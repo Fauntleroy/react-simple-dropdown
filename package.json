@@ -1,0 +1,28 @@
+{
+  "name": "react-dropdown-container",
+  "version": "0.0.1",
+  "description": "Non-prescriptive React.js dropdown toolkit",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fauntleroy/react-dropdown-container.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "component",
+    "dropdown"
+  ],
+  "author": {
+    "name": "Timothy Kempf",
+    "email": "tim@kemp59f.info",
+    "url": "kempfffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.info"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fauntleroy/react-dropdown-container/issues"
+  },
+  "homepage": "https://github.com/Fauntleroy/react-dropdown-container"
+}
