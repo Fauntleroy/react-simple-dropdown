@@ -6,8 +6,8 @@ var isBoolean = function (data) {
     return (data === true || data === false);
 };
 
-var DropdownTrigger = require('DropdownTrigger.js');
-var DropdownContent = require('DropdownContent.js');
+var DropdownTrigger = require('./DropdownTrigger.js');
+var DropdownContent = require('./DropdownContent.js');
 
 var Dropdown = React.createClass({
     getInitialState: function(){
