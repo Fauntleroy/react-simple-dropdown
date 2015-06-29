@@ -6,8 +6,8 @@ var isBoolean = function (data) {
     return (data === true || data === false);
 };
 
-var DropdownTrigger = require('DropdownTrigger.jsx');
-var DropdownContent = require('DropdownContent.jsx');
+var DropdownTrigger = require('DropdownTrigger.js');
+var DropdownContent = require('DropdownContent.js');
 
 var Dropdown = React.createClass({
     getInitialState: function(){
@@ -36,11 +36,9 @@ var Dropdown = React.createClass({
             dropdown: true,
             'dropdown--active': active
         });
-        return (
-            <div className={dropdown_classes}>
-                {children}
-            </div>
-        );
+        return React.createElement('div', {
+            className: dropdown_classes
+        }, children);
     },
     isActive: function(){
         return isBoolean(this.props.active) ?

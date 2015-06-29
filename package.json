@@ -2,7 +2,7 @@
   "name": "react-dropdown-container",
   "version": "0.0.1",
   "description": "Non-prescriptive React.js dropdown toolkit",
-  "main": "src/Dropdown.jsx",
+  "main": "src/Dropdown.js",
   "scripts": {},
   "repository": {
     "type": "git",
