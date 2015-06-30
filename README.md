@@ -12,13 +12,13 @@ This module provides three React components that you can use as a basis for any 
 - `DropdownContents`: Contains the "filling" of your dropdown. Generally, this is a list of links.
 - `Dropdown`: The base element for your dropdown. This contains both the `DropdownTrigger` and the `DropdownContents`, and handles communication between them.
 
-Here's a quick demonstration of how they are used:
+When using these, keep in mind that `DropdownTrigger` and `DropdownContent` must be direct children of `Dropdown`. Here's a quick example:
 
 ```js
 var React = require('react');
 var Dropdown = require('react-simple-dropdown');
-var DropdownTrigger = Dropdown.Trigger;
-var DropdownContent = Dropdown.Content;
+var DropdownTrigger = Dropdown.DropdownTrigger;
+var DropdownContent = Dropdown.DropdownContent;
 
 var Menu = React.createClass({
     render: function () {
@@ -47,7 +47,7 @@ var Menu = React.createClass({
 
 ### Options
 
-Options can be passed to `Dropdown` as props. A list of available options can be found below.
+Options can be passed to `Dropdown` as props. A list of available options can be found below. These must be passed to the containing `Dropdown` component.
 
 Property | Type | Description
 ----- | ----- | -----
