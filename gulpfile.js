@@ -13,7 +13,7 @@ var generateCssStream = function(){
         .pipe( gulp_less({
             paths: [ path.join( __dirname, 'src' ) ]
         }))
-        .pipe( gulp.dest('./dist') );
+        .pipe( gulp.dest('./') );
     return stream;
 };
 
@@ -39,7 +39,7 @@ var generateBrowserifyStream = function( bundler ){
     var stream = bundler.bundle()
         .on( 'error', gulp_util.log.bind( gulp_util, 'Browserify Error' ) )
         .pipe( vinyl_source('index.js') )
-        .pipe( gulp.dest('./dist/') );
+        .pipe( gulp.dest('./') );
     return stream;
 };
 
@@ -69,7 +69,7 @@ gulp.task( 'compile and watch js', function () {
 var copyStatic = function () {
     gulp_util.log('Copying static files');
     var stream = gulp.src('./src/index.html')
-        .pipe( gulp.dest('./dist/') );
+        .pipe( gulp.dest('./') );
     return stream;
 };
 
