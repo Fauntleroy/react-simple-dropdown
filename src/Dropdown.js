@@ -2,6 +2,8 @@ var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
 var cx = require('classnames');
 
+var mergeClasses = require('./utils/mergeClasses.js');
+
 var isBoolean = function (data) {
     return (data === true || data === false);
 };
@@ -22,7 +24,15 @@ var Dropdown = React.createClass({
         window.removeEventListener( 'click', this._onWindowClick );
     },
     render: function () {
+        // create component classes
         var active = this.isActive();
+        var classnames_string = this.props.classNames;
+        var dropdown_classes_object = mergeClasses({
+            dropdown: true,
+            'dropdown--active': active
+        }, classnames_string);
+        var dropdown_classes = cx(dropdown_classes_object);
+        // prepare child elements
         var children = React.Children.map( this.props.children, function( child ){
             if( child.type === DropdownTrigger ){
                 child = cloneWithProps( child, {
@@ -32,10 +42,6 @@ var Dropdown = React.createClass({
             }
             return child;
         }, this);
-        var dropdown_classes = cx({
-            dropdown: true,
-            'dropdown--active': active
-        });
         return React.createElement('div', {
             className: dropdown_classes
         }, children);
