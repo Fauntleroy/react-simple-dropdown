@@ -2,10 +2,6 @@ var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
 var cx = require('classnames');
 
-var isBoolean = function (data) {
-    return (data === true || data === false);
-};
-
 var DropdownTrigger = require('./DropdownTrigger.js');
 var DropdownContent = require('./DropdownContent.js');
 
@@ -44,7 +40,7 @@ var Dropdown = React.createClass({
         }, children);
     },
     isActive: function(){
-        return isBoolean(this.props.active) ?
+        return ( typeof this.props.active === 'boolean' ) ?
             this.props.active :
             this.state.active;
     },
