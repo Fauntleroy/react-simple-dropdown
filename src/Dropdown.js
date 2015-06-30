@@ -27,10 +27,11 @@ var Dropdown = React.createClass({
         // create component classes
         var active = this.isActive();
         var classname = this.props.className || '';
-        var dropdown_classes_object = mergeClasses({
+        var dropdown_classes_object = {
             dropdown: true,
             'dropdown--active': active
-        }, classname);
+        };
+        mergeClasses(dropdown_classes_object, classname);
         var dropdown_classes = cx(dropdown_classes_object);
         // prepare child elements
         var children = React.Children.map( this.props.children, function( child ){
