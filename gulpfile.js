@@ -1,9 +1,29 @@
+var path = require('path');
 var vinyl_source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var gulp = require('gulp');
+var gulp_less = require('gulp-less');
 var gulp_util = require('gulp-util');
-var gulp_watch = require('gulp-watch');
+
+// Compile CSS
+
+var generateCssStream = function(){
+    var stream = gulp.src('./src/index.less')
+        .pipe( gulp_less({
+            paths: [ path.join( __dirname, 'src' ) ]
+        }))
+        .pipe( gulp.dest('./dist') );
+    return stream;
+};
+
+gulp.task( 'compile css', function(){
+    generateCssStream();
+});
+
+gulp.task( 'compile and watch css', function(){
+    gulp.watch( './src/**/*.{less,css}', ['compile css'] );
+});
 
 
 // Compile JS
@@ -11,7 +31,7 @@ var gulp_watch = require('gulp-watch');
 var generateBrowserifyBundler = function () {
     var bundler = browserify( './src/index.jsx', watchify.args );
     bundler.transform('babelify');
-    bundler.transform('cssify');
+    bundler.transform('brfs');
     return bundler;
 };
 
@@ -55,12 +75,12 @@ var copyStatic = function () {
 
 gulp.task( 'copy static', copyStatic );
 gulp.task( 'watch static', function () {
-    gulp_watch( './src/index.html', copyStatic );
+    gulp.watch( './src/index.html', ['copy static'] );
 });
 gulp.task( 'copy and watch static', ['copy static', 'watch static']);
 
 
 // Public tasks
 
-gulp.task( 'build', ['compile js', 'copy static'] );
-gulp.task( 'default', ['compile and watch js', 'copy and watch static'] );
+gulp.task( 'build', ['compile css', 'compile js', 'copy static'] );
+gulp.task( 'default', ['compile and watch css', 'compile and watch js', 'copy and watch static'] );

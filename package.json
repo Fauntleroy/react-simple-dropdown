@@ -5,16 +5,19 @@
     "dev": "gulp"
   },
   "dependencies": {
+    "react": "^0.13.3",
+    "highlight.js": "^8.6.0",
+    "react-highlight": "^0.4.1",
     "react-simple-dropdown": "git+https://github.com/Fauntleroy/react-simple-dropdown.git"
   },
   "devDependencies": {
     "babelify": "^6.1.2",
+    "brfs": "^1.4.0",
     "browserify": "^10.2.4",
     "cssify": "^0.7.0",
     "gulp": "^3.9.0",
+    "gulp-less": "^3.0.3",
     "gulp-util": "^3.0.6",
-    "gulp-watch": "^4.2.4",
-    "react": "^0.13.3",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.3"
   }
