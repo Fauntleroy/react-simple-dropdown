@@ -196,6 +196,9 @@
 .markdown .hljs-link_url {
   text-decoration: underline;
 }
+.dropdown {
+  display: inline-block;
+}
 .dropdown__content {
   display: none;
   position: absolute;
