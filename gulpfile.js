@@ -48,14 +48,14 @@ gulp.task( 'compile and watch js', function () {
 
 var copyStatic = function () {
     gulp_util.log('Copying static files');
-    var stream = gulp.src('./src/{index.html}')
+    var stream = gulp.src('./src/index.html')
         .pipe( gulp.dest('./dist/') );
     return stream;
 };
 
 gulp.task( 'copy static', copyStatic );
 gulp.task( 'watch static', function () {
-    gulp_watch( './src/{index.html}', copyStatic );
+    gulp_watch( './src/index.html', copyStatic );
 });
 gulp.task( 'copy and watch static', ['copy static', 'watch static']);
 

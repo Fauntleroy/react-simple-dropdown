@@ -1,18 +1,19 @@
 import React from 'react';
-import Dropdown, { Trigger as DropdownTrigger, Content as DropdownContent } from 'react-simple-dropdown';
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import './index.css';
 
 var AccountDropdown = React.createClass({
     render: function () {
+        var user = this.props.user;
         return (
-            <Dropdown>
+            <Dropdown className="account-dropdown">
                 <DropdownTrigger>
-                    <img className="account-dropdown__avatar" src="" />
-                    <span className="account-dropdown__name">Fauntleroy</span>
+                    <img className="account-dropdown__avatar" src={user.avatar_url} />
+                    <span className="account-dropdown__name">{user.name}</span>
                 </DropdownTrigger>
-                <DropdownContainer>
+                <DropdownContent>
                     <div className="account-dropdown__identity account-dropdown__segment">
-                        Signed in as <strong>Fauntleroy</strong>
+                        Signed in as <strong>{user.name}</strong>
                     </div>
                     <ul className="account-dropdown__quick-links account-dropdown__segment">
                         <li className="account-dropdown__link">
@@ -48,10 +49,15 @@ var AccountDropdown = React.createClass({
                             </a>
                         </li>
                     </ul>
-                </DropdownContainer>
+                </DropdownContent>
             </Dropdown>
         );
     }
 });
 
-React.render( AccountDropdown, document.getElementById('account-dropdown') );
+var user = {
+    name: 'Fauntleroy',
+    avatar_url: 'https://avatars2.githubusercontent.com/u/507047?v=3&s=20'
+};
+
+React.render( <AccountDropdown user={user} />, document.getElementById('account-dropdown') );
