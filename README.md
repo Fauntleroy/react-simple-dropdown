@@ -2,7 +2,7 @@
 
 Non-prescriptive React.js dropdown toolkit.
 
-See it in action (Demo)
+[See it in action (Demo)](http://fauntleroy.github.io/react-simple-dropdown/)
 
 ### How to use
 
