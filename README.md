@@ -12,7 +12,9 @@ This module provides three React components that you can use as a basis for any 
 - `DropdownContents`: Contains the "filling" of your dropdown. Generally, this is a list of links.
 - `Dropdown`: The base element for your dropdown. This contains both the `DropdownTrigger` and the `DropdownContents`, and handles communication between them.
 
-When using these, keep in mind that `DropdownTrigger` and `DropdownContent` must be direct children of `Dropdown`. Here's a quick example:
+There is also a [barebones stylesheet](styles/Dropdown.css) which **must be included in order for the component to actually work**.
+
+Keep in mind that `DropdownTrigger` and `DropdownContent` must be direct children of `Dropdown`. Here's a quick example:
 
 ```js
 var React = require('react');
