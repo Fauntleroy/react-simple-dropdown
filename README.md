@@ -14,7 +14,7 @@ This module provides three React components that you can use as a basis for any 
 
 There is also a [barebones stylesheet](styles/Dropdown.css) which **must be included in order for the component to actually work**.
 
-Keep in mind that `DropdownTrigger` and `DropdownContent` must be direct children of `Dropdown`. Here's a quick example:
+Keep in mind that `DropdownTrigger` and `DropdownContent` **must be direct children** of `Dropdown`. Here's a quick example:
 
 ```js
 var React = require('react');
