@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "components/Dropdown.js",
-  "scripts": {},
+  "scripts": {
+    "test": "zuul -- test/**/*.js",
+    "test:browser": "zuul --local 55555 -- test/**/*.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Fauntleroy/react-simple-dropdown.git"
@@ -30,6 +33,10 @@
   },
   "devDependencies": {
     "browserify": "^10.2.4",
-    "watchify": "^3.2.3"
+    "dom-classes": "0.0.1",
+    "reactify": "^1.1.1",
+    "tape": "^4.0.0",
+    "watchify": "^3.2.3",
+    "zuul": "^3.1.0"
   }
 }
