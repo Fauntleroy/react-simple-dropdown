@@ -4,8 +4,8 @@
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "components/Dropdown.js",
   "scripts": {
-    "test": "zuul -- test/**/*.js",
-    "test:browser": "zuul --local 55555 -- test/**/*.js"
+    "test": "zuul -- test/**/*.{js,jsx}",
+    "test:browser": "zuul --local 55555 -- test/**/*.{js,jsx}"
   },
   "repository": {
     "type": "git",
