@@ -128,13 +128,13 @@ process.umask = function() { return 0; };
 		return classes.substr(1);
 	}
 
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd){
 		// AMD. Register as an anonymous module.
 		define(function () {
 			return classNames;
 		});
-	} else if (typeof module !== 'undefined' && module.exports) {
-		module.exports = classNames;
 	} else {
 		window.classNames = classNames;
 	}

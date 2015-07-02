@@ -5,10 +5,10 @@
     "dev": "gulp"
   },
   "dependencies": {
-    "react": "^0.13.3",
     "highlight.js": "^8.6.0",
+    "react": "^0.13.3",
     "react-highlight": "^0.4.1",
-    "react-simple-dropdown": "git+https://github.com/Fauntleroy/react-simple-dropdown.git"
+    "react-simple-dropdown": "^0.1.0"
   },
   "devDependencies": {
     "babelify": "^6.1.2",
