@@ -1,5 +1,4 @@
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
 var cx = require('classnames');
 
 var DropdownTrigger = require('./DropdownTrigger.js');
@@ -25,10 +24,10 @@ var Dropdown = React.createClass({
             'dropdown--active': active
         });
         dropdown_classes += ' ' + this.props.className;
-        // prepare child elements
+        // stick callback on trigger element
         var children = React.Children.map( this.props.children, function( child ){
             if( child.type === DropdownTrigger ){
-                child = cloneWithProps( child, {
+                child = React.cloneElement( child, {
                     ref: 'trigger',
                     onClick: this._onToggleClick
                 });
