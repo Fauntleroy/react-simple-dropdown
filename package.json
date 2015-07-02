@@ -4,7 +4,7 @@
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "components/Dropdown.js",
   "scripts": {
-    "test": "zuul -- test/**/*.{js,jsx}",
+    "test": "zuul --debug --phantom -- test/**/*.{js,jsx}",
     "test:browser": "zuul --local 55555 -- test/**/*.{js,jsx}"
   },
   "repository": {
@@ -34,6 +34,7 @@
   "devDependencies": {
     "browserify": "^10.2.4",
     "dom-classes": "0.0.1",
+    "phantomjs": "^1.9.17",
     "reactify": "^1.1.1",
     "simple-mock": "^0.3.1",
     "tape": "^4.0.0",
