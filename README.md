@@ -4,6 +4,14 @@ Non-prescriptive React.js dropdown toolkit.
 
 [See it in action (Demo)](http://fauntleroy.github.io/react-simple-dropdown/)
 
+### Installation
+
+This module is designed for use with [Browserify](http://browserify.org) (but should work with anything CommonJS compatible). You can easily install it with [npm](http://npmjs.com):
+
+```bash
+npm install react-simple-dropdown
+```
+
 ### How to use
 
 This module provides three React components that you can use as a basis for any kind of dropdown menu:
