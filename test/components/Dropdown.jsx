@@ -1,6 +1,7 @@
 var test = require('tape');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
+var smock = require('simple-mock');
 var domClasses = require('dom-classes');
 var hasClass = domClasses.has;
 
@@ -13,10 +14,17 @@ var TestApp = React.createClass({
         return {};
     },
     render: function(){
-        return (<Dropdown className="test" active={this.state.active}>
-            <DropdownTrigger></DropdownTrigger>
-            <DropdownContent></DropdownContent>
-        </Dropdown>);
+        return (
+            <Dropdown
+                className="test"
+                active={this.state.active}
+                onShow={this.state.onShow}
+                onHide={this.state.onHide}
+            >
+                <DropdownTrigger></DropdownTrigger>
+                <DropdownContent></DropdownContent>
+            </Dropdown>
+        );
     }
 });
 var test_app = TestUtils.renderIntoDocument( <TestApp /> );
@@ -35,11 +43,23 @@ test( 'Merges classes from props with default element class', function( t ){
 });
 
 test( 'Dropdown is toggled when DropdownTrigger is clicked', function( t ){
-    t.plan( 2 );
+    t.plan( 4 );
+    var onShowCallback = smock.stub();
+    var onHideCallback = smock.stub();
+    test_app.setState({
+        onShow: onShowCallback,
+        onHide: onHideCallback
+    });
     TestUtils.Simulate.click( trigger_element );
     t.ok( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'has class `dropdown--active` after trigger is clicked' );
+    t.equal( onShowCallback.callCount, 1, '`onShow` function was called' );
     TestUtils.Simulate.click( trigger_element );
     t.notOk( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'does not have class `dropdown--active` after trigger is clicked again' );
+    t.equal( onHideCallback.callCount, 1, '`onHide` function was called' );
+    test_app.setState({
+        onShow: null,
+        onHide: null
+    });
 });
 
 test( 'Dropdown state can be manually set with props', function( t ){

@@ -35,6 +35,7 @@
     "browserify": "^10.2.4",
     "dom-classes": "0.0.1",
     "reactify": "^1.1.1",
+    "simple-mock": "^0.3.1",
     "tape": "^4.0.0",
     "watchify": "^3.2.3",
     "zuul": "^3.1.0"
