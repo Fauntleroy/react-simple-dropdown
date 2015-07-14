@@ -16,7 +16,7 @@ var TestApp = React.createClass({
     render: function(){
         return (
             <Dropdown
-                className="test"
+                className={this.state.className}
                 active={this.state.active}
                 onShow={this.state.onShow}
                 onHide={this.state.onHide}
@@ -37,9 +37,16 @@ var content = TestUtils.findRenderedComponentWithType( test_app, DropdownContent
 var content_element = TestUtils.findRenderedDOMComponentWithClass( content, 'dropdown__content' );
 
 test( 'Merges classes from props with default element class', function( t ){
-    t.plan( 2 );
+    t.plan( 3 );
+    t.equal( domClasses( dropdown_element_dom_node ).length, 1, 'has one class when `className` is empty' );
+    test_app.setState({
+        className: 'test'
+    });
     t.ok( hasClass( dropdown_element_dom_node, 'dropdown' ), 'has class `dropdown`' );
     t.ok( hasClass( dropdown_element_dom_node, 'test' ), 'has class `test`' );
+    test_app.setState({
+        className: null
+    });
 });
 
 test( 'Dropdown is toggled when DropdownTrigger is clicked', function( t ){
