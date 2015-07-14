@@ -23,7 +23,9 @@ var Dropdown = React.createClass({
             dropdown: true,
             'dropdown--active': active
         });
-        dropdown_classes += ' ' + this.props.className;
+        if( this.props.className ){
+            dropdown_classes += ' ' + this.props.className;
+        }
         // stick callback on trigger element
         var children = React.Children.map( this.props.children, function( child ){
             if( child.type === DropdownTrigger ){
