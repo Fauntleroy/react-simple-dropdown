@@ -28,8 +28,7 @@
   },
   "homepage": "https://github.com/Fauntleroy/react-simple-dropdown",
   "dependencies": {
-    "classnames": "^2.1.2",
-    "react": "^0.13.3"
+    "classnames": "^2.1.2"
   },
   "devDependencies": {
     "browserify": "^10.2.4",
@@ -39,5 +38,8 @@
     "tape": "^4.0.0",
     "watchify": "^3.2.3",
     "zuul": "^3.1.0"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0"
   }
 }
