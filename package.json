@@ -6,9 +6,10 @@
   },
   "dependencies": {
     "highlight.js": "^8.6.0",
-    "react": "^0.13.3",
-    "react-highlight": "^0.4.1",
-    "react-simple-dropdown": "^0.1.0"
+    "react": "0.14.x",
+    "react-dom": "0.14.x",
+    "react-highlight": "^0.6.1",
+    "react-simple-dropdown": "1.0.0"
   },
   "devDependencies": {
     "babelify": "^6.1.2",
