@@ -15,7 +15,12 @@ const DropdownTrigger = createClass({
     const { children, className, onClick } = this.props;
     const classes = 'dropdown__trigger ' + className;
     return (
-      <a className={classes} href="#dropdown-trigger" onClick={onClick}>
+      <a
+        style={this.props.style}
+        className={classes}
+        href="#dropdown-trigger"
+        onClick={onClick}
+      >
         {children}
       </a>
     );
