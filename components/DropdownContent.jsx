@@ -13,7 +13,14 @@ const DropdownContent = createClass({
   render: function(){
     const { children, className } = this.props;
     const classes = 'dropdown__content ' + className;
-    return <div className={classes}>{children}</div>;
+    return (
+      <div
+        style={this.props.style}
+        className={classes}
+      >
+        {children}
+      </div>
+    )
   }
 });
 

@@ -41,7 +41,14 @@ var Dropdown = createClass({
       }
       return child;
     });
-    return <div className={dropdown_classes}>{bound_children}</div>;
+    return (
+      <div
+        style={this.props.style}
+        className={dropdown_classes}
+      >
+        {bound_children}
+      </div>
+    );
   },
   isActive: function(){
     return ( typeof this.props.active === 'boolean' ) ?
