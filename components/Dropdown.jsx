@@ -16,6 +16,11 @@ var Dropdown = createClass({
       className: ''
     }
   },
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.show) {
+      this.setState({ active: true});
+    }
+  },
   componentDidMount: function () {
     window.addEventListener( 'click', this._onWindowClick );
   },
