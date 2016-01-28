@@ -8,7 +8,7 @@ import DropdownContent from './DropdownContent.js';
 var Dropdown = createClass({
   getInitialState: function(){
     return {
-      active: false
+      active: this.props.show || false
     };
   },
   getDefaultProps: function(){
