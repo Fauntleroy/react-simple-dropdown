@@ -6,6 +6,7 @@ import DropdownTrigger from './DropdownTrigger.js';
 import DropdownContent from './DropdownContent.js';
 
 var Dropdown = createClass({
+  displayName: 'Dropdown',
   getInitialState: function(){
     return {
       active: false

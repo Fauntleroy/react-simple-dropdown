@@ -1,6 +1,7 @@
 import React, { createClass, PropTypes } from 'react';
 
 const DropdownTrigger = createClass({
+  displayName: 'DropdownTrigger',
   propTypes: {
     children: PropTypes.any,
     className: PropTypes.string,

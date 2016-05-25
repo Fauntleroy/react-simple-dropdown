@@ -1,6 +1,7 @@
 import React, { createClass, PropTypes } from 'react';
 
 const DropdownContent = createClass({
+  displayName: 'DropdownContent',
   propTypes: {
     children: PropTypes.any,
     className: PropTypes.string
