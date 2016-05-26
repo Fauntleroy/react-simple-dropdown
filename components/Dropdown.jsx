@@ -9,12 +9,17 @@ var Dropdown = createClass({
   displayName: 'Dropdown',
   getInitialState: function(){
     return {
-      active: false
+      active: this.props.show || false
     };
   },
   getDefaultProps: function(){
     return {
       className: ''
+    }
+  },
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.show) {
+      this.setState({ active: true});
     }
   },
   componentDidMount: function () {
