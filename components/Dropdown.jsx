@@ -7,23 +7,28 @@ import DropdownContent from './DropdownContent.js';
 
 var Dropdown = createClass({
   displayName: 'Dropdown',
-  getInitialState: function(){
+
+  getInitialState () {
     return {
       active: false
     };
   },
-  getDefaultProps: function(){
+
+  getDefaultProps () {
     return {
       className: ''
     }
   },
-  componentDidMount: function () {
+
+  componentDidMount () {
     window.addEventListener( 'click', this._onWindowClick );
   },
-  componentWillUnmount: function () {
+
+  componentWillUnmount () {
     window.removeEventListener( 'click', this._onWindowClick );
   },
-  render: function () {
+
+  render () {
     const { children, className } = this.props;
     // create component classes
     const active = this.isActive();
@@ -45,18 +50,19 @@ var Dropdown = createClass({
     return (
       <div
         style={this.props.style}
-        className={dropdown_classes}
-      >
+        className={dropdown_classes}>
         {bound_children}
       </div>
     );
   },
-  isActive: function(){
+
+  isActive () {
     return ( typeof this.props.active === 'boolean' ) ?
       this.props.active :
       this.state.active;
   },
-  hide: function(){
+
+  hide () {
     this.setState({
       active: false
     });
@@ -64,7 +70,8 @@ var Dropdown = createClass({
       this.props.onHide();
     }
   },
-  show: function(){
+
+  show () {
     this.setState({
       active: true
     });
@@ -72,13 +79,15 @@ var Dropdown = createClass({
       this.props.onShow();
     }
   },
-  _onWindowClick: function( event ){
+
+  _onWindowClick ( event ) {
     const dropdown_element = findDOMNode( this );
     if( event.target !== dropdown_element && !dropdown_element.contains( event.target ) && this.isActive() ){
       this.hide();
     }
   },
-  _onToggleClick: function( event ){
+
+  _onToggleClick ( event ) {
     event.preventDefault();
     if( this.isActive() ){
       this.hide();

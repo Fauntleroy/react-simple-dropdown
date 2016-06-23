@@ -2,23 +2,27 @@ import React, { createClass, PropTypes } from 'react';
 
 const DropdownContent = createClass({
   displayName: 'DropdownContent',
+
   propTypes: {
-    children: PropTypes.any,
+    children: PropTypes.element,
     className: PropTypes.string
   },
-  getDefaultProps: function(){
+
+  getDefaultProps () {
     return {
       className: ''
     }
   },
-  render: function(){
+
+  render () {
     const { children, className } = this.props;
-    const classes = 'dropdown__content ' + className;
+    const props = {
+      ...this.props,
+      className: `dropdown__content ${className}`
+    };
+
     return (
-      <div
-        style={this.props.style}
-        className={classes}
-      >
+      <div {...props}>
         {children}
       </div>
     )
