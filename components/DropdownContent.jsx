@@ -4,7 +4,7 @@ const DropdownContent = createClass({
   displayName: 'DropdownContent',
 
   propTypes: {
-    children: PropTypes.element,
+    children: PropTypes.node,
     className: PropTypes.string
   },
 

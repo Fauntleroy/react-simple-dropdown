@@ -4,9 +4,8 @@ const DropdownTrigger = createClass({
   displayName: 'DropdownTrigger',
 
   propTypes: {
-    children: PropTypes.element,
-    className: PropTypes.string,
-    onClick: PropTypes.func.isRequired
+    children: PropTypes.node,
+    className: PropTypes.string
   },
 
   getDefaultProps () {
