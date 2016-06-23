@@ -9,7 +9,7 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-highlight": "^0.8.0",
-    "react-simple-dropdown": "^1.1.0"
+    "react-simple-dropdown": "1.1.3"
   },
   "devDependencies": {
     "babelify": "^6.1.2",
