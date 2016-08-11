@@ -16,7 +16,8 @@ var Dropdown = createClass({
 
   getDefaultProps () {
     return {
-      className: ''
+      className: '',
+      activeClassName: 'dropdown--active'
     }
   },
 
@@ -34,7 +35,7 @@ var Dropdown = createClass({
     const active = this.isActive();
     var dropdown_classes = cx({
       dropdown: true,
-      'dropdown--active': active
+      [activeClassName]: active
     });
     dropdown_classes += ' ' + className;
     // stick callback on trigger element
