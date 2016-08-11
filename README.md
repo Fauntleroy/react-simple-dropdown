@@ -64,3 +64,4 @@ Property | Type | Description
 **show** | *boolean* | Manually show/hide the `DropdownContent`. Make sure to unset this or the dropdown will stay open.
 **onShow** | *function* | Callback for when `DropdownContent` is shown.
 **onHide** | *function* | Callback for when `DropdownContent` is hidden.
+**activeClassName** | *string* | Class to be applied to the dropdown when active. Default value: 'dropdown--active'
