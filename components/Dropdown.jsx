@@ -30,7 +30,7 @@ var Dropdown = createClass({
   },
 
   render () {
-    const { children, className } = this.props;
+    const { children, className, activeClassName } = this.props;
     // create component classes
     const active = this.isActive();
     var dropdown_classes = cx({
