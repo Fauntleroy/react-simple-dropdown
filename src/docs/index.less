@@ -1,0 +1,67 @@
+@import (less) '../../node_modules/highlight.js/styles/github-gist.css';
+@import (less) '../../styles/Dropdown.css';
+
+// General
+
+body {
+    padding: 40px 80px;
+    font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+// Account Dropdown
+
+.account-dropdown__avatar {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px 0 0;
+    border-radius: 3px;
+}
+
+.account-dropdown .dropdown__trigger {
+    line-height: 20px;
+}
+
+.account-dropdown .dropdown__trigger:after {
+    content: '\25BE';
+    margin: 0 0 0 10px;
+}
+
+.account-dropdown__avatar,
+.account-dropdown__name {
+    vertical-align: middle;
+}
+
+.account-dropdown .dropdown__content {
+    margin-top: 5px;
+    border-top: rgba( 0, 0, 0, 0.05 ) 1px solid;
+    background: rgb( 255, 255, 255 );
+    box-shadow: 0 5px 8px rgba( 0, 0, 0, 0.15 );
+}
+
+.account-dropdown__quick-links,
+.account-dropdown__management-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.account-dropdown__segment {
+    padding: 10px 15px;
+    border-bottom: rgb( 225, 225, 225 ) 1px solid;
+}
+
+.account-dropdown__link {
+    margin: 5px 0;
+}
+
+
+// Code
+
+.code {
+    border: rgb( 235, 235, 235 ) 1px solid;
+}
