@@ -8,7 +8,7 @@
     "postpublish": "npm run clean",
     "test": "npm run build && zuul -- test/**/*.{js,jsx}",
     "test:browser": "zuul --local 55555 -- test/**/*.{js,jsx}",
-    "build": "babel src/components/**/* --out-dir lib",
+    "build": "babel src/components --out-dir lib/components",
     "watch": "npm run build -- -w",
     "dev": "npm-run-all --parallel watch test:browser",
     "clean": "trash lib",
