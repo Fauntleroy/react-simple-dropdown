@@ -14,11 +14,11 @@
     "clean": "trash lib",
     "docs:build": "npm-run-all -p docs:build:*",
     "docs:build:css": "lessc src/docs/index.less docs/index.css",
-    "docs:build:js": "browserify -t [ babelify brfs ] --extension=.jsx src/docs/index.jsx --outfile docs/index.js",
+    "docs:build:js": "browserify -t [ babelify ] -t [ brfs ] --extension=.jsx src/docs/index.jsx --outfile docs/index.js",
     "docs:build:html": "ncp src/docs/index.html docs/index.html",
     "docs:watch": "npm-run-all -p docs:watch:*",
     "docs:watch:css": "autoless src/docs/ docs/",
-    "docs:watch:js": "watchify -t [ babelify brfs ] --extension=.jsx src/docs/index.jsx --outfile docs/index.js -v",
+    "docs:watch:js": "watchify -t [ babelify ] -t [ brfs ] --extension=.jsx src/docs/index.jsx --outfile docs/index.js -v",
     "docs:watch:html": "sane 'npm run docs:build:html' src/docs/ --glob='index.html'"
   },
   "repository": {

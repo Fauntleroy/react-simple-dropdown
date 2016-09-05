@@ -9,7 +9,7 @@ var user = {
     avatar_url: 'https://avatars2.githubusercontent.com/u/507047?v=3&s=20'
 };
 
-var account_dropdown_code = fs.readFileSync( __dirname + '/components/AccountDropdown.jsx', 'UTF8' );
+var account_dropdown_code = fs.readFileSync(__dirname + '/components/AccountDropdown.jsx', 'utf8');
 
 ReactDOM.render( <AccountDropdown user={user} />, document.getElementById('account-dropdown') );
 ReactDOM.render( (<Highlight className="code jsx">{account_dropdown_code}</Highlight>), document.getElementById('account-dropdown-code') );
