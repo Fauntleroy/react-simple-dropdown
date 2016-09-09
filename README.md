@@ -61,6 +61,17 @@ Options can be passed to `Dropdown` as props. A list of available options can be
 
 Property | Type | Description
 ----- | ----- | -----
-**show** | *boolean* | Manually show/hide the `DropdownContent`. Make sure to unset this or the dropdown will stay open.
+**active** | *boolean* | Manually show/hide the `DropdownContent`. Make sure to unset this or the dropdown will stay open.
 **onShow** | *function* | Callback for when `DropdownContent` is shown.
 **onHide** | *function* | Callback for when `DropdownContent` is hidden.
+
+
+### Instance
+
+Each instance of `Dropdown` has some methods developers might find useful.
+
+Method | Description
+----- | -----
+**show** | Shows the dropdown.
+**hide** | Hides the dropdown.
+**isActive** | Returns a boolean indicating whether or not the dropdown is active.
