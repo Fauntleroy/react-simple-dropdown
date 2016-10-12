@@ -17,8 +17,8 @@ npm install react-simple-dropdown
 This module provides three React components that you can use as a basis for any kind of dropdown menu:
 
 - `DropdownTrigger`: The element that will cause your dropdown to appear when clicked.
-- `DropdownContents`: Contains the "filling" of your dropdown. Generally, this is a list of links.
-- `Dropdown`: The base element for your dropdown. This contains both the `DropdownTrigger` and the `DropdownContents`, and handles communication between them.
+- `DropdownContent`: Contains the "filling" of your dropdown. Generally, this is a list of links.
+- `Dropdown`: The base element for your dropdown. This contains both the `DropdownTrigger` and the `DropdownContent`, and handles communication between them.
 
 There is also a [barebones stylesheet](styles/Dropdown.css) which **must be included in order for the component to actually work**.
 
