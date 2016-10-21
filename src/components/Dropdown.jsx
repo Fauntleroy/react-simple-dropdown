@@ -22,10 +22,12 @@ var Dropdown = createClass({
 
   componentDidMount () {
     window.addEventListener( 'click', this._onWindowClick );
+    window.addEventListener( 'touchstart', this._onWindowClick );
   },
 
   componentWillUnmount () {
     window.removeEventListener( 'click', this._onWindowClick );
+    window.removeEventListener( 'touchstart', this._onWindowClick );
   },
 
   render () {
