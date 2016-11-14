@@ -64,21 +64,21 @@ var Dropdown = createClass({
       this.state.active;
   },
 
-  hide () {
+  hide ( event ) {
     this.setState({
       active: false
     });
     if( this.props.onHide ){
-      this.props.onHide();
+      this.props.onHide( event );
     }
   },
 
-  show () {
+  show ( event ) {
     this.setState({
       active: true
     });
     if( this.props.onShow ){
-      this.props.onShow();
+      this.props.onShow( event );
     }
   },
 
@@ -92,9 +92,9 @@ var Dropdown = createClass({
   _onToggleClick ( event ) {
     event.preventDefault();
     if( this.isActive() ){
-      this.hide();
+      this.hide( event );
     } else {
-      this.show();
+      this.show( event );
     }
   }
 });
