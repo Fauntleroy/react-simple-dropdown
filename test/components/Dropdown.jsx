@@ -12,15 +12,16 @@ var TestApp = createClass({
     return {};
   },
   render: function(){
+    const { className, active, onShow, onHide, onTriggerClick } = this.state;
     return (
       <Dropdown
-        className={this.state.className}
-        active={this.state.active}
-        onShow={this.state.onShow}
-        onHide={this.state.onHide}
+        className={className}
+        active={active}
+        onShow={onShow}
+        onHide={onHide}
       >
-        <DropdownTrigger></DropdownTrigger>
-        <DropdownContent></DropdownContent>
+        <DropdownTrigger onClick={onTriggerClick} />
+        <DropdownContent />
       </Dropdown>
     );
   }
@@ -65,6 +66,16 @@ test( 'Dropdown is toggled when DropdownTrigger is clicked', function( t ){
     onShow: null,
     onHide: null
   });
+});
+
+test( 'Custom onClick handler is called when DropDownTrigger is clicked', function( t ){
+  t.plan( 1 );
+  var onTriggerClickCallback = smock.stub();
+  test_app.setState({
+    onTriggerClick: onTriggerClickCallback
+  });
+  Simulate.click( trigger_element );
+  t.equal( onTriggerClickCallback.callCount, 1, 'click handler called when trigger is clicked');
 });
 
 test( 'Dropdown state can be manually set with props', function( t ){

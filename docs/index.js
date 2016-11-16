@@ -43,12 +43,15 @@ var Dropdown = (0, _react.createClass)({
   },
   componentDidMount: function componentDidMount() {
     window.addEventListener('click', this._onWindowClick);
+    window.addEventListener('touchstart', this._onWindowClick);
   },
   componentWillUnmount: function componentWillUnmount() {
     window.removeEventListener('click', this._onWindowClick);
+    window.removeEventListener('touchstart', this._onWindowClick);
   },
   render: function render() {
-    var _this = this;
+    var _this = this,
+        _arguments = arguments;
 
     var _props = this.props;
     var children = _props.children;
@@ -64,10 +67,18 @@ var Dropdown = (0, _react.createClass)({
     // stick callback on trigger element
     var bound_children = _react2.default.Children.map(children, function (child) {
       if (child.type === _DropdownTrigger2.default) {
-        child = (0, _react.cloneElement)(child, {
-          ref: 'trigger',
-          onClick: _this._onToggleClick
-        });
+        (function () {
+          var originalOnClick = child.props.onClick;
+          child = (0, _react.cloneElement)(child, {
+            ref: 'trigger',
+            onClick: function onClick(event) {
+              _this._onToggleClick(event);
+              if (originalOnClick) {
+                originalOnClick.apply(child, _arguments);
+              }
+            }
+          });
+        })();
       }
       return child;
     });

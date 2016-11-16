@@ -42,9 +42,15 @@ var Dropdown = createClass({
     // stick callback on trigger element
     const bound_children = React.Children.map( children, child => {
       if( child.type === DropdownTrigger ){
+        const originalOnClick = child.props.onClick;
         child = cloneElement( child, {
           ref: 'trigger',
-          onClick: this._onToggleClick
+          onClick: ( event ) => {
+            this._onToggleClick( event );
+            if( originalOnClick ){
+              originalOnClick.apply( child, arguments );
+            }
+          }
         });
       }
       return child;
