@@ -225,7 +225,7 @@ var DropdownTrigger = (0, _react.createClass)({
       className: 'dropdown__trigger ' + className
     });
 
-    return _react2.default.createElement('a', _extends({}, props, { href: '#dropdown-trigger' }), children);
+    return _react2.default.createElement('a', props, children);
   }
 });
 

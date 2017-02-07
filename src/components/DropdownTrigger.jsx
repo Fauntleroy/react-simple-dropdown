@@ -22,7 +22,7 @@ const DropdownTrigger = createClass({
     };
 
     return (
-      <a {...props} href="#dropdown-trigger">
+      <a {...props}>
         {children}
       </a>
     );
