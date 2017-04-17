@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/Dropdown.js';
 
-var AccountDropdown = React.createClass({
-  handleLinkClick: function () {
-    this.refs.dropdown.hide();
-  },
+class AccountDropdown extends Component {
+  constructor (props) {
+    super(props);
 
-  render: function () {
+    this.handleLinkClick = this.handleLinkClick.bind(this);
+  }
+
+  handleLinkClick () {
+    this.refs.dropdown.hide();
+  }
+
+  render () {
     var user = this.props.user;
     return (
       <Dropdown className="account-dropdown" ref="dropdown">
@@ -55,6 +61,6 @@ var AccountDropdown = React.createClass({
       </Dropdown>
     );
   }
-});
+}
 
 export default AccountDropdown;

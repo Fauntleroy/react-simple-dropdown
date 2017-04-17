@@ -1,5 +1,5 @@
 import test from 'tape';
-import React, { createClass } from 'react';
+import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { findRenderedComponentWithType, findRenderedDOMComponentWithClass, renderIntoDocument, Simulate } from 'react-addons-test-utils';
 import smock from 'simple-mock';
@@ -7,11 +7,14 @@ import domClasses, { has as hasClass } from 'dom-classes';
 
 import Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/Dropdown.js';
 
-var TestApp = createClass({
-  getInitialState: function(){
-    return {};
-  },
-  render: function(){
+class TestApp extends Component {
+  constructor () {
+    super();
+
+    this.state = {};
+  }
+
+  render () {
     const { className, active, onShow, onHide, onTriggerClick } = this.state;
     return (
       <Dropdown
@@ -25,7 +28,7 @@ var TestApp = createClass({
       </Dropdown>
     );
   }
-});
+}
 var test_app = renderIntoDocument( <TestApp /> );
 var dropdown = findRenderedComponentWithType( test_app, Dropdown );
 var dropdown_element = findRenderedDOMComponentWithClass( dropdown, 'dropdown' );

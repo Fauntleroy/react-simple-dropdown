@@ -1,16 +1,19 @@
 import test from 'tape';
-import React, { createClass } from 'react';
+import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { findRenderedComponentWithType, findRenderedDOMComponentWithClass, renderIntoDocument } from 'react-addons-test-utils';
 import domClasses, { has as hasClass } from 'dom-classes';
 
 import DropdownTrigger from '../../lib/components/DropdownTrigger.js';
 
-var TestApp = createClass({
-  getInitialState: function(){
-    return {};
-  },
-  render: function(){
+class TestApp extends Component {
+  constructor () {
+    super();
+
+    this.state = {};
+  }
+
+  render () {
     return (
       <DropdownTrigger
         className={this.state.className}
@@ -18,7 +21,7 @@ var TestApp = createClass({
       />
     );
   }
-});
+}
 var test_app = renderIntoDocument( <TestApp /> );
 var dropdown_trigger = findRenderedComponentWithType( test_app, DropdownTrigger );
 var dropdown_trigger_element = findRenderedDOMComponentWithClass( dropdown_trigger, 'dropdown__trigger' );

@@ -1,32 +1,30 @@
-import React, { createClass, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-const DropdownTrigger = createClass({
-  displayName: 'DropdownTrigger',
-
-  propTypes: {
-    children: PropTypes.node,
-    className: PropTypes.string
-  },
-
-  getDefaultProps () {
-    return {
-      className: ''
-    };
-  },
-
+class DropdownTrigger extends Component {
   render () {
     const { children, className } = this.props;
-    const props = {
+    const dropdownTriggerProps = {
       ...this.props,
       className: `dropdown__trigger ${className}`
     };
 
     return (
-      <a {...props}>
+      <a {...dropdownTriggerProps}>
         {children}
       </a>
     );
   }
-});
+}
+
+DropdownTrigger.displayName = 'DropdownTrigger';
+
+DropdownTrigger.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string
+};
+
+DropdownTrigger.defaultProps = {
+  className: ''
+};
 
 export default DropdownTrigger;

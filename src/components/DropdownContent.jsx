@@ -1,32 +1,30 @@
-import React, { createClass, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-const DropdownContent = createClass({
-  displayName: 'DropdownContent',
-
-  propTypes: {
-    children: PropTypes.node,
-    className: PropTypes.string
-  },
-
-  getDefaultProps () {
-    return {
-      className: ''
-    }
-  },
-
+class DropdownContent extends Component {
   render () {
     const { children, className } = this.props;
-    const props = {
+    const dropdownContentProps = {
       ...this.props,
       className: `dropdown__content ${className}`
     };
 
     return (
-      <div {...props}>
+      <div {...dropdownContentProps}>
         {children}
       </div>
     )
   }
-});
+}
+
+DropdownContent.displayName = 'DropdownContent';
+
+DropdownContent.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string
+};
+
+DropdownContent.defaultProps = {
+  className: ''
+};
 
 export default DropdownContent;

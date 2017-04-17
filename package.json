@@ -44,7 +44,6 @@
   "homepage": "https://github.com/Fauntleroy/react-simple-dropdown",
   "dependencies": {
     "classnames": "^2.1.2",
-    "create-react-class": "^15.5.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
