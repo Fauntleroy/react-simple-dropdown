@@ -8,6 +8,7 @@
     "postpublish": "npm run clean",
     "test": "npm run build && zuul -- test/**/*.{js,jsx}",
     "test:browser": "zuul --local 55555 -- test/**/*.{js,jsx}",
+    "test:electron": "zuul --electron -- test/**/*.{js,jsx}",
     "build": "babel src/components --out-dir lib/components",
     "watch": "npm run build -- -w",
     "dev": "npm-run-all --parallel watch test:browser",
@@ -42,7 +43,9 @@
   },
   "homepage": "https://github.com/Fauntleroy/react-simple-dropdown",
   "dependencies": {
-    "classnames": "^2.1.2"
+    "classnames": "^2.1.2",
+    "create-react-class": "^15.5.2",
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "autoless": "^0.1.7",
@@ -69,7 +72,7 @@
     "tape": "^4.0.0",
     "trash-cli": "^1.2.0",
     "watchify": "^3.7.0",
-    "zuul": "^3.10.1"
+    "zuul": "^3.11.1"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
