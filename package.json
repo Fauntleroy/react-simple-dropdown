@@ -57,6 +57,7 @@
     "brfs": "^1.4.3",
     "browserify": "^13.1.0",
     "dom-classes": "0.0.1",
+    "electron": "^1.6.2",
     "highlight.js": "^9.6.0",
     "less": "^2.7.1",
     "mkdirp": "^0.5.1",

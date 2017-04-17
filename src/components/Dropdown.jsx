@@ -1,4 +1,5 @@
 import React, { cloneElement, Component } from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 
@@ -102,6 +103,11 @@ class Dropdown extends Component {
       this.show();
     }
   }
+}
+
+Dropdown.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string
 }
 
 Dropdown.defaultProps = {
