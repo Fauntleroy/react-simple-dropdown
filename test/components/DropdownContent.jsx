@@ -1,7 +1,7 @@
 import test from 'tape';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { findRenderedComponentWithType, findRenderedDOMComponentWithClass, renderIntoDocument } from 'react-addons-test-utils';
+import { findRenderedComponentWithType, findRenderedDOMComponentWithClass, renderIntoDocument } from 'react-dom/test-utils';
 import domClasses, { has as hasClass } from 'dom-classes';
 
 import DropdownContent from '../../lib/components/DropdownContent.js';

@@ -1,7 +1,7 @@
 import test from 'tape';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { findRenderedComponentWithType, findRenderedDOMComponentWithClass, renderIntoDocument, Simulate } from 'react-addons-test-utils';
+import { findRenderedComponentWithType, findRenderedDOMComponentWithClass, renderIntoDocument, Simulate } from 'react-dom/test-utils';
 import smock from 'simple-mock';
 import domClasses, { has as hasClass } from 'dom-classes';
 
