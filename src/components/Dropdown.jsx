@@ -1,34 +1,34 @@
-import React, { cloneElement, createClass } from 'react';
+import React, { cloneElement, Component } from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 
 import DropdownTrigger from './DropdownTrigger.js';
 import DropdownContent from './DropdownContent.js';
 
-var Dropdown = createClass({
-  displayName: 'Dropdown',
+class Dropdown extends Component {
+  constructor (props) {
+    super(props);
 
-  getInitialState () {
-    return {
+    this.state = {
       active: false
     };
-  },
 
-  getDefaultProps () {
-    return {
-      className: ''
-    }
-  },
+    this._onWindowClick = this._onWindowClick.bind(this);
+    this._onToggleClick = this._onToggleClick.bind(this);
+  }
+
+  displayName: 'Dropdown'
 
   componentDidMount () {
     window.addEventListener( 'click', this._onWindowClick );
     window.addEventListener( 'touchstart', this._onWindowClick );
-  },
+  }
 
   componentWillUnmount () {
     window.removeEventListener( 'click', this._onWindowClick );
     window.removeEventListener( 'touchstart', this._onWindowClick );
-  },
+  }
 
   render () {
     const { children, className } = this.props;
@@ -62,13 +62,13 @@ var Dropdown = createClass({
         {bound_children}
       </div>
     );
-  },
+  }
 
   isActive () {
     return ( typeof this.props.active === 'boolean' ) ?
       this.props.active :
       this.state.active;
-  },
+  }
 
   hide () {
     this.setState({
@@ -77,7 +77,7 @@ var Dropdown = createClass({
     if( this.props.onHide ){
       this.props.onHide();
     }
-  },
+  }
 
   show () {
     this.setState({
@@ -86,14 +86,14 @@ var Dropdown = createClass({
     if( this.props.onShow ){
       this.props.onShow();
     }
-  },
+  }
 
   _onWindowClick ( event ) {
     const dropdown_element = findDOMNode( this );
     if( event.target !== dropdown_element && !dropdown_element.contains( event.target ) && this.isActive() ){
       this.hide();
     }
-  },
+  }
 
   _onToggleClick ( event ) {
     event.preventDefault();
@@ -103,7 +103,16 @@ var Dropdown = createClass({
       this.show();
     }
   }
-});
+}
+
+Dropdown.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string
+}
+
+Dropdown.defaultProps = {
+  className: ''
+};
 
 export { DropdownTrigger, DropdownContent };
 export default Dropdown;

@@ -8,6 +8,7 @@
     "postpublish": "npm run clean",
     "test": "npm run build && zuul -- test/**/*.{js,jsx}",
     "test:browser": "zuul --local 55555 -- test/**/*.{js,jsx}",
+    "test:electron": "zuul --electron -- test/**/*.{js,jsx}",
     "build": "babel src/components --out-dir lib/components",
     "watch": "npm run build -- -w",
     "dev": "npm-run-all --parallel watch test:browser",
@@ -42,7 +43,8 @@
   },
   "homepage": "https://github.com/Fauntleroy/react-simple-dropdown",
   "dependencies": {
-    "classnames": "^2.1.2"
+    "classnames": "^2.1.2",
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "autoless": "^0.1.7",
@@ -55,24 +57,24 @@
     "brfs": "^1.4.3",
     "browserify": "^13.1.0",
     "dom-classes": "0.0.1",
+    "electron": "^1.6.2",
     "highlight.js": "^9.6.0",
     "less": "^2.7.1",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "npm-run-all": "^1.4.0",
-    "react": "15.0.x",
-    "react-addons-test-utils": "15.0.x",
-    "react-dom": "15.0.x",
+    "react": "^15.5.0",
+    "react-dom": "^15.5.0",
     "react-highlight": "^0.9.0",
     "sane": "^1.4.1",
     "simple-mock": "^0.3.1",
     "tape": "^4.0.0",
     "trash-cli": "^1.2.0",
     "watchify": "^3.7.0",
-    "zuul": "^3.10.1"
+    "zuul": "^3.11.1"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0"
+    "react": "0.14.x || 15.x",
+    "react-dom": "0.14.x || 15.x"
   }
 }

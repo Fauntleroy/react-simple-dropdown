@@ -1,10 +1,22 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.DropdownContent = exports.DropdownTrigger = undefined;
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
 
 var _react = require('react');
 
@@ -28,98 +40,143 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var Dropdown = (0, _react.createClass)({
-  displayName: 'Dropdown',
-
-  getInitialState: function getInitialState() {
-    return {
-      active: false
-    };
-  },
-  getDefaultProps: function getDefaultProps() {
-    return {
-      className: ''
-    };
-  },
-  componentDidMount: function componentDidMount() {
-    window.addEventListener('click', this._onWindowClick);
-    window.addEventListener('touchstart', this._onWindowClick);
-  },
-  componentWillUnmount: function componentWillUnmount() {
-    window.removeEventListener('click', this._onWindowClick);
-    window.removeEventListener('touchstart', this._onWindowClick);
-  },
-  render: function render() {
-    var _this = this,
-        _arguments = arguments;
-
-    var _props = this.props;
-    var children = _props.children;
-    var className = _props.className;
-    // create component classes
-
-    var active = this.isActive();
-    var dropdown_classes = (0, _classnames2.default)({
-      dropdown: true,
-      'dropdown--active': active
-    });
-    dropdown_classes += ' ' + className;
-    // stick callback on trigger element
-    var bound_children = _react2.default.Children.map(children, function (child) {
-      if (child.type === _DropdownTrigger2.default) {
-        (function () {
-          var originalOnClick = child.props.onClick;
-          child = (0, _react.cloneElement)(child, {
-            ref: 'trigger',
-            onClick: function onClick(event) {
-              _this._onToggleClick(event);
-              if (originalOnClick) {
-                originalOnClick.apply(child, _arguments);
-              }
-            }
-          });
-        })();
-      }
-      return child;
-    });
-    return _react2.default.createElement('div', {
-      style: this.props.style,
-      className: dropdown_classes }, bound_children);
-  },
-  isActive: function isActive() {
-    return typeof this.props.active === 'boolean' ? this.props.active : this.state.active;
-  },
-  hide: function hide() {
-    this.setState({
-      active: false
-    });
-    if (this.props.onHide) {
-      this.props.onHide();
-    }
-  },
-  show: function show() {
-    this.setState({
-      active: true
-    });
-    if (this.props.onShow) {
-      this.props.onShow();
-    }
-  },
-  _onWindowClick: function _onWindowClick(event) {
-    var dropdown_element = (0, _reactDom.findDOMNode)(this);
-    if (event.target !== dropdown_element && !dropdown_element.contains(event.target) && this.isActive()) {
-      this.hide();
-    }
-  },
-  _onToggleClick: function _onToggleClick(event) {
-    event.preventDefault();
-    if (this.isActive()) {
-      this.hide();
-    } else {
-      this.show();
-    }
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
   }
-});
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var Dropdown = function (_Component) {
+  _inherits(Dropdown, _Component);
+
+  function Dropdown(props) {
+    _classCallCheck(this, Dropdown);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dropdown).call(this, props));
+
+    _this.state = {
+      active: false
+    };
+
+    _this._onWindowClick = _this._onWindowClick.bind(_this);
+    _this._onToggleClick = _this._onToggleClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(Dropdown, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      window.addEventListener('click', this._onWindowClick);
+      window.addEventListener('touchstart', this._onWindowClick);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      window.removeEventListener('click', this._onWindowClick);
+      window.removeEventListener('touchstart', this._onWindowClick);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this,
+          _arguments = arguments;
+
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      // create component classes
+
+      var active = this.isActive();
+      var dropdown_classes = (0, _classnames2.default)({
+        dropdown: true,
+        'dropdown--active': active
+      });
+      dropdown_classes += ' ' + className;
+      // stick callback on trigger element
+      var bound_children = _react2.default.Children.map(children, function (child) {
+        if (child.type === _DropdownTrigger2.default) {
+          (function () {
+            var originalOnClick = child.props.onClick;
+            child = (0, _react.cloneElement)(child, {
+              ref: 'trigger',
+              onClick: function onClick(event) {
+                _this2._onToggleClick(event);
+                if (originalOnClick) {
+                  originalOnClick.apply(child, _arguments);
+                }
+              }
+            });
+          })();
+        }
+        return child;
+      });
+      return _react2.default.createElement('div', {
+        style: this.props.style,
+        className: dropdown_classes }, bound_children);
+    }
+  }, {
+    key: 'isActive',
+    value: function isActive() {
+      return typeof this.props.active === 'boolean' ? this.props.active : this.state.active;
+    }
+  }, {
+    key: 'hide',
+    value: function hide() {
+      this.setState({
+        active: false
+      });
+      if (this.props.onHide) {
+        this.props.onHide();
+      }
+    }
+  }, {
+    key: 'show',
+    value: function show() {
+      this.setState({
+        active: true
+      });
+      if (this.props.onShow) {
+        this.props.onShow();
+      }
+    }
+  }, {
+    key: '_onWindowClick',
+    value: function _onWindowClick(event) {
+      var dropdown_element = (0, _reactDom.findDOMNode)(this);
+      if (event.target !== dropdown_element && !dropdown_element.contains(event.target) && this.isActive()) {
+        this.hide();
+      }
+    }
+  }, {
+    key: '_onToggleClick',
+    value: function _onToggleClick(event) {
+      event.preventDefault();
+      if (this.isActive()) {
+        this.hide();
+      } else {
+        this.show();
+      }
+    }
+  }]);
+
+  return Dropdown;
+}(_react.Component);
+
+Dropdown.defaultProps = {
+  className: ''
+};
 
 exports.DropdownTrigger = _DropdownTrigger2.default;
 exports.DropdownContent = _DropdownContent2.default;
@@ -128,6 +185,8 @@ exports.default = Dropdown;
 },{"./DropdownContent.js":2,"./DropdownTrigger.js":3,"classnames":4,"react":340,"react-dom":200}],2:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -142,6 +201,16 @@ var _extends = Object.assign || function (target) {
   }return target;
 };
 
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -150,37 +219,69 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var DropdownContent = (0, _react.createClass)({
-  displayName: 'DropdownContent',
-
-  propTypes: {
-    children: _react.PropTypes.node,
-    className: _react.PropTypes.string
-  },
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      className: ''
-    };
-  },
-  render: function render() {
-    var _props = this.props;
-    var children = _props.children;
-    var className = _props.className;
-
-    var props = _extends({}, this.props, {
-      className: 'dropdown__content ' + className
-    });
-
-    return _react2.default.createElement('div', props, children);
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
   }
-});
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var DropdownContent = function (_Component) {
+  _inherits(DropdownContent, _Component);
+
+  function DropdownContent() {
+    _classCallCheck(this, DropdownContent);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownContent).apply(this, arguments));
+  }
+
+  _createClass(DropdownContent, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownContentProps = _extends({}, this.props, {
+        className: 'dropdown__content ' + className
+      });
+
+      return _react2.default.createElement('div', dropdownContentProps, children);
+    }
+  }]);
+
+  return DropdownContent;
+}(_react.Component);
+
+DropdownContent.displayName = 'DropdownContent';
+
+DropdownContent.propTypes = {
+  children: _react.PropTypes.node,
+  className: _react.PropTypes.string
+};
+
+DropdownContent.defaultProps = {
+  className: ''
+};
 
 exports.default = DropdownContent;
 
 },{"react":340}],3:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -195,6 +296,16 @@ var _extends = Object.assign || function (target) {
   }return target;
 };
 
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -203,31 +314,61 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var DropdownTrigger = (0, _react.createClass)({
-  displayName: 'DropdownTrigger',
-
-  propTypes: {
-    children: _react.PropTypes.node,
-    className: _react.PropTypes.string
-  },
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      className: ''
-    };
-  },
-  render: function render() {
-    var _props = this.props;
-    var children = _props.children;
-    var className = _props.className;
-
-    var props = _extends({}, this.props, {
-      className: 'dropdown__trigger ' + className
-    });
-
-    return _react2.default.createElement('a', props, children);
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
   }
-});
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var DropdownTrigger = function (_Component) {
+  _inherits(DropdownTrigger, _Component);
+
+  function DropdownTrigger() {
+    _classCallCheck(this, DropdownTrigger);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownTrigger).apply(this, arguments));
+  }
+
+  _createClass(DropdownTrigger, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownTriggerProps = _extends({}, this.props, {
+        className: 'dropdown__trigger ' + className
+      });
+
+      return _react2.default.createElement('a', dropdownTriggerProps, children);
+    }
+  }]);
+
+  return DropdownTrigger;
+}(_react.Component);
+
+DropdownTrigger.displayName = 'DropdownTrigger';
+
+DropdownTrigger.propTypes = {
+  children: _react.PropTypes.node,
+  className: _react.PropTypes.string
+};
+
+DropdownTrigger.defaultProps = {
+  className: ''
+};
 
 exports.default = DropdownTrigger;
 
@@ -832,15 +973,19 @@ module.exports = focusNode;
  *
  * The activeElement will be null only if the document or document body is not
  * yet defined.
+ *
+ * @param {?DOMDocument} doc Defaults to current document.
+ * @return {?DOMElement}
  */
-function getActiveElement() /*?DOMElement*/{
-  if (typeof document === 'undefined') {
+function getActiveElement(doc) /*?DOMElement*/{
+  doc = doc || (typeof document !== 'undefined' ? document : undefined);
+  if (typeof doc === 'undefined') {
     return null;
   }
   try {
-    return document.activeElement || document.body;
+    return doc.activeElement || doc.body;
   } catch (e) {
-    return document.body;
+    return doc.body;
   }
 }
 
@@ -966,10 +1111,10 @@ module.exports = getMarkupWrap;
  */
 
 function getUnboundedScrollPosition(scrollable) {
-  if (scrollable === window) {
+  if (scrollable.Window && scrollable instanceof scrollable.Window) {
     return {
-      x: window.pageXOffset || document.documentElement.scrollLeft,
-      y: window.pageYOffset || document.documentElement.scrollTop
+      x: scrollable.pageXOffset || scrollable.document.documentElement.scrollLeft,
+      y: scrollable.pageYOffset || scrollable.document.documentElement.scrollTop
     };
   }
   return {
@@ -1075,12 +1220,18 @@ module.exports = hyphenateStyleName;
  * will remain to ensure logic does not differ in production.
  */
 
-function invariant(condition, format, a, b, c, d, e, f) {
-  if ("development" !== 'production') {
+var validateFormat = function validateFormat(format) {};
+
+if ("development" !== 'production') {
+  validateFormat = function validateFormat(format) {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
     }
-  }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
 
   if (!condition) {
     var error;
@@ -1120,7 +1271,9 @@ module.exports = invariant;
  * @return {boolean} Whether or not the object is a DOM node.
  */
 function isNode(object) {
-  return !!(object && (typeof Node === 'function' ? object instanceof Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+  var doc = object ? object.ownerDocument || object : document;
+  var defaultView = doc.defaultView || window;
+  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
 }
 
 module.exports = isNode;
@@ -1398,7 +1551,8 @@ function is(x, y) {
   if (x === y) {
     // Steps 1-5, 7-10
     // Steps 6.b-6.e: +0 != -0
-    return x !== 0 || 1 / x === 1 / y;
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
   } else {
     // Step 6.a: NaN == NaN
     return x !== x && y !== y;
@@ -35182,6 +35336,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -35192,107 +35348,128 @@ var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AccountDropdown = _react2.default.createClass({
-  displayName: 'AccountDropdown',
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  handleLinkClick: function handleLinkClick() {
-    this.refs.dropdown.hide();
-  },
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  render: function render() {
-    var user = this.props.user;
-    return _react2.default.createElement(
-      _Dropdown2.default,
-      { className: 'account-dropdown', ref: 'dropdown' },
-      _react2.default.createElement(
-        _Dropdown.DropdownTrigger,
-        null,
-        _react2.default.createElement('img', { className: 'account-dropdown__avatar', src: user.avatar_url }),
-        _react2.default.createElement(
-          'span',
-          { className: 'account-dropdown__name' },
-          'My Account'
-        )
-      ),
-      _react2.default.createElement(
-        _Dropdown.DropdownContent,
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'account-dropdown__identity account-dropdown__segment' },
-          'Signed in as ',
-          _react2.default.createElement(
-            'strong',
-            null,
-            user.name
-          )
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'account-dropdown__quick-links account-dropdown__segment' },
-          _react2.default.createElement(
-            'li',
-            { className: 'account-dropdown__link' },
-            _react2.default.createElement(
-              'a',
-              { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
-              'Your profile'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            { className: 'account-dropdown__link' },
-            _react2.default.createElement(
-              'a',
-              { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
-              'Your stars'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            { className: 'account-dropdown__link' },
-            _react2.default.createElement(
-              'a',
-              { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
-              'Explore'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            { className: 'account-dropdown__link' },
-            _react2.default.createElement(
-              'a',
-              { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
-              'Help'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'account-dropdown__management-links account-dropdown__segment' },
-          _react2.default.createElement(
-            'li',
-            { className: 'account-dropdown__link' },
-            _react2.default.createElement(
-              'a',
-              { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
-              'Settings'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            { className: 'account-dropdown__link' },
-            _react2.default.createElement(
-              'a',
-              { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
-              'Sign out'
-            )
-          )
-        )
-      )
-    );
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AccountDropdown = function (_Component) {
+  _inherits(AccountDropdown, _Component);
+
+  function AccountDropdown(props) {
+    _classCallCheck(this, AccountDropdown);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AccountDropdown).call(this, props));
+
+    _this.handleLinkClick = _this.handleLinkClick.bind(_this);
+    return _this;
   }
-});
+
+  _createClass(AccountDropdown, [{
+    key: 'handleLinkClick',
+    value: function handleLinkClick() {
+      this.refs.dropdown.hide();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var user = this.props.user;
+      return _react2.default.createElement(
+        _Dropdown2.default,
+        { className: 'account-dropdown', ref: 'dropdown' },
+        _react2.default.createElement(
+          _Dropdown.DropdownTrigger,
+          null,
+          _react2.default.createElement('img', { className: 'account-dropdown__avatar', src: user.avatar_url }),
+          _react2.default.createElement(
+            'span',
+            { className: 'account-dropdown__name' },
+            'My Account'
+          )
+        ),
+        _react2.default.createElement(
+          _Dropdown.DropdownContent,
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'account-dropdown__identity account-dropdown__segment' },
+            'Signed in as ',
+            _react2.default.createElement(
+              'strong',
+              null,
+              user.name
+            )
+          ),
+          _react2.default.createElement(
+            'ul',
+            { className: 'account-dropdown__quick-links account-dropdown__segment' },
+            _react2.default.createElement(
+              'li',
+              { className: 'account-dropdown__link' },
+              _react2.default.createElement(
+                'a',
+                { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
+                'Your profile'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              { className: 'account-dropdown__link' },
+              _react2.default.createElement(
+                'a',
+                { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
+                'Your stars'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              { className: 'account-dropdown__link' },
+              _react2.default.createElement(
+                'a',
+                { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
+                'Explore'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              { className: 'account-dropdown__link' },
+              _react2.default.createElement(
+                'a',
+                { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
+                'Help'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'ul',
+            { className: 'account-dropdown__management-links account-dropdown__segment' },
+            _react2.default.createElement(
+              'li',
+              { className: 'account-dropdown__link' },
+              _react2.default.createElement(
+                'a',
+                { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
+                'Settings'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              { className: 'account-dropdown__link' },
+              _react2.default.createElement(
+                'a',
+                { className: 'account-dropdown__link__anchor', href: '#', onClick: this.handleLinkClick },
+                'Sign out'
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AccountDropdown;
+}(_react.Component);
 
 exports.default = AccountDropdown;
 
@@ -35325,7 +35502,7 @@ var user = {
     avatar_url: 'https://avatars2.githubusercontent.com/u/507047?v=3&s=20'
 };
 
-var account_dropdown_code = "import React from 'react';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/Dropdown.js';\n\nvar AccountDropdown = React.createClass({\n  handleLinkClick: function () {\n    this.refs.dropdown.hide();\n  },\n\n  render: function () {\n    var user = this.props.user;\n    return (\n      <Dropdown className=\"account-dropdown\" ref=\"dropdown\">\n        <DropdownTrigger>\n          <img className=\"account-dropdown__avatar\" src={user.avatar_url} /><span className=\"account-dropdown__name\">My Account</span>\n        </DropdownTrigger>\n        <DropdownContent>\n          <div className=\"account-dropdown__identity account-dropdown__segment\">\n            Signed in as <strong>{user.name}</strong>\n          </div>\n          <ul className=\"account-dropdown__quick-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your profile\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your stars\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Explore\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Help\n              </a>\n            </li>\n          </ul>\n          <ul className=\"account-dropdown__management-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Settings\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Sign out\n              </a>\n            </li>\n          </ul>\n        </DropdownContent>\n      </Dropdown>\n    );\n  }\n});\n\nexport default AccountDropdown;\n";
+var account_dropdown_code = "import React, { Component } from 'react';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/Dropdown.js';\n\nclass AccountDropdown extends Component {\n  constructor (props) {\n    super(props);\n\n    this.handleLinkClick = this.handleLinkClick.bind(this);\n  }\n\n  handleLinkClick () {\n    this.refs.dropdown.hide();\n  }\n\n  render () {\n    var user = this.props.user;\n    return (\n      <Dropdown className=\"account-dropdown\" ref=\"dropdown\">\n        <DropdownTrigger>\n          <img className=\"account-dropdown__avatar\" src={user.avatar_url} /><span className=\"account-dropdown__name\">My Account</span>\n        </DropdownTrigger>\n        <DropdownContent>\n          <div className=\"account-dropdown__identity account-dropdown__segment\">\n            Signed in as <strong>{user.name}</strong>\n          </div>\n          <ul className=\"account-dropdown__quick-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your profile\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your stars\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Explore\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Help\n              </a>\n            </li>\n          </ul>\n          <ul className=\"account-dropdown__management-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Settings\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Sign out\n              </a>\n            </li>\n          </ul>\n        </DropdownContent>\n      </Dropdown>\n    );\n  }\n}\n\nexport default AccountDropdown;\n";
 
 _reactDom2.default.render(_react2.default.createElement(_AccountDropdown2.default, { user: user }), document.getElementById('account-dropdown'));
 _reactDom2.default.render(_react2.default.createElement(
