@@ -15,94 +15,92 @@ class TestApp extends Component {
   }
 
   render () {
-    const { className, active, onShow, onHide, onTriggerClick } = this.state;
+    const { onTriggerClick } = this.state;
+
     return (
       <Dropdown
-        className={className}
-        active={active}
-        onShow={onShow}
-        onHide={onHide}
-      >
+        {...this.state}>
         <DropdownTrigger onClick={onTriggerClick} />
         <DropdownContent />
       </Dropdown>
     );
   }
 }
-var test_app = renderIntoDocument( <TestApp /> );
-var dropdown = findRenderedComponentWithType( test_app, Dropdown );
-var dropdown_element = findRenderedDOMComponentWithClass( dropdown, 'dropdown' );
-var dropdown_element_dom_node = findDOMNode( dropdown_element );
-var trigger = findRenderedComponentWithType( test_app, DropdownTrigger );
-var trigger_element = findRenderedDOMComponentWithClass( trigger, 'dropdown__trigger' );
-var content = findRenderedComponentWithType( test_app, DropdownContent );
-var content_element = findRenderedDOMComponentWithClass( content, 'dropdown__content' );
 
-test( 'Merges classes from props with default element class', function( t ){
-  t.plan( 3 );
-  t.equal( domClasses( dropdown_element_dom_node ).length, 1, 'has one class when `className` is empty' );
-  test_app.setState({
+const testApp = renderIntoDocument(<TestApp />);
+const dropdown = findRenderedComponentWithType(testApp, Dropdown);
+const dropdownElement = findRenderedDOMComponentWithClass(dropdown, 'dropdown');
+const dropdownElementDomNode = findDOMNode(dropdownElement);
+const trigger = findRenderedComponentWithType(testApp, DropdownTrigger);
+const triggerElement = findRenderedDOMComponentWithClass(trigger, 'dropdown__trigger');
+const content = findRenderedComponentWithType(testApp, DropdownContent);
+const contentElement = findRenderedDOMComponentWithClass(content, 'dropdown__content');
+
+test('Merges classes from props with default element class', function (t) {
+  t.plan(3);
+  t.equal(domClasses(dropdownElementDomNode).length, 1, 'has one class when `className` is empty');
+  testApp.setState({
     className: 'test'
   });
-  t.ok( hasClass( dropdown_element_dom_node, 'dropdown' ), 'has class `dropdown`' );
-  t.ok( hasClass( dropdown_element_dom_node, 'test' ), 'has class `test`' );
-  test_app.setState({
+  t.ok(hasClass(dropdownElementDomNode, 'dropdown'), 'has class `dropdown`');
+  t.ok(hasClass(dropdownElementDomNode, 'test'), 'has class `test`');
+  testApp.setState({
     className: null
   });
 });
 
-test( 'Dropdown is toggled when DropdownTrigger is clicked', function( t ){
-  t.plan( 4 );
-  var onShowCallback = smock.stub();
-  var onHideCallback = smock.stub();
-  test_app.setState({
+test('Dropdown is toggled when DropdownTrigger is clicked', function (t) {
+  t.plan(4);
+  const onShowCallback = smock.stub();
+  const onHideCallback = smock.stub();
+  testApp.setState({
     onShow: onShowCallback,
     onHide: onHideCallback
   });
-  Simulate.click( trigger_element );
-  t.ok( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'has class `dropdown--active` after trigger is clicked' );
-  t.equal( onShowCallback.callCount, 1, '`onShow` function was called' );
-  Simulate.click( trigger_element );
-  t.notOk( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'does not have class `dropdown--active` after trigger is clicked again' );
-  t.equal( onHideCallback.callCount, 1, '`onHide` function was called' );
-  test_app.setState({
+  Simulate.click(triggerElement);
+  t.ok(hasClass(dropdownElementDomNode, 'dropdown--active'), 'has class `dropdown--active` after trigger is clicked');
+  t.equal(onShowCallback.callCount, 1, '`onShow` function was called');
+  Simulate.click(triggerElement);
+  t.notOk(hasClass(dropdownElementDomNode, 'dropdown--active'), 'does not have class `dropdown--active` after trigger is clicked again');
+  t.equal(onHideCallback.callCount, 1, '`onHide` function was called');
+  testApp.setState({
     onShow: null,
     onHide: null
   });
 });
 
-test( 'Custom onClick handler is called when DropDownTrigger is clicked', function( t ){
-  t.plan( 1 );
-  var onTriggerClickCallback = smock.stub();
-  test_app.setState({
+test('Custom onClick handler is called when DropDownTrigger is clicked', function (t) {
+  t.plan(1);
+  const onTriggerClickCallback = smock.stub();
+  testApp.setState({
     onTriggerClick: onTriggerClickCallback
   });
-  Simulate.click( trigger_element );
-  t.equal( onTriggerClickCallback.callCount, 1, 'click handler called when trigger is clicked');
+  Simulate.click(triggerElement);
+  t.equal(onTriggerClickCallback.callCount, 1, 'click handler called when trigger is clicked');
 });
 
-test( 'Dropdown state can be manually set with props', function( t ){
-  t.plan( 2 );
-  test_app.setState({
+test('Dropdown state can be manually set with props', function (t) {
+  t.plan(2);
+  testApp.setState({
     active: true
   });
-  t.ok( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'has class `dropdown--active` when `active` is set to `true`' );
-  test_app.setState({
+  t.ok(hasClass(dropdownElementDomNode, 'dropdown--active'), 'has class `dropdown--active` when `active` is set to `true`');
+  testApp.setState({
     active: false
   });
-  t.notOk( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'does not have class `dropdown--active` when `active` is set to `false`' );
-  test_app.setState({
+  t.notOk(hasClass(dropdownElementDomNode, 'dropdown--active'), 'does not have class `dropdown--active` when `active` is set to `false`');
+  testApp.setState({
     active: null
   });
 });
 
-test( 'Dropdown hides itself when area outside dropdown is clicked', function( t ){
-  t.plan( 2 );
+test('Dropdown hides itself when area outside dropdown is clicked', function (t) {
+  t.plan(2);
   dropdown.setState({
     active: true
   });
-  Simulate.click( content_element );
-  t.ok( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'has class `dropdown--active` after content element is clicked' );
+  Simulate.click(contentElement);
+  t.ok(hasClass(dropdownElementDomNode, 'dropdown--active'), 'has class `dropdown--active` after content element is clicked');
   document.body.click();
-  t.notOk( hasClass( dropdown_element_dom_node, 'dropdown--active' ), 'does not have class `dropdown--active` after document body is clicked' );
+  t.notOk(hasClass(dropdownElementDomNode, 'dropdown--active'), 'does not have class `dropdown--active` after document body is clicked');
 });
