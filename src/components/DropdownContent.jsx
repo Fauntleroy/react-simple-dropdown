@@ -13,7 +13,7 @@ class DropdownContent extends Component {
       <div {...dropdownContentProps}>
         {children}
       </div>
-    )
+    );
   }
 }
 

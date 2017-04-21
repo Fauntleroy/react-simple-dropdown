@@ -7,6 +7,18 @@ import DropdownTrigger from './DropdownTrigger.js';
 import DropdownContent from './DropdownContent.js';
 
 class Dropdown extends Component {
+  displayName: 'Dropdown'
+
+  componentDidMount () {
+    window.addEventListener('click', this._onWindowClick);
+    window.addEventListener('touchstart', this._onWindowClick);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('click', this._onWindowClick);
+    window.removeEventListener('touchstart', this._onWindowClick);
+  }
+
   constructor (props) {
     super(props);
 
@@ -18,37 +30,65 @@ class Dropdown extends Component {
     this._onToggleClick = this._onToggleClick.bind(this);
   }
 
-  displayName: 'Dropdown'
-
-  componentDidMount () {
-    window.addEventListener( 'click', this._onWindowClick );
-    window.addEventListener( 'touchstart', this._onWindowClick );
+  isActive () {
+    return (typeof this.props.active === 'boolean') ?
+      this.props.active :
+      this.state.active;
   }
 
-  componentWillUnmount () {
-    window.removeEventListener( 'click', this._onWindowClick );
-    window.removeEventListener( 'touchstart', this._onWindowClick );
+  hide () {
+    this.setState({
+      active: false
+    });
+    if (this.props.onHide) {
+      this.props.onHide();
+    }
+  }
+
+  show () {
+    this.setState({
+      active: true
+    });
+    if (this.props.onShow) {
+      this.props.onShow();
+    }
+  }
+
+  _onWindowClick (event) {
+    const dropdownElement = findDOMNode(this);
+    if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive()) {
+      this.hide();
+    }
+  }
+
+  _onToggleClick (event) {
+    event.preventDefault();
+    if (this.isActive()) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 
   render () {
     const { children, className } = this.props;
     // create component classes
     const active = this.isActive();
-    var dropdown_classes = cx({
+    let dropdownClasses = cx({
       dropdown: true,
       'dropdown--active': active
     });
-    dropdown_classes += ' ' + className;
+    dropdownClasses += ` ${className}`;
     // stick callback on trigger element
-    const bound_children = React.Children.map( children, child => {
-      if( child.type === DropdownTrigger ){
+    const boundChildren = React.Children.map(children, child => {
+      if (child.type === DropdownTrigger) {
         const originalOnClick = child.props.onClick;
-        child = cloneElement( child, {
+        child = cloneElement(child, {
           ref: 'trigger',
-          onClick: ( event ) => {
-            this._onToggleClick( event );
-            if( originalOnClick ){
-              originalOnClick.apply( child, arguments );
+          onClick: (event) => {
+            this._onToggleClick(event);
+            if (originalOnClick) {
+              originalOnClick.apply(child, arguments);
             }
           }
         });
@@ -58,57 +98,21 @@ class Dropdown extends Component {
     return (
       <div
         style={this.props.style}
-        className={dropdown_classes}>
-        {bound_children}
+        className={dropdownClasses}>
+        {boundChildren}
       </div>
     );
-  }
-
-  isActive () {
-    return ( typeof this.props.active === 'boolean' ) ?
-      this.props.active :
-      this.state.active;
-  }
-
-  hide () {
-    this.setState({
-      active: false
-    });
-    if( this.props.onHide ){
-      this.props.onHide();
-    }
-  }
-
-  show () {
-    this.setState({
-      active: true
-    });
-    if( this.props.onShow ){
-      this.props.onShow();
-    }
-  }
-
-  _onWindowClick ( event ) {
-    const dropdown_element = findDOMNode( this );
-    if( event.target !== dropdown_element && !dropdown_element.contains( event.target ) && this.isActive() ){
-      this.hide();
-    }
-  }
-
-  _onToggleClick ( event ) {
-    event.preventDefault();
-    if( this.isActive() ){
-      this.hide();
-    } else {
-      this.show();
-    }
   }
 }
 
 Dropdown.propTypes = {
+  active: PropTypes.bool,
+  onHide: PropTypes.func,
+  onShow: PropTypes.func,
   children: PropTypes.node,
-  className: PropTypes.string
-}
+  className: PropTypes.string,
+  style: PropTypes.object
+};
 
 Dropdown.defaultProps = {
   className: ''

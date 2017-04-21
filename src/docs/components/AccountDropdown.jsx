@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/Dropdown.js';
 
 class AccountDropdown extends Component {
@@ -13,7 +14,8 @@ class AccountDropdown extends Component {
   }
 
   render () {
-    var user = this.props.user;
+    const { user } = this.props;
+
     return (
       <Dropdown className="account-dropdown" ref="dropdown">
         <DropdownTrigger>
@@ -62,5 +64,9 @@ class AccountDropdown extends Component {
     );
   }
 }
+
+AccountDropdown.propTypes = {
+  user: PropTypes.object.isRequired
+};
 
 export default AccountDropdown;
