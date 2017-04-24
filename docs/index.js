@@ -8,6 +8,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DropdownContent = exports.DropdownTrigger = undefined;
 
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
 var _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -152,7 +162,6 @@ var Dropdown = function (_Component) {
         dropdown: true,
         'dropdown--active': active
       });
-      dropdownClasses += ' ' + className;
       // stick callback on trigger element
       var boundChildren = _react2.default.Children.map(children, function (child) {
         if (child.type === _DropdownTrigger2.default) {
@@ -171,9 +180,13 @@ var Dropdown = function (_Component) {
         }
         return child;
       });
-      return _react2.default.createElement('div', {
-        style: this.props.style,
-        className: dropdownClasses }, boundChildren);
+      var cleanProps = _extends({}, this.props);
+      delete cleanProps.active;
+      delete cleanProps.onShow;
+      delete cleanProps.onHide;
+
+      return _react2.default.createElement('div', _extends({}, cleanProps, {
+        className: dropdownClasses + ' ' + className }), boundChildren);
     }
   }]);
 
@@ -206,16 +219,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
 var _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -236,6 +239,12 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -272,9 +281,9 @@ var DropdownContent = function (_Component) {
       var children = _props.children;
       var className = _props.className;
 
-      var dropdownContentProps = _extends({}, this.props, {
-        className: 'dropdown__content ' + className
-      });
+      var dropdownContentProps = _objectWithoutProperties(_props, ['children', 'className']);
+
+      dropdownContentProps.className = 'dropdown__content ' + className;
 
       return _react2.default.createElement('div', dropdownContentProps, children);
     }
@@ -305,16 +314,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
 var _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -335,6 +334,12 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -371,9 +376,9 @@ var DropdownTrigger = function (_Component) {
       var children = _props.children;
       var className = _props.className;
 
-      var dropdownTriggerProps = _extends({}, this.props, {
-        className: 'dropdown__trigger ' + className
-      });
+      var dropdownTriggerProps = _objectWithoutProperties(_props, ['children', 'className']);
+
+      dropdownTriggerProps.className = 'dropdown__trigger ' + className;
 
       return _react2.default.createElement('a', dropdownTriggerProps, children);
     }
