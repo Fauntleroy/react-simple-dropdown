@@ -74,11 +74,10 @@ class Dropdown extends Component {
     const { children, className } = this.props;
     // create component classes
     const active = this.isActive();
-    let dropdownClasses = cx({
+    const dropdownClasses = cx({
       dropdown: true,
       'dropdown--active': active
     });
-    dropdownClasses += ` ${className}`;
     // stick callback on trigger element
     const boundChildren = React.Children.map(children, child => {
       if (child.type === DropdownTrigger) {
@@ -95,10 +94,15 @@ class Dropdown extends Component {
       }
       return child;
     });
+    const cleanProps = { ...this.props };
+    delete cleanProps.active;
+    delete cleanProps.onShow;
+    delete cleanProps.onHide;
+
     return (
       <div
-        style={this.props.style}
-        className={dropdownClasses}>
+        {...cleanProps}
+        className={`${dropdownClasses} ${className}`}>
         {boundChildren}
       </div>
     );
