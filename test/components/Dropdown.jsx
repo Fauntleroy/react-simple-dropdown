@@ -29,17 +29,31 @@ class TestApp extends Component {
   }
 }
 
-const testApp = renderIntoDocument(<TestApp />);
-const dropdown = findRenderedComponentWithType(testApp, Dropdown);
-const dropdownElement = findRenderedDOMComponentWithClass(dropdown, 'dropdown');
-const dropdownElementDomNode = findDOMNode(dropdownElement);
-const trigger = findRenderedComponentWithType(testApp, DropdownTrigger);
-const triggerElement = findRenderedDOMComponentWithClass(trigger, 'dropdown__trigger');
-const content = findRenderedComponentWithType(testApp, DropdownContent);
-const contentElement = findRenderedDOMComponentWithClass(content, 'dropdown__content');
+const renderTestApp = () => {
+  const testApp = renderIntoDocument(<TestApp />);
+  const dropdown = findRenderedComponentWithType(testApp, Dropdown);
+  const dropdownElement = findRenderedDOMComponentWithClass(dropdown, 'dropdown');
+  const dropdownElementDomNode = findDOMNode(dropdownElement);
+  const trigger = findRenderedComponentWithType(testApp, DropdownTrigger);
+  const triggerElement = findRenderedDOMComponentWithClass(trigger, 'dropdown__trigger');
+  const content = findRenderedComponentWithType(testApp, DropdownContent);
+  const contentElement = findRenderedDOMComponentWithClass(content, 'dropdown__content');
+  return {
+    testApp,
+    dropdown,
+    dropdownElement,
+    dropdownElementDomNode,
+    trigger,
+    triggerElement,
+    content,
+    contentElement
+  };
+};
 
 test('Merges classes from props with default element class', function (t) {
   t.plan(3);
+
+  const { testApp, dropdownElementDomNode } = renderTestApp();
 
   t.equal(domClasses(dropdownElementDomNode).length, 1, 'has one class when `className` is empty');
 
@@ -49,10 +63,6 @@ test('Merges classes from props with default element class', function (t) {
 
   t.ok(hasClass(dropdownElementDomNode, 'dropdown'), 'has class `dropdown`');
   t.ok(hasClass(dropdownElementDomNode, 'test'), 'has class `test`');
-
-  testApp.setState({
-    className: null
-  });
 });
 
 test('Transfers props to base element', function (t) {
@@ -62,6 +72,8 @@ test('Transfers props to base element', function (t) {
   const className = 'test';
   const dataTest = 'test';
   const onClick = smock.stub();
+
+  const { testApp, dropdownElementDomNode } = renderTestApp();
 
   testApp.setState({
     id,
@@ -77,16 +89,12 @@ test('Transfers props to base element', function (t) {
   t.equal(dropdownElementDomNode.getAttribute('id'), id, 'passes id prop as an attribute to base element');
   t.equal(dropdownElementDomNode.getAttribute('data-test'), dataTest, 'passes arbitrary prop as an attribute to base element');
   t.equal(onClick.callCount, 1, 'passes event handlers');
-
-  testApp.setState({
-    id: null,
-    className: null,
-    onClick: null
-  });
 });
 
 test('Dropdown is toggled when DropdownTrigger is clicked', function (t) {
   t.plan(4);
+
+  const { testApp, dropdownElementDomNode, triggerElement } = renderTestApp();
 
   const onShowCallback = smock.stub();
   const onHideCallback = smock.stub();
@@ -102,15 +110,45 @@ test('Dropdown is toggled when DropdownTrigger is clicked', function (t) {
   Simulate.click(triggerElement);
   t.notOk(hasClass(dropdownElementDomNode, 'dropdown--active'), 'does not have class `dropdown--active` after trigger is clicked again');
   t.equal(onHideCallback.callCount, 1, '`onHide` function was called');
+});
+
+test('Dropdown is firing onShow only after the dropdown is shown', function (t) {
+  t.plan(1);
+
+  const { testApp, dropdownElementDomNode, triggerElement } = renderTestApp();
+
+  const onShowCallback = smock.stub(() => {
+    t.ok(hasClass(dropdownElementDomNode, 'dropdown--active'), 'has class `dropdown--active` when onShow callback is called.');
+  });
 
   testApp.setState({
-    onShow: null,
-    onHide: null
+    onShow: onShowCallback
   });
+
+  Simulate.click(triggerElement);
+});
+
+test('Dropdown is firing onHide only after the dropdown is hidden', function (t) {
+  t.plan(1);
+
+  const { testApp, dropdownElementDomNode, triggerElement } = renderTestApp();
+
+  const onHideCallback = smock.stub(() => {
+    t.notOk(hasClass(dropdownElementDomNode, 'dropdown--active'), 'does not have class `dropdown--active` when onHide callback is called.');
+  });
+
+  testApp.setState({
+    onHide: onHideCallback
+  });
+
+  Simulate.click(triggerElement); // first click to show the dropdown
+  Simulate.click(triggerElement); // second click to hide the dropdown
 });
 
 test('Custom onClick handler is called when DropDownTrigger is clicked', function (t) {
   t.plan(1);
+
+  const { testApp, triggerElement } = renderTestApp();
 
   const onTriggerClickCallback = smock.stub();
   testApp.setState({
@@ -126,6 +164,8 @@ test('Custom onClick handler is called when DropDownTrigger is clicked', functio
 test('Dropdown state can be manually set with props', function (t) {
   t.plan(2);
 
+  const { testApp, dropdownElementDomNode } = renderTestApp();
+
   testApp.setState({
     active: true
   });
@@ -137,14 +177,12 @@ test('Dropdown state can be manually set with props', function (t) {
   });
 
   t.notOk(hasClass(dropdownElementDomNode, 'dropdown--active'), 'does not have class `dropdown--active` when `active` is set to `false`');
-
-  testApp.setState({
-    active: null
-  });
 });
 
 test('Dropdown hides itself when area outside dropdown is clicked', function (t) {
   t.plan(2);
+
+  const { dropdown, contentElement, dropdownElementDomNode } = renderTestApp();
 
   dropdown.setState({
     active: true
