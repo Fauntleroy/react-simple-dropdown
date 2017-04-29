@@ -39,19 +39,21 @@ class Dropdown extends Component {
   hide () {
     this.setState({
       active: false
+    }, () => {
+      if (this.props.onHide) {
+        this.props.onHide();
+      }
     });
-    if (this.props.onHide) {
-      this.props.onHide();
-    }
   }
 
   show () {
     this.setState({
       active: true
+    }, () => {
+      if (this.props.onShow) {
+        this.props.onShow();
+      }
     });
-    if (this.props.onShow) {
-      this.props.onShow();
-    }
   }
 
   _onWindowClick (event) {
