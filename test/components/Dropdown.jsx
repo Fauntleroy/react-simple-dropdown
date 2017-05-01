@@ -29,7 +29,7 @@ class TestApp extends Component {
   }
 }
 
-const renderTestApp = () => {
+function renderTestApp () {
   const testApp = renderIntoDocument(<TestApp />);
   const dropdown = findRenderedComponentWithType(testApp, Dropdown);
   const dropdownElement = findRenderedDOMComponentWithClass(dropdown, 'dropdown');
@@ -38,6 +38,7 @@ const renderTestApp = () => {
   const triggerElement = findRenderedDOMComponentWithClass(trigger, 'dropdown__trigger');
   const content = findRenderedComponentWithType(testApp, DropdownContent);
   const contentElement = findRenderedDOMComponentWithClass(content, 'dropdown__content');
+
   return {
     testApp,
     dropdown,
@@ -48,7 +49,7 @@ const renderTestApp = () => {
     content,
     contentElement
   };
-};
+}
 
 test('Merges classes from props with default element class', function (t) {
   t.plan(3);

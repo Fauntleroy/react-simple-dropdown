@@ -19,12 +19,23 @@ class TestApp extends Component {
   }
 }
 
-const testApp = renderIntoDocument(<TestApp />);
-const dropdownContent = findRenderedComponentWithType(testApp, DropdownContent);
-const dropdownContentDomNode = findDOMNode(dropdownContent);
+function renderTestApp () {
+  const testApp = renderIntoDocument(<TestApp />);
+  const dropdownContent = findRenderedComponentWithType(testApp, DropdownContent);
+  const dropdownContentDomNode = findDOMNode(dropdownContent);
+
+  return {
+    testApp,
+    dropdownContent,
+    dropdownContentDomNode
+  };
+}
 
 test('Merges classes from props with default element class', function (t) {
   t.plan(3);
+
+  const { testApp, dropdownContentDomNode } = renderTestApp();
+
   t.equal(domClasses(dropdownContentDomNode).length, 1, 'has one class when `className` is empty');
   testApp.setState({
     className: 'test'
@@ -39,6 +50,7 @@ test('Merges classes from props with default element class', function (t) {
 test('Transfers props to base element', function (t) {
   t.plan(5);
 
+  const { testApp, dropdownContentDomNode } = renderTestApp();
   const id = 'test';
   const className = 'test';
   const dataTest = 'test';

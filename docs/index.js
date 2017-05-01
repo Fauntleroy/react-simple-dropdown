@@ -111,22 +111,28 @@ var Dropdown = function (_Component) {
   }, {
     key: 'hide',
     value: function hide() {
+      var _this2 = this;
+
       this.setState({
         active: false
+      }, function () {
+        if (_this2.props.onHide) {
+          _this2.props.onHide();
+        }
       });
-      if (this.props.onHide) {
-        this.props.onHide();
-      }
     }
   }, {
     key: 'show',
     value: function show() {
+      var _this3 = this;
+
       this.setState({
         active: true
+      }, function () {
+        if (_this3.props.onShow) {
+          _this3.props.onShow();
+        }
       });
-      if (this.props.onShow) {
-        this.props.onShow();
-      }
     }
   }, {
     key: '_onWindowClick',
@@ -149,7 +155,7 @@ var Dropdown = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this,
+      var _this4 = this,
           _arguments = arguments;
 
       var _props = this.props;
@@ -170,7 +176,7 @@ var Dropdown = function (_Component) {
             child = (0, _react.cloneElement)(child, {
               ref: 'trigger',
               onClick: function onClick(event) {
-                _this2._onToggleClick(event);
+                _this4._onToggleClick(event);
                 if (originalOnClick) {
                   originalOnClick.apply(child, _arguments);
                 }
