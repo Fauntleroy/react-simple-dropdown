@@ -25,13 +25,17 @@ There is also a [barebones stylesheet](styles/Dropdown.css) which **must be incl
 Keep in mind that `DropdownTrigger` and `DropdownContent` **must be direct children** of `Dropdown`. Here's a quick example:
 
 ```js
-var React = require('react');
-var Dropdown = require('react-simple-dropdown');
-var DropdownTrigger = Dropdown.DropdownTrigger;
-var DropdownContent = Dropdown.DropdownContent;
+const React = require('react');
+const Dropdown = require('react-simple-dropdown');
+const DropdownTrigger = Dropdown.DropdownTrigger;
+const DropdownContent = Dropdown.DropdownContent;
 
-var Menu = React.createClass({
-    render: function () {
+export default class Menu extends React.component{
+    constructor(props){
+      super(props);
+    }
+
+    render() {
         return (
             <Dropdown>
                 <DropdownTrigger>Profile</DropdownTrigger>
@@ -52,7 +56,9 @@ var Menu = React.createClass({
             </Dropdown>
         )
     }
-});
+};
+
+
 ```
 
 ### Options
