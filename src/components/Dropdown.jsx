@@ -78,12 +78,13 @@ class Dropdown extends Component {
       onHide,
       className,
       component = 'div',
-      activeClassName = 'dropdown--active',
       ...otherProps
     } = this.props;
     const Component = component;
     // create component classes
     const isActive = this.isActive();
+    const activeClassName = Dropdown.customClasses.active
+
     const dropdownClasses = cx({
       dropdown: true,
       [activeClassName]: isActive
@@ -113,6 +114,10 @@ class Dropdown extends Component {
       </Component>
     );
   }
+}
+
+Dropdown.customClasses = {
+  active: 'dropdown--active'
 }
 
 Dropdown.propTypes = {
