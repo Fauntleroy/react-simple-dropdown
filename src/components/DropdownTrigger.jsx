@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 class DropdownTrigger extends Component {
   render () {
-    const { children, className, ...dropdownTriggerProps } = this.props;
+    const { children, className, component, ...dropdownTriggerProps } = this.props;
+    const Component = component;
     dropdownTriggerProps.className = `dropdown__trigger ${className}`;
 
     return (
-      <a {...dropdownTriggerProps}>
+      <Component {...dropdownTriggerProps}>
         {children}
-      </a>
+      </Component>
     );
   }
 }
@@ -22,7 +23,8 @@ DropdownTrigger.propTypes = {
 };
 
 DropdownTrigger.defaultProps = {
-  className: ''
+  className: '',
+  component: 'a'
 };
 
 export default DropdownTrigger;

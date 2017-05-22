@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 class DropdownContent extends Component {
   render () {
-    const { children, className, ...dropdownContentProps } = this.props;
+    const { children, className, component, ...dropdownContentProps } = this.props;
+    const Component = component
     dropdownContentProps.className = `dropdown__content ${className}`;
 
     return (
-      <div {...dropdownContentProps}>
+      <Component {...dropdownContentProps}>
         {children}
-      </div>
+      </Component>
     );
   }
 }
@@ -22,7 +23,8 @@ DropdownContent.propTypes = {
 };
 
 DropdownContent.defaultProps = {
-  className: ''
+  className: '',
+  component: 'div'
 };
 
 export default DropdownContent;
