@@ -77,7 +77,7 @@ class Dropdown extends Component {
       onShow,
       onHide,
       className,
-      component = 'div',
+      component,
       ...otherProps
     } = this.props;
     const Component = component;
@@ -130,7 +130,8 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
-  className: ''
+  className: '',
+  component: 'div'
 };
 
 export { DropdownTrigger, DropdownContent };
