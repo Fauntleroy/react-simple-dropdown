@@ -3,13 +3,14 @@
   "version": "3.0.0",
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "lib/components/Dropdown.js",
+  "types": "lib/components/Dropdown.d.ts",
   "scripts": {
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
     "test": "npm run build && zuul -- test/**/*.{js,jsx}",
     "test:browser": "zuul --local 55555 -- test/**/*.{js,jsx}",
     "test:electron": "zuul --electron -- test/**/*.{js,jsx}",
-    "build": "babel src/components --out-dir lib/components",
+    "build": "babel src/components --out-dir lib/components --copy-files",
     "watch": "npm run build -- -w",
     "dev": "npm-run-all --parallel watch test:browser",
     "lint": "eslint src --ext .js --ext .jsx",
@@ -50,7 +51,6 @@
   "devDependencies": {
     "@meadow/eslint-config": "^2.0.2",
     "autoless": "^0.1.7",
-    "babel": "6.5.2",
     "babel-cli": "6.10.1",
     "babel-eslint": "^7.2.2",
     "babel-preset-es2016": "6.0.11",
