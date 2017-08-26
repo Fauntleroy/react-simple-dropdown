@@ -161,6 +161,7 @@ var Dropdown = function (_Component) {
       var _props = this.props;
       var children = _props.children;
       var className = _props.className;
+      var removeElement = _props.removeElement;
       // create component classes
 
       var active = this.isActive();
@@ -183,6 +184,8 @@ var Dropdown = function (_Component) {
               }
             });
           })();
+        } else if (child.type === _DropdownContent2.default && removeElement && !active) {
+          child = null;
         }
         return child;
       });
@@ -190,6 +193,7 @@ var Dropdown = function (_Component) {
       delete cleanProps.active;
       delete cleanProps.onShow;
       delete cleanProps.onHide;
+      delete cleanProps.removeElement;
 
       return _react2.default.createElement('div', _extends({}, cleanProps, {
         className: dropdownClasses + ' ' + className }), boundChildren);
@@ -205,6 +209,7 @@ Dropdown.propTypes = {
   onShow: _propTypes2.default.func,
   children: _propTypes2.default.node,
   className: _propTypes2.default.string,
+  removeElement: _propTypes2.default.bool,
   style: _propTypes2.default.object
 };
 

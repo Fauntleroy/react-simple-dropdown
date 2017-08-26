@@ -9,6 +9,10 @@ import Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components
 
 const DEFAULT_TEST_APP_STATE = {};
 
+function isInPage(node) {
+  return (node === document.body) ? false : document.body.contains(node);
+}
+
 class TestApp extends Component {
   constructor () {
     super();
@@ -38,6 +42,7 @@ function renderTestApp () {
   const triggerElement = findRenderedDOMComponentWithClass(trigger, 'dropdown__trigger');
   const content = findRenderedComponentWithType(testApp, DropdownContent);
   const contentElement = findRenderedDOMComponentWithClass(content, 'dropdown__content');
+  const contentElementDomNode = findDOMNode(contentElement);
 
   return {
     testApp,
@@ -47,7 +52,8 @@ function renderTestApp () {
     trigger,
     triggerElement,
     content,
-    contentElement
+    contentElement,
+    contentElementDomNode
   };
 }
 
@@ -193,4 +199,33 @@ test('Dropdown hides itself when area outside dropdown is clicked', function (t)
   t.ok(hasClass(dropdownElementDomNode, 'dropdown--active'), 'has class `dropdown--active` after content element is clicked');
   document.body.click();
   t.notOk(hasClass(dropdownElementDomNode, 'dropdown--active'), 'does not have class `dropdown--active` after document body is clicked');
+});
+
+test('Dropdown Content element is removed when removeElement is set', function (t) {
+  t.plan(2);
+
+  const { testApp } = renderTestApp();
+
+  testApp.setState({
+    active: false,
+    removeElement: true
+  });
+
+  try {
+    findRenderedDOMComponentWithClass(testApp, 'dropdown__content');
+  } catch (error) {
+    t.ok(true, 'content element is not rendered when dropdown is not active');
+  }
+
+  testApp.setState({
+    active: true
+  });
+
+  try {
+    findRenderedDOMComponentWithClass(testApp, 'dropdown__content');
+  } catch (error) {
+    t.fail('content element is rendered when dropdown is active');
+  } finally {
+    t.pass('content element is rendered when dropdown is active');
+  }
 });

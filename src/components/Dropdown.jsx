@@ -73,7 +73,7 @@ class Dropdown extends Component {
   }
 
   render () {
-    const { children, className } = this.props;
+    const { children, className, removeElement } = this.props;
     // create component classes
     const active = this.isActive();
     const dropdownClasses = cx({
@@ -93,6 +93,8 @@ class Dropdown extends Component {
             }
           }
         });
+      } else if (child.type === DropdownContent && removeElement && !active) {
+        child = null;
       }
       return child;
     });
@@ -100,6 +102,7 @@ class Dropdown extends Component {
     delete cleanProps.active;
     delete cleanProps.onShow;
     delete cleanProps.onHide;
+    delete cleanProps.removeElement;
 
     return (
       <div
@@ -117,6 +120,7 @@ Dropdown.propTypes = {
   onShow: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
+  removeElement: PropTypes.bool,
   style: PropTypes.object
 };
 
