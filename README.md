@@ -62,6 +62,7 @@ Options can be passed to `Dropdown` as props. A list of available options can be
 Property | Type | Description
 ----- | ----- | -----
 **active** | *boolean* | Manually show/hide the `DropdownContent`. Make sure to unset this or the dropdown will stay open.
+**disabled** | *boolean* | Disable toggling of the dropdown by clicking on `DropdownTrigger`. Toggling with `active`, `show()`, and `hide()` is still possible.
 **removeElement** | *boolean* | Remove the `DropdownContent` element when inactive (rather than just hide it).
 **onShow** | *function* | Callback for when `DropdownContent` is shown.
 **onHide** | *function* | Callback for when `DropdownContent` is hidden.
