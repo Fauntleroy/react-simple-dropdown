@@ -227,13 +227,15 @@ test('Dropdown Content element is removed when removeElement is set', function (
 });
 
 test('DropdownTrigger should do nothing when disabled', function (t) {
-  t.plan(1);
+  t.plan(2);
 
-  const { testApp, dropdown, triggerElement } = renderTestApp();
+  const { testApp, dropdown, dropdownElementDomNode, triggerElement } = renderTestApp();
 
   testApp.setState({
     disabled: true
   });
+
+  t.ok(hasClass(dropdownElementDomNode, 'dropdown--disabled'), 'has class `dropdown--disabled` when disabled is set');
 
   const onToggleClickStub = smock.mock(dropdown, '_onToggleClick');
 

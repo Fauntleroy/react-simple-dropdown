@@ -78,7 +78,8 @@ class Dropdown extends Component {
     const active = this.isActive();
     const dropdownClasses = cx({
       dropdown: true,
-      'dropdown--active': active
+      'dropdown--active': active,
+      'dropdown--disabled': disabled
     });
     // stick callback on trigger element
     const boundChildren = React.Children.map(children, child => {
