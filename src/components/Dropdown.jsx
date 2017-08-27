@@ -73,7 +73,7 @@ class Dropdown extends Component {
   }
 
   render () {
-    const { children, className, removeElement } = this.props;
+    const { children, className, disabled, removeElement } = this.props;
     // create component classes
     const active = this.isActive();
     const dropdownClasses = cx({
@@ -87,7 +87,9 @@ class Dropdown extends Component {
         child = cloneElement(child, {
           ref: 'trigger',
           onClick: (event) => {
-            this._onToggleClick(event);
+            if (!disabled) {
+              this._onToggleClick(event);
+            }
             if (originalOnClick) {
               originalOnClick.apply(child, arguments);
             }
@@ -115,6 +117,7 @@ class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
+  disabled: PropTypes.bool,
   active: PropTypes.bool,
   onHide: PropTypes.func,
   onShow: PropTypes.func,

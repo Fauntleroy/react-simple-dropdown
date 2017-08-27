@@ -9,10 +9,6 @@ import Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components
 
 const DEFAULT_TEST_APP_STATE = {};
 
-function isInPage(node) {
-  return (node === document.body) ? false : document.body.contains(node);
-}
-
 class TestApp extends Component {
   constructor () {
     super();
@@ -228,4 +224,22 @@ test('Dropdown Content element is removed when removeElement is set', function (
   } finally {
     t.pass('content element is rendered when dropdown is active');
   }
+});
+
+test('DropdownTrigger should do nothing when disabled', function (t) {
+  t.plan(1);
+
+  const { testApp, dropdown, triggerElement } = renderTestApp();
+
+  testApp.setState({
+    disabled: true
+  });
+
+  const onToggleClickStub = smock.mock(dropdown, '_onToggleClick');
+
+  Simulate.click(triggerElement);
+
+  t.equal(onToggleClickStub.callCount, 0, 'prevents _onToggleClick call');
+
+  smock.restore();
 });
