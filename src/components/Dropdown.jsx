@@ -90,9 +90,9 @@ class Dropdown extends Component {
           onClick: (event) => {
             if (!disabled) {
               this._onToggleClick(event);
-            }
-            if (originalOnClick) {
-              originalOnClick.apply(child, arguments);
+              if (originalOnClick) {
+                originalOnClick.apply(child, arguments);
+              }
             }
           }
         });

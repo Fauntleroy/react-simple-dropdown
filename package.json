@@ -1,6 +1,6 @@
 {
   "name": "react-simple-dropdown",
-  "version": "3.1.0",
+  "version": "3.2.0-alpha.2",
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "lib/components/Dropdown.js",
   "scripts": {
@@ -71,7 +71,7 @@
     "react-dom": "^15.5.0",
     "react-highlight": "^0.9.0",
     "sane": "^1.4.1",
-    "simple-mock": "^0.3.1",
+    "simple-mock": "0.8.0",
     "tape": "^4.0.0",
     "trash-cli": "^1.2.0",
     "watchify": "^3.7.0",
