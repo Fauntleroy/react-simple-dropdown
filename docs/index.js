@@ -85,19 +85,17 @@ var Dropdown = function (_Component) {
       window.addEventListener('click', this._onWindowClick);
       window.addEventListener('touchstart', this._onWindowClick);
 
-      this._startAutoUpdateContentPosition();
-
       if (this.props.attachment === 'attached') {
-        this._watchTriggerPosition();
+        this._startAutoUpdateContentStyle();
       }
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.attachment !== 'attached' && nextProps.attachment === 'attached') {
-        this._watchTriggerPosition();
+        this._startAutoUpdateContentStyle();
       } else if (this.props.attachment === 'attached' && nextProps.attachment !== 'attached') {
-        this._unwatchTriggerPosition();
+        this._stopAutoUpdateContentStyle();
       }
     }
   }, {
@@ -107,7 +105,6 @@ var Dropdown = function (_Component) {
       window.removeEventListener('touchstart', this._onWindowClick);
 
       this._stopAutoUpdateContentStyle();
-      this._unwatchTriggerPosition();
     }
   }]);
 
@@ -125,7 +122,6 @@ var Dropdown = function (_Component) {
     _this._onWindowClick = _this._onWindowClick.bind(_this);
     _this._onToggleClick = _this._onToggleClick.bind(_this);
     _this._setContentStyle = _this._setContentStyle.bind(_this);
-    _this._setTriggerPosition = _this._setTriggerPosition.bind(_this);
     return _this;
   }
 
@@ -152,18 +148,18 @@ var Dropdown = function (_Component) {
     value: function show() {
       var _this3 = this;
 
-      this._setContentStyle();
       this.setState({
         active: true
       }, function () {
+        _this3._setContentStyle();
         if (_this3.props.onShow) {
           _this3.props.onShow();
         }
       });
     }
   }, {
-    key: '_startAutoUpdateContentPosition',
-    value: function _startAutoUpdateContentPosition() {
+    key: '_startAutoUpdateContentStyle',
+    value: function _startAutoUpdateContentStyle() {
       if (!this._contentStyleUpdaterInterval) {
         this._contentStyleUpdaterInterval = window.setInterval(this._setContentStyle, 1000 / 120);
       }
@@ -173,20 +169,6 @@ var Dropdown = function (_Component) {
     value: function _stopAutoUpdateContentStyle() {
       if (this._contentStyleUpdaterInterval) {
         clearInterval(this._contentStyleUpdaterInterval);
-      }
-    }
-  }, {
-    key: '_watchTriggerPosition',
-    value: function _watchTriggerPosition() {
-      if (!this._triggerPositionWatcherInterval) {
-        this._triggerPositionWatcherInterval = window.setInterval(this._setTriggerPosition, 1000 / 120);
-      }
-    }
-  }, {
-    key: '_unwatchTriggerPosition',
-    value: function _unwatchTriggerPosition() {
-      if (this._triggerPositionWatcherInterval) {
-        clearInterval(this._triggerPositionWatcherInterval);
       }
     }
   }, {
@@ -208,22 +190,17 @@ var Dropdown = function (_Component) {
       }
     }
   }, {
-    key: '_setTriggerPosition',
-    value: function _setTriggerPosition() {
-      this.setState({
-        triggerPosition: this.refs.trigger.getPosition()
-      });
-    }
-  }, {
     key: '_setContentStyle',
     value: function _setContentStyle() {
       var _props = this.props;
-      var avoidEdges = _props.avoidEdges;
       var contentHorizontalEdge = _props.contentHorizontalEdge;
       var contentVerticalEdge = _props.contentVerticalEdge;
-      var positionHorizontal = _props.positionHorizontal;
-      var positionVertical = _props.positionVertical;
-      var triggerPosition = this.state.triggerPosition;
+      var _props2 = this.props;
+      var avoidEdges = _props2.avoidEdges;
+      var positionHorizontal = _props2.positionHorizontal;
+      var positionVertical = _props2.positionVertical;
+
+      var triggerPosition = this.refs.trigger.getPosition();
 
       if (!this.refs.content) {
         return;
@@ -301,12 +278,12 @@ var Dropdown = function (_Component) {
       var _this4 = this,
           _arguments = arguments;
 
-      var _props2 = this.props;
-      var attachment = _props2.attachment;
-      var children = _props2.children;
-      var className = _props2.className;
-      var disabled = _props2.disabled;
-      var removeElement = _props2.removeElement;
+      var _props3 = this.props;
+      var attachment = _props3.attachment;
+      var children = _props3.children;
+      var className = _props3.className;
+      var disabled = _props3.disabled;
+      var removeElement = _props3.removeElement;
       // create component classes
 
       var active = this.isActive();
@@ -481,12 +458,12 @@ var DropdownContent = function (_Component) {
   _createClass(DropdownContent, [{
     key: 'getPosition',
     value: function getPosition() {
+      // invisibly show element so we can get real size information
       var originalDisplay = this.refs.content.style.display;
       var originalVisibility = this.refs.content.style.visibility;
       this.refs.content.style.visibility = 'hidden';
       this.refs.content.style.display = 'block';
       var elementPosition = this.refs.content.getBoundingClientRect();
-      //console.log(elementPosition.height);
       this.refs.content.style.visibility = originalVisibility;
       this.refs.content.style.display = originalDisplay;
       return elementPosition;

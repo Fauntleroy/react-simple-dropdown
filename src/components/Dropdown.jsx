@@ -14,18 +14,16 @@ class Dropdown extends Component {
     window.addEventListener('click', this._onWindowClick);
     window.addEventListener('touchstart', this._onWindowClick);
 
-    this._startAutoUpdateContentPosition();
-
     if (this.props.attachment === 'attached') {
-      this._watchTriggerPosition();
+      this._startAutoUpdateContentStyle();
     }
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.attachment !== 'attached' && nextProps.attachment === 'attached') {
-      this._watchTriggerPosition();
+      this._startAutoUpdateContentStyle();
     } else if (this.props.attachment === 'attached' && nextProps.attachment !== 'attached') {
-      this._unwatchTriggerPosition();
+      this._stopAutoUpdateContentStyle();
     }
   }
 
@@ -34,7 +32,6 @@ class Dropdown extends Component {
     window.removeEventListener('touchstart', this._onWindowClick);
 
     this._stopAutoUpdateContentStyle();
-    this._unwatchTriggerPosition();
   }
 
   constructor (props) {
@@ -49,7 +46,6 @@ class Dropdown extends Component {
     this._onWindowClick = this._onWindowClick.bind(this);
     this._onToggleClick = this._onToggleClick.bind(this);
     this._setContentStyle = this._setContentStyle.bind(this);
-    this._setTriggerPosition = this._setTriggerPosition.bind(this);
   }
 
   isActive () {
@@ -69,17 +65,17 @@ class Dropdown extends Component {
   }
 
   show () {
-    this._setContentStyle();
     this.setState({
       active: true
     }, () => {
+      this._setContentStyle();
       if (this.props.onShow) {
         this.props.onShow();
       }
     });
   }
 
-  _startAutoUpdateContentPosition () {
+  _startAutoUpdateContentStyle () {
     if (!this._contentStyleUpdaterInterval) {
       this._contentStyleUpdaterInterval = window.setInterval(this._setContentStyle, 1000 / 120);
     }
@@ -88,18 +84,6 @@ class Dropdown extends Component {
   _stopAutoUpdateContentStyle () {
     if (this._contentStyleUpdaterInterval) {
       clearInterval(this._contentStyleUpdaterInterval);
-    }
-  }
-
-  _watchTriggerPosition () {
-    if (!this._triggerPositionWatcherInterval) {
-      this._triggerPositionWatcherInterval = window.setInterval(this._setTriggerPosition, 1000 / 120);
-    }
-  }
-
-  _unwatchTriggerPosition () {
-    if (this._triggerPositionWatcherInterval) {
-      clearInterval(this._triggerPositionWatcherInterval);
     }
   }
 
@@ -119,16 +103,10 @@ class Dropdown extends Component {
     }
   }
 
-  _setTriggerPosition () {
-    this.setState({
-      triggerPosition: this.refs.trigger.getPosition()
-    });
-  }
-
   _setContentStyle () {
     let { contentHorizontalEdge, contentVerticalEdge } = this.props;
     const { avoidEdges, positionHorizontal, positionVertical } = this.props;
-    const { triggerPosition } = this.state;
+    const triggerPosition = this.refs.trigger.getPosition();
 
     if (!this.refs.content) {
       return;
