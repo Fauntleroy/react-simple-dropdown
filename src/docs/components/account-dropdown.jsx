@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/Dropdown.js';
+
+const user = {
+  avatarUrl: 'https://avatars0.githubusercontent.com/u/507047?v=4&s=40',
+  name: 'Timothy Kempf'
+};
 
 class AccountDropdown extends Component {
   constructor (props) {
@@ -14,12 +18,10 @@ class AccountDropdown extends Component {
   }
 
   render () {
-    const { user } = this.props;
-
     return (
-      <Dropdown className="account-dropdown" ref="dropdown">
+      <Dropdown className="account-dropdown" ref="dropdown" {...this.props}>
         <DropdownTrigger>
-          <img className="account-dropdown__avatar" src={user.avatar_url} /><span className="account-dropdown__name">My Account</span>
+          <img className="account-dropdown__avatar" src={user.avatarUrl} /><span className="account-dropdown__name">My Account</span>
         </DropdownTrigger>
         <DropdownContent>
           <div className="account-dropdown__identity account-dropdown__segment">
@@ -64,9 +66,5 @@ class AccountDropdown extends Component {
     );
   }
 }
-
-AccountDropdown.propTypes = {
-  user: PropTypes.object.isRequired
-};
 
 export default AccountDropdown;

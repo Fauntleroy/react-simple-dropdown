@@ -1,6 +1,6 @@
 {
   "name": "react-simple-dropdown",
-  "version": "3.2.0",
+  "version": "4.0.0-alpha.1",
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "lib/components/Dropdown.js",
   "scripts": {
@@ -45,7 +45,10 @@
   "homepage": "https://github.com/Fauntleroy/react-simple-dropdown",
   "dependencies": {
     "classnames": "^2.1.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "react-append-to-body": "^2.0.13",
+    "react-minimalist-portal": "^2.1.0",
+    "react-portal": "^3.1.0"
   },
   "devDependencies": {
     "@meadow/eslint-config": "^2.0.2",
@@ -64,6 +67,7 @@
     "eslint": "^3.19.0",
     "highlight.js": "^9.6.0",
     "less": "^2.7.1",
+    "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "npm-run-all": "^1.4.0",

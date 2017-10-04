@@ -3,7 +3,14 @@
 }
 
 .dropdown__content {
-    display: none;
+  display: none;
+}
+
+.dropdown__content--active {
+  display: block;
+}
+
+.dropdown .dropdown__content {
     position: absolute;
 }
 
