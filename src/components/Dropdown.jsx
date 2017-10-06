@@ -7,6 +7,8 @@ import Portal from 'react-minimalist-portal';
 import DropdownTrigger from './DropdownTrigger.js';
 import DropdownContent from './DropdownContent.js';
 
+import { getElementOuterWidth, getElementOuterHeight } from '../utils/dom.js';
+
 class Dropdown extends Component {
   displayName: 'Dropdown'
 
@@ -24,6 +26,10 @@ class Dropdown extends Component {
       this._startAutoUpdateContentStyle();
     } else if (this.props.attachment === 'attached' && nextProps.attachment !== 'attached') {
       this._stopAutoUpdateContentStyle();
+    }
+
+    if (!this.props.active && nextProps.active) {
+      this._setContentStyle();
     }
   }
 
@@ -104,14 +110,15 @@ class Dropdown extends Component {
   }
 
   _setContentStyle () {
-    let { contentHorizontalEdge, contentVerticalEdge } = this.props;
-    const { avoidEdges, positionHorizontal, positionVertical } = this.props;
-    const triggerPosition = this.refs.trigger.getPosition();
-
     if (!this.refs.content) {
       return;
     }
 
+    const { avoidEdges, contentHorizontalEdge, contentVerticalEdge, positionHorizontal, positionVertical } = this.props;
+    const triggerPosition = this.refs.trigger.getElement().getBoundingClientRect();
+    const contentElement = this.refs.content.getElement();
+    const contentHeight = getElementOuterHeight(contentElement);
+    const contentWidth = getElementOuterWidth(contentElement);
     let horizontalOffset = 0;
     let verticalOffset = 0;
 
@@ -132,55 +139,55 @@ class Dropdown extends Component {
       verticalOffset += triggerPosition.top;
     }
 
-    if (avoidEdges && this.refs.content) {
-      const contentPosition = this.refs.content.getPosition();
-      const contentTopEdge = (contentVerticalEdge === 'bottom') ? verticalOffset - contentPosition.height : verticalOffset;
-      const contentRightEdge = (contentHorizontalEdge === 'right') ? horizontalOffset : horizontalOffset + contentPosition.width;
-      const contentBottomEdge = (contentVerticalEdge === 'bottom') ? verticalOffset : verticalOffset + contentPosition.height;
-      const contentLeftEdge = (contentHorizontalEdge === 'right') ? horizontalOffset - contentPosition.width : horizontalOffset;
-
-      const intersectsTopEdge = contentTopEdge < 0 && contentBottomEdge > 0;
-      const intersectsRightEdge = contentRightEdge > window.innerWidth && contentLeftEdge < window.innerWidth;
-      const intersectsBottomEdge = contentBottomEdge > window.innerHeight && contentTopEdge < window.innerHeight;
-      const intersectsLeftEdge = contentLeftEdge < 0 && contentRightEdge > 0;
-
-      if (intersectsBottomEdge && contentVerticalEdge === 'top' && positionVertical === 'bottom') {
-        contentVerticalEdge = 'bottom';
-        verticalOffset -= triggerPosition.height;
-      } else if (intersectsTopEdge && contentVerticalEdge === 'bottom' && positionVertical === 'top') {
-        contentVerticalEdge = 'top';
-        verticalOffset += triggerPosition.height;
-      }
-
-      if (intersectsRightEdge && contentHorizontalEdge === 'left' && positionHorizontal === 'right') {
-        contentHorizontalEdge = 'right';
-        horizontalOffset -= triggerPosition.width;
-      } else if (intersectsLeftEdge && contentHorizontalEdge === 'right' && positionHorizontal === 'left') {
-        contentHorizontalEdge = 'left';
-        horizontalOffset += triggerPosition.width;
-      }
-    }
-
-    const transforms = [];
-    if (contentHorizontalEdge === 'right') {
-      transforms.push('translateX(-100%)');
-    }
     if (contentVerticalEdge === 'bottom') {
-      transforms.push('translateY(-100%)');
+      verticalOffset -= contentHeight;
+    }
+
+    if (contentHorizontalEdge === 'right') {
+      horizontalOffset -= contentWidth;
+    }
+
+    if (avoidEdges) {
+      const contentTopEdge = verticalOffset;
+      const contentRightEdge = horizontalOffset + contentWidth;
+      const contentBottomEdge = verticalOffset + contentHeight;
+      const contentLeftEdge = horizontalOffset;
+
+      const beyondTopEdge = contentTopEdge < 0;
+      const beyondRightEdge = contentRightEdge > window.innerWidth;
+      const beyondBottomEdge = contentBottomEdge > window.innerHeight;
+      const beyondLeftEdge = contentLeftEdge < 0;
+
+      if (beyondBottomEdge) {
+        verticalOffset = window.innerHeight - 5 - contentHeight;
+      } else if (beyondTopEdge) {
+        verticalOffset = 5;
+      }
+
+      if (beyondLeftEdge) {
+        horizontalOffset = 5;
+      } else if (beyondRightEdge) {
+        horizontalOffset = window.innerWidth - 5 - contentWidth;
+      }
     }
 
     this.setState({
       contentStyle: {
         position: 'fixed',
         top: verticalOffset,
-        left: horizontalOffset,
-        transform: transforms.join(' ')
+        left: horizontalOffset
       }
     });
   }
 
   render () {
-    const { attachment, children, className, disabled, removeElement } = this.props;
+    const {
+      attachment,
+      children,
+      className,
+      disabled,
+      removeElement
+    } = this.props;
     // create component classes
     const active = this.isActive();
     const renderInPortal = (attachment === 'detached' || attachment === 'attached');
@@ -215,7 +222,7 @@ class Dropdown extends Component {
             active,
             style: contentStyle
           });
-          child = (<Portal>{child}</Portal>);
+          child = (<Portal><div className={dropdownClasses}>{child}</div></Portal>);
         }
       }
       return child;

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class DropdownTrigger extends Component {
-  getPosition () {
-    return this.refs.trigger.getBoundingClientRect();
+  getElement () {
+    return this.refs.trigger;
   }
 
   render () {

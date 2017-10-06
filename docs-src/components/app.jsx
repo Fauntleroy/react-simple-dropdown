@@ -5,16 +5,20 @@ import React, { Component } from 'react';
 
 import Highlight from 'react-highlight';
 
-import AccountDropdown from './account-dropdown';
+import ExampleDropdown from './example-dropdown';
 
 // eslint-disable-next-line no-sync
-const accountDropdownCode = fs.readFileSync(`${__dirname}/account-dropdown.jsx`, 'utf8');
+const accountDropdownCode = fs.readFileSync(`${__dirname}/example-dropdown.jsx`, 'utf8');
 
 const ATTACHMENTS = ['inline', 'attached', 'detached'];
 const POSITIONS_HORIZONTAL = ['left', 'center', 'right'];
 const POSITIONS_VERTICAL = ['top', 'middle', 'bottom'];
 const CONTENT_EDGES_HORIZONTAL = ['left', 'right'];
 const CONTENT_EDGES_VERTICAL = ['top', 'bottom'];
+
+const attachments = [{
+  name: 'undefined'
+}, ...ATTACHMENTS.map(attachment => ({ name: attachment, value: attachment }))];
 
 function defaultDataGetter (event) {
   return event.target.value;
@@ -24,17 +28,7 @@ class App extends Component {
   constructor (props) {
     super(props);
 
-    this.state = {
-      attachment: ATTACHMENTS[0],
-      avoidEdges: false,
-      disabled: false,
-      onHide: function () {},
-      onShow: function () {},
-      positionHorizontal: POSITIONS_HORIZONTAL[0],
-      positionVertical: POSITIONS_VERTICAL[2],
-      className: 'account-dropdown',
-      removeElement: false
-    };
+    this.state = {};
 
     this.handleLinkClick = this.handleLinkClick.bind(this);
   }
@@ -45,16 +39,21 @@ class App extends Component {
 
   createStateHandler (key, dataGetter = defaultDataGetter) {
     return (event) => {
-      this.setState({
-        [key]: dataGetter(event)
-      });
+      const newData = dataGetter(event);
+      const newState = {
+        ...this.state
+      };
+      if (typeof newData !== 'undefined') {
+        newState[key] = newData;
+      }
+
+      this.setState(newState);
     };
   }
 
   createStateUnsetter (key) {
     return () => {
       this.setState({
-        // eslint-disable-next-line no-undefined
         [key]: undefined
       });
     };
@@ -76,12 +75,14 @@ class App extends Component {
 
     return (
       <div className="app">
+        <h2>A Simple Account Dropdown</h2>
+        <h3>Props</h3>
         <ul>
           <li>
             <label>
               attachment
               <select onChange={this.createStateHandler('attachment')} value={attachment}>
-                {_.map(ATTACHMENTS, selectedAttachment => (<option key={selectedAttachment}>{selectedAttachment}</option>))}
+                {_.map(attachments, currentAttachment => (<option key={currentAttachment.name} value={currentAttachment.value}>{currentAttachment.name}</option>))}
               </select>
             </label>
           </li>
@@ -93,6 +94,7 @@ class App extends Component {
                 onChange={this.createStateHandler('avoidEdges', (event) => event.target.checked)}
                 value={avoidEdges} />
             </label>
+            <button type="button" onClick={this.createStateUnsetter('avoidEdges')}>Unset avoidEdges</button>
           </li>
           <li>
             <label>
@@ -102,6 +104,7 @@ class App extends Component {
                 onChange={this.createStateHandler('disabled', (event) => event.target.checked)}
                 value={disabled} />
             </label>
+            <button type="button" onClick={this.createStateUnsetter('disabled')}>Unset disabled</button>
           </li>
           <li>
             <label>
@@ -111,7 +114,7 @@ class App extends Component {
                 onChange={this.createStateHandler('active', (event) => event.target.checked)}
                 value={active} />
             </label>
-            <button type="button" onClick={this.createStateUnsetter('active')}>Unset Active</button>
+            <button type="button" onClick={this.createStateUnsetter('active')}>Unset active</button>
           </li>
           <li>
             <label>
@@ -158,14 +161,17 @@ class App extends Component {
                 type="checkbox"
                 onChange={this.createStateHandler('removeElement', (event) => event.target.checked)}
                 value={removeElement} />
+              <button type="button" onClick={this.createStateUnsetter('removeElement')}>Unset removeElement</button>
             </label>
           </li>
         </ul>
+        <h3>Example</h3>
         <div className="overflow-scroller">
           <div className="overflow-scroller__top-spacer" />
+          <ExampleDropdown {...this.state} />
           <div className="overflow-scroller__bottom-spacer" />
-          <AccountDropdown {...this.state} />
         </div>
+        <h3>Code</h3>
         <div>
           <Highlight className="code jsx">{accountDropdownCode}</Highlight>
         </div>
