@@ -5,10 +5,10 @@ import cx from 'classnames';
 
 import Portal from 'react-minimalist-portal';
 
-import DropdownTrigger from './DropdownTrigger.js';
-import DropdownContent from './DropdownContent.js';
+import DropdownTrigger from './dropdown-trigger';
+import DropdownContent from './dropdown-content';
 
-import { getElementOuterWidth, getElementOuterHeight } from '../utils/dom.js';
+import { getElementOuterWidth, getElementOuterHeight } from '../utils/dom';
 
 class Dropdown extends Component {
   displayName: 'Dropdown'
