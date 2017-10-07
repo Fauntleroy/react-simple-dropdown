@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 
 import Highlight from 'react-highlight';
 
+import Dropdown from '../../src/components/dropdown';
 import ExampleDropdown from './example-dropdown';
 
 // eslint-disable-next-line no-sync
@@ -16,10 +17,6 @@ const POSITIONS_VERTICAL = ['top', 'middle', 'bottom'];
 const CONTENT_EDGES_HORIZONTAL = ['left', 'right'];
 const CONTENT_EDGES_VERTICAL = ['top', 'bottom'];
 
-const attachments = [{
-  name: 'undefined'
-}, ...ATTACHMENTS.map(attachment => ({ name: attachment, value: attachment }))];
-
 function defaultDataGetter (event) {
   return event.target.value;
 }
@@ -29,6 +26,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      ...Dropdown.defaultProps,
       mountDropdown: true
     };
 
@@ -82,14 +80,14 @@ class App extends Component {
 
     return (
       <div className="app">
-        <h2>A Simple Account Dropdown</h2>
+        <h2>React Simple Dropdown</h2>
         <h3>Props</h3>
-        <ul>
+        <ul className="props-manager">
           <li>
             <label>
               attachment
               <select onChange={this.createStateHandler('attachment')} value={attachment}>
-                {_.map(attachments, currentAttachment => (<option key={currentAttachment.name} value={currentAttachment.value}>{currentAttachment.name}</option>))}
+                {_.map(ATTACHMENTS, currentAttachment => (<option key={currentAttachment} value={currentAttachment}>{currentAttachment}</option>))}
               </select>
             </label>
           </li>
@@ -101,7 +99,6 @@ class App extends Component {
                 onChange={this.createStateHandler('avoidEdges', (event) => event.target.checked)}
                 checked={avoidEdges} />
             </label>
-            <button type="button" onClick={this.createStateUnsetter('avoidEdges')}>Unset avoidEdges</button>
           </li>
           <li>
             <label>
@@ -111,7 +108,6 @@ class App extends Component {
                 onChange={this.createStateHandler('disabled', (event) => event.target.checked)}
                 checked={disabled} />
             </label>
-            <button type="button" onClick={this.createStateUnsetter('disabled')}>Unset disabled</button>
           </li>
           <li>
             <label>
@@ -168,7 +164,6 @@ class App extends Component {
                 type="checkbox"
                 onChange={this.createStateHandler('removeElement', (event) => event.target.checked)}
                 checked={removeElement} />
-              <button type="button" onClick={this.createStateUnsetter('removeElement')}>Unset removeElement</button>
             </label>
           </li>
         </ul>

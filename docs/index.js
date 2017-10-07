@@ -21,6 +21,10 @@ var _reactHighlight = require('react-highlight');
 
 var _reactHighlight2 = _interopRequireDefault(_reactHighlight);
 
+var _dropdown = require('../../src/components/dropdown');
+
+var _dropdown2 = _interopRequireDefault(_dropdown);
+
 var _exampleDropdown = require('./example-dropdown');
 
 var _exampleDropdown2 = _interopRequireDefault(_exampleDropdown);
@@ -37,24 +41,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 
 
 // eslint-disable-next-line no-sync
-var accountDropdownCode = "import React from 'react';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/Dropdown.js';\n\nexport default function ExampleDropdown (props) {\n  return (\n    <Dropdown className=\"example-dropdown\" {...props}>\n      <DropdownTrigger className=\"example-dropdown__trigger\">\n        Dropdown Trigger\n      </DropdownTrigger>\n      <DropdownContent className=\"example-dropdown__content\">\n        Dropdown Content\n      </DropdownContent>\n    </Dropdown>\n  );\n}\n";
+var accountDropdownCode = "import React from 'react';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/dropdown.js';\n\nexport default function ExampleDropdown (props) {\n  return (\n    <Dropdown className=\"example-dropdown\" {...props}>\n      <DropdownTrigger className=\"example-dropdown__trigger\">\n        Dropdown Trigger\n      </DropdownTrigger>\n      <DropdownContent className=\"example-dropdown__content\">\n        Dropdown Content\n      </DropdownContent>\n    </Dropdown>\n  );\n}\n";
 
 var ATTACHMENTS = ['inline', 'attached', 'detached'];
 var POSITIONS_HORIZONTAL = ['left', 'center', 'right'];
 var POSITIONS_VERTICAL = ['top', 'middle', 'bottom'];
 var CONTENT_EDGES_HORIZONTAL = ['left', 'right'];
 var CONTENT_EDGES_VERTICAL = ['top', 'bottom'];
-
-var attachments = [{
-  name: 'undefined'
-}].concat(_toConsumableArray(ATTACHMENTS.map(function (attachment) {
-  return { name: attachment, value: attachment };
-})));
 
 function defaultDataGetter(event) {
   return event.target.value;
@@ -68,9 +64,9 @@ var App = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
-    _this.state = {
+    _this.state = _extends({}, _dropdown2.default.defaultProps, {
       mountDropdown: true
-    };
+    });
 
     _this.handleLinkClick = _this.handleLinkClick.bind(_this);
     return _this;
@@ -133,7 +129,7 @@ var App = function (_Component) {
         _react2.default.createElement(
           'h2',
           null,
-          'A Simple Account Dropdown'
+          'React Simple Dropdown'
         ),
         _react2.default.createElement(
           'h3',
@@ -142,7 +138,7 @@ var App = function (_Component) {
         ),
         _react2.default.createElement(
           'ul',
-          null,
+          { className: 'props-manager' },
           _react2.default.createElement(
             'li',
             null,
@@ -153,11 +149,11 @@ var App = function (_Component) {
               _react2.default.createElement(
                 'select',
                 { onChange: this.createStateHandler('attachment'), value: attachment },
-                _lodash2.default.map(attachments, function (currentAttachment) {
+                _lodash2.default.map(ATTACHMENTS, function (currentAttachment) {
                   return _react2.default.createElement(
                     'option',
-                    { key: currentAttachment.name, value: currentAttachment.value },
-                    currentAttachment.name
+                    { key: currentAttachment, value: currentAttachment },
+                    currentAttachment
                   );
                 })
               )
@@ -176,11 +172,6 @@ var App = function (_Component) {
                   return event.target.checked;
                 }),
                 checked: avoidEdges })
-            ),
-            _react2.default.createElement(
-              'button',
-              { type: 'button', onClick: this.createStateUnsetter('avoidEdges') },
-              'Unset avoidEdges'
             )
           ),
           _react2.default.createElement(
@@ -196,11 +187,6 @@ var App = function (_Component) {
                   return event.target.checked;
                 }),
                 checked: disabled })
-            ),
-            _react2.default.createElement(
-              'button',
-              { type: 'button', onClick: this.createStateUnsetter('disabled') },
-              'Unset disabled'
             )
           ),
           _react2.default.createElement(
@@ -325,12 +311,7 @@ var App = function (_Component) {
                 onChange: this.createStateHandler('removeElement', function (event) {
                   return event.target.checked;
                 }),
-                checked: removeElement }),
-              _react2.default.createElement(
-                'button',
-                { type: 'button', onClick: this.createStateUnsetter('removeElement') },
-                'Unset removeElement'
-              )
+                checked: removeElement })
             )
           )
         ),
@@ -383,7 +364,7 @@ App.propTypes = {};
 
 exports.default = App;
 
-},{"./example-dropdown":2,"lodash":206,"react":369,"react-highlight":341}],2:[function(require,module,exports){
+},{"../../src/components/dropdown":372,"./example-dropdown":2,"lodash":206,"react":369,"react-highlight":341}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -398,30 +379,30 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Dropdown = require('../../lib/components/Dropdown.js');
+var _dropdown = require('../../lib/components/dropdown.js');
 
-var _Dropdown2 = _interopRequireDefault(_Dropdown);
+var _dropdown2 = _interopRequireDefault(_dropdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ExampleDropdown(props) {
   return _react2.default.createElement(
-    _Dropdown2.default,
+    _dropdown2.default,
     _extends({ className: 'example-dropdown' }, props),
     _react2.default.createElement(
-      _Dropdown.DropdownTrigger,
+      _dropdown.DropdownTrigger,
       { className: 'example-dropdown__trigger' },
       'Dropdown Trigger'
     ),
     _react2.default.createElement(
-      _Dropdown.DropdownContent,
+      _dropdown.DropdownContent,
       { className: 'example-dropdown__content' },
       'Dropdown Content'
     )
   );
 }
 
-},{"../../lib/components/Dropdown.js":4,"react":369}],3:[function(require,module,exports){
+},{"../../lib/components/dropdown.js":6,"react":369}],3:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -441,6 +422,237 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(_app2.default, null), document.getElementById('app'));
 
 },{"./components/app.jsx":1,"react":369,"react-dom":215}],4:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var DropdownContent = function (_Component) {
+  _inherits(DropdownContent, _Component);
+
+  function DropdownContent() {
+    _classCallCheck(this, DropdownContent);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownContent).apply(this, arguments));
+  }
+
+  _createClass(DropdownContent, [{
+    key: 'getElement',
+    value: function getElement() {
+      return this.refs.content;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var active = _props.active;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownContentProps = _objectWithoutProperties(_props, ['active', 'children', 'className']);
+
+      var dropdownContentClassNames = (0, _classnames2.default)({
+        'dropdown__content': true,
+        'dropdown__content--active': active
+      });
+      dropdownContentProps.className = dropdownContentClassNames + ' ' + className;
+
+      return _react2.default.createElement('div', _extends({}, dropdownContentProps, { ref: 'content' }), children);
+    }
+  }]);
+
+  return DropdownContent;
+}(_react.Component);
+
+DropdownContent.displayName = 'DropdownContent';
+
+DropdownContent.propTypes = {
+  active: _propTypes2.default.bool,
+  children: _propTypes2.default.node,
+  className: _propTypes2.default.string
+};
+
+DropdownContent.defaultProps = {
+  active: false,
+  className: ''
+};
+
+exports.default = DropdownContent;
+
+},{"classnames":8,"prop-types":213,"react":369}],5:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var DropdownTrigger = function (_Component) {
+  _inherits(DropdownTrigger, _Component);
+
+  function DropdownTrigger() {
+    _classCallCheck(this, DropdownTrigger);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownTrigger).apply(this, arguments));
+  }
+
+  _createClass(DropdownTrigger, [{
+    key: 'getElement',
+    value: function getElement() {
+      return this.refs.trigger;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownTriggerProps = _objectWithoutProperties(_props, ['children', 'className']);
+
+      dropdownTriggerProps.className = 'dropdown__trigger ' + className;
+
+      return _react2.default.createElement('a', _extends({}, dropdownTriggerProps, { ref: 'trigger' }), children);
+    }
+  }]);
+
+  return DropdownTrigger;
+}(_react.Component);
+
+DropdownTrigger.displayName = 'DropdownTrigger';
+
+DropdownTrigger.propTypes = {
+  children: _propTypes2.default.node,
+  className: _propTypes2.default.string
+};
+
+DropdownTrigger.defaultProps = {
+  className: ''
+};
+
+exports.default = DropdownTrigger;
+
+},{"prop-types":213,"react":369}],6:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -488,15 +700,15 @@ var _reactMinimalistPortal = require('react-minimalist-portal');
 
 var _reactMinimalistPortal2 = _interopRequireDefault(_reactMinimalistPortal);
 
-var _DropdownTrigger = require('./DropdownTrigger.js');
+var _dropdownTrigger = require('./dropdown-trigger');
 
-var _DropdownTrigger2 = _interopRequireDefault(_DropdownTrigger);
+var _dropdownTrigger2 = _interopRequireDefault(_dropdownTrigger);
 
-var _DropdownContent = require('./DropdownContent.js');
+var _dropdownContent = require('./dropdown-content');
 
-var _DropdownContent2 = _interopRequireDefault(_DropdownContent);
+var _dropdownContent2 = _interopRequireDefault(_dropdownContent);
 
-var _dom = require('../utils/dom.js');
+var _dom = require('../utils/dom');
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -752,7 +964,7 @@ var Dropdown = function (_Component) {
       });
       // stick callback on trigger element
       var boundChildren = _react2.default.Children.map(children, function (child) {
-        if (child.type === _DropdownTrigger2.default) {
+        if (child.type === _dropdownTrigger2.default) {
           (function () {
             var originalOnClick = child.props.onClick;
             child = (0, _react.cloneElement)(child, {
@@ -767,7 +979,7 @@ var Dropdown = function (_Component) {
               }
             });
           })();
-        } else if (child.type === _DropdownContent2.default) {
+        } else if (child.type === _dropdownContent2.default) {
           if (removeElement && !active) {
             child = null;
           } else if (renderInPortal) {
@@ -830,242 +1042,11 @@ Dropdown.defaultProps = {
   positionVertical: 'bottom'
 };
 
-exports.DropdownTrigger = _DropdownTrigger2.default;
-exports.DropdownContent = _DropdownContent2.default;
+exports.DropdownTrigger = _dropdownTrigger2.default;
+exports.DropdownContent = _dropdownContent2.default;
 exports.default = Dropdown;
 
-},{"../utils/dom.js":7,"./DropdownContent.js":5,"./DropdownTrigger.js":6,"classnames":8,"prop-types":213,"react":369,"react-dom":215,"react-minimalist-portal":343}],5:[function(require,module,exports){
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _objectWithoutProperties(obj, keys) {
-  var target = {};for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-  }return target;
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var DropdownContent = function (_Component) {
-  _inherits(DropdownContent, _Component);
-
-  function DropdownContent() {
-    _classCallCheck(this, DropdownContent);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownContent).apply(this, arguments));
-  }
-
-  _createClass(DropdownContent, [{
-    key: 'getElement',
-    value: function getElement() {
-      return this.refs.content;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var active = _props.active;
-      var children = _props.children;
-      var className = _props.className;
-
-      var dropdownContentProps = _objectWithoutProperties(_props, ['active', 'children', 'className']);
-
-      var dropdownContentClassNames = (0, _classnames2.default)({
-        'dropdown__content': true,
-        'dropdown__content--active': active
-      });
-      dropdownContentProps.className = dropdownContentClassNames + ' ' + className;
-
-      return _react2.default.createElement('div', _extends({}, dropdownContentProps, { ref: 'content' }), children);
-    }
-  }]);
-
-  return DropdownContent;
-}(_react.Component);
-
-DropdownContent.displayName = 'DropdownContent';
-
-DropdownContent.propTypes = {
-  active: _propTypes2.default.bool,
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string
-};
-
-DropdownContent.defaultProps = {
-  active: false,
-  className: ''
-};
-
-exports.default = DropdownContent;
-
-},{"classnames":8,"prop-types":213,"react":369}],6:[function(require,module,exports){
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _objectWithoutProperties(obj, keys) {
-  var target = {};for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-  }return target;
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var DropdownTrigger = function (_Component) {
-  _inherits(DropdownTrigger, _Component);
-
-  function DropdownTrigger() {
-    _classCallCheck(this, DropdownTrigger);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownTrigger).apply(this, arguments));
-  }
-
-  _createClass(DropdownTrigger, [{
-    key: 'getElement',
-    value: function getElement() {
-      return this.refs.trigger;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-
-      var dropdownTriggerProps = _objectWithoutProperties(_props, ['children', 'className']);
-
-      dropdownTriggerProps.className = 'dropdown__trigger ' + className;
-
-      return _react2.default.createElement('a', _extends({}, dropdownTriggerProps, { ref: 'trigger' }), children);
-    }
-  }]);
-
-  return DropdownTrigger;
-}(_react.Component);
-
-DropdownTrigger.displayName = 'DropdownTrigger';
-
-DropdownTrigger.propTypes = {
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string
-};
-
-DropdownTrigger.defaultProps = {
-  className: ''
-};
-
-exports.default = DropdownTrigger;
-
-},{"prop-types":213,"react":369}],7:[function(require,module,exports){
+},{"../utils/dom":7,"./dropdown-content":4,"./dropdown-trigger":5,"classnames":8,"prop-types":213,"react":369,"react-dom":215,"react-minimalist-portal":343}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1093,8 +1074,6 @@ function getElementOuterWidth(element) {
 
   return width + horizontalMargin;
 }
-
-exports.default = {};
 
 },{}],8:[function(require,module,exports){
 /*!
@@ -55186,4 +55165,572 @@ module.exports = traverseAllChildren;
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":346}]},{},[3]);
+},{"./lib/React":346}],370:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DropdownContent = function (_Component) {
+  _inherits(DropdownContent, _Component);
+
+  function DropdownContent() {
+    _classCallCheck(this, DropdownContent);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownContent).apply(this, arguments));
+  }
+
+  _createClass(DropdownContent, [{
+    key: 'getElement',
+    value: function getElement() {
+      return this.refs.content;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var active = _props.active;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownContentProps = _objectWithoutProperties(_props, ['active', 'children', 'className']);
+
+      var dropdownContentClassNames = (0, _classnames2.default)({
+        'dropdown__content': true,
+        'dropdown__content--active': active
+      });
+      dropdownContentProps.className = dropdownContentClassNames + ' ' + className;
+
+      return _react2.default.createElement(
+        'div',
+        _extends({}, dropdownContentProps, { ref: 'content' }),
+        children
+      );
+    }
+  }]);
+
+  return DropdownContent;
+}(_react.Component);
+
+DropdownContent.displayName = 'DropdownContent';
+
+DropdownContent.propTypes = {
+  active: _propTypes2.default.bool,
+  children: _propTypes2.default.node,
+  className: _propTypes2.default.string
+};
+
+DropdownContent.defaultProps = {
+  active: false,
+  className: ''
+};
+
+exports.default = DropdownContent;
+
+},{"classnames":8,"prop-types":213,"react":369}],371:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DropdownTrigger = function (_Component) {
+  _inherits(DropdownTrigger, _Component);
+
+  function DropdownTrigger() {
+    _classCallCheck(this, DropdownTrigger);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownTrigger).apply(this, arguments));
+  }
+
+  _createClass(DropdownTrigger, [{
+    key: 'getElement',
+    value: function getElement() {
+      return this.refs.trigger;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownTriggerProps = _objectWithoutProperties(_props, ['children', 'className']);
+
+      dropdownTriggerProps.className = 'dropdown__trigger ' + className;
+
+      return _react2.default.createElement(
+        'a',
+        _extends({}, dropdownTriggerProps, { ref: 'trigger' }),
+        children
+      );
+    }
+  }]);
+
+  return DropdownTrigger;
+}(_react.Component);
+
+DropdownTrigger.displayName = 'DropdownTrigger';
+
+DropdownTrigger.propTypes = {
+  children: _propTypes2.default.node,
+  className: _propTypes2.default.string
+};
+
+DropdownTrigger.defaultProps = {
+  className: ''
+};
+
+exports.default = DropdownTrigger;
+
+},{"prop-types":213,"react":369}],372:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DropdownContent = exports.DropdownTrigger = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactDom = require('react-dom');
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _reactMinimalistPortal = require('react-minimalist-portal');
+
+var _reactMinimalistPortal2 = _interopRequireDefault(_reactMinimalistPortal);
+
+var _dropdownTrigger = require('./dropdown-trigger');
+
+var _dropdownTrigger2 = _interopRequireDefault(_dropdownTrigger);
+
+var _dropdownContent = require('./dropdown-content');
+
+var _dropdownContent2 = _interopRequireDefault(_dropdownContent);
+
+var _dom = require('../utils/dom');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Dropdown = function (_Component) {
+  _inherits(Dropdown, _Component);
+
+  _createClass(Dropdown, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      window.addEventListener('click', this._onWindowClick);
+      window.addEventListener('touchstart', this._onWindowClick);
+
+      if (this.props.attachment === 'attached') {
+        this._startAutoUpdateContentStyle();
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.attachment !== 'attached' && nextProps.attachment === 'attached') {
+        this._startAutoUpdateContentStyle();
+      } else if (this.props.attachment === 'attached' && nextProps.attachment !== 'attached') {
+        this._stopAutoUpdateContentStyle();
+      }
+
+      if (!this.props.active && nextProps.active) {
+        this._setContentStyle();
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      window.removeEventListener('click', this._onWindowClick);
+      window.removeEventListener('touchstart', this._onWindowClick);
+
+      this._stopAutoUpdateContentStyle();
+    }
+  }]);
+
+  function Dropdown(props) {
+    _classCallCheck(this, Dropdown);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dropdown).call(this, props));
+
+    _this.state = {
+      active: false,
+      contentTop: 0,
+      contentLeft: 0
+    };
+
+    _this._onWindowClick = _this._onWindowClick.bind(_this);
+    _this._onToggleClick = _this._onToggleClick.bind(_this);
+    _this._onAnimationFrame = _this._onAnimationFrame.bind(_this);
+    _this._setContentStyle = _this._setContentStyle.bind(_this);
+    return _this;
+  }
+
+  _createClass(Dropdown, [{
+    key: 'isActive',
+    value: function isActive() {
+      return typeof this.props.active === 'boolean' ? this.props.active : this.state.active;
+    }
+  }, {
+    key: 'hide',
+    value: function hide() {
+      var _this2 = this;
+
+      this.setState({
+        active: false
+      }, function () {
+        if (_this2.props.onHide) {
+          _this2.props.onHide();
+        }
+      });
+    }
+  }, {
+    key: 'show',
+    value: function show() {
+      var _this3 = this;
+
+      this.setState({
+        active: true
+      }, function () {
+        _this3._setContentStyle();
+        if (_this3.props.onShow) {
+          _this3.props.onShow();
+        }
+      });
+    }
+  }, {
+    key: '_startAutoUpdateContentStyle',
+    value: function _startAutoUpdateContentStyle() {
+      if (!this._contentStyleUpdaterRafId) {
+        this._contentStyleUpdaterRafId = requestAnimationFrame(this._onAnimationFrame);
+      }
+    }
+  }, {
+    key: '_stopAutoUpdateContentStyle',
+    value: function _stopAutoUpdateContentStyle() {
+      if (this._contentStyleUpdaterRafId) {
+        cancelAnimationFrame(this._contentStyleUpdaterRafId);
+        delete this._contentStyleUpdaterRafId;
+      }
+    }
+  }, {
+    key: '_onAnimationFrame',
+    value: function _onAnimationFrame() {
+      var attachment = this.props.attachment;
+
+
+      if (attachment !== 'attached') {
+        return;
+      }
+
+      this._setContentStyle();
+      this._contentStyleUpdaterRafId = requestAnimationFrame(this._onAnimationFrame);
+    }
+  }, {
+    key: '_onWindowClick',
+    value: function _onWindowClick(event) {
+      var dropdownElement = (0, _reactDom.findDOMNode)(this);
+      if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive()) {
+        this.hide();
+      }
+    }
+  }, {
+    key: '_onToggleClick',
+    value: function _onToggleClick(event) {
+      event.preventDefault();
+      if (this.isActive()) {
+        this.hide();
+      } else {
+        this.show();
+      }
+    }
+  }, {
+    key: '_setContentStyle',
+    value: function _setContentStyle() {
+      if (!this.refs.content) {
+        return;
+      }
+
+      var _props = this.props;
+      var avoidEdges = _props.avoidEdges;
+      var contentHorizontalEdge = _props.contentHorizontalEdge;
+      var contentVerticalEdge = _props.contentVerticalEdge;
+      var positionHorizontal = _props.positionHorizontal;
+      var positionVertical = _props.positionVertical;
+
+      var triggerPosition = this.refs.trigger.getElement().getBoundingClientRect();
+      var contentElement = this.refs.content.getElement();
+      var contentHeight = (0, _dom.getElementOuterHeight)(contentElement);
+      var contentWidth = (0, _dom.getElementOuterWidth)(contentElement);
+      var horizontalOffset = 0;
+      var verticalOffset = 0;
+
+      if (triggerPosition) {
+        if (positionHorizontal === 'center') {
+          horizontalOffset = triggerPosition.width / 2;
+        } else if (positionHorizontal === 'right') {
+          horizontalOffset = triggerPosition.width;
+        }
+
+        if (positionVertical === 'bottom') {
+          verticalOffset = triggerPosition.height;
+        } else if (positionVertical === 'middle') {
+          verticalOffset = triggerPosition.height / 2;
+        }
+
+        horizontalOffset += triggerPosition.left;
+        verticalOffset += triggerPosition.top;
+      }
+
+      if (contentVerticalEdge === 'bottom') {
+        verticalOffset -= contentHeight;
+      }
+
+      if (contentHorizontalEdge === 'right') {
+        horizontalOffset -= contentWidth;
+      }
+
+      if (avoidEdges) {
+        var contentTopEdge = verticalOffset;
+        var contentRightEdge = horizontalOffset + contentWidth;
+        var contentBottomEdge = verticalOffset + contentHeight;
+        var contentLeftEdge = horizontalOffset;
+
+        var beyondTopEdge = contentTopEdge < 0;
+        var beyondRightEdge = contentRightEdge > window.innerWidth;
+        var beyondBottomEdge = contentBottomEdge > window.innerHeight;
+        var beyondLeftEdge = contentLeftEdge < 0;
+
+        if (beyondBottomEdge) {
+          verticalOffset = window.innerHeight - 5 - contentHeight;
+        } else if (beyondTopEdge) {
+          verticalOffset = 5;
+        }
+
+        if (beyondLeftEdge) {
+          horizontalOffset = 5;
+        } else if (beyondRightEdge) {
+          horizontalOffset = window.innerWidth - 5 - contentWidth;
+        }
+      }
+
+      this.setState({
+        contentStyle: {
+          position: 'fixed',
+          top: verticalOffset,
+          left: horizontalOffset
+        }
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this,
+          _arguments = arguments;
+
+      var _props2 = this.props;
+      var attachment = _props2.attachment;
+      var children = _props2.children;
+      var className = _props2.className;
+      var disabled = _props2.disabled;
+      var removeElement = _props2.removeElement;
+      // create component classes
+
+      var active = this.isActive();
+      var renderInPortal = attachment === 'detached' || attachment === 'attached';
+      var dropdownClasses = (0, _classnames2.default)({
+        dropdown: true,
+        'dropdown--active': active,
+        'dropdown--disabled': disabled
+      });
+      // stick callback on trigger element
+      var boundChildren = _react2.default.Children.map(children, function (child) {
+        if (child.type === _dropdownTrigger2.default) {
+          (function () {
+            var originalOnClick = child.props.onClick;
+            child = (0, _react.cloneElement)(child, {
+              ref: 'trigger',
+              onClick: function onClick(event) {
+                if (!disabled) {
+                  _this4._onToggleClick(event);
+                  if (originalOnClick) {
+                    originalOnClick.apply(child, _arguments);
+                  }
+                }
+              }
+            });
+          })();
+        } else if (child.type === _dropdownContent2.default) {
+          if (removeElement && !active) {
+            child = null;
+          } else if (renderInPortal) {
+            var contentStyle = _this4.state.contentStyle;
+
+
+            child = (0, _react.cloneElement)(child, {
+              ref: 'content',
+              active: active,
+              style: contentStyle
+            });
+            child = _react2.default.createElement(
+              _reactMinimalistPortal2.default,
+              null,
+              child
+            );
+          }
+        }
+        return child;
+      });
+      var cleanProps = _extends({}, this.props);
+      delete cleanProps.attachment;
+      delete cleanProps.avoidEdges;
+      delete cleanProps.active;
+      delete cleanProps.contentHorizontalEdge;
+      delete cleanProps.contentVerticalEdge;
+      delete cleanProps.onShow;
+      delete cleanProps.onHide;
+      delete cleanProps.positionHorizontal;
+      delete cleanProps.positionVertical;
+      delete cleanProps.removeElement;
+
+      return _react2.default.createElement(
+        'div',
+        _extends({}, cleanProps, {
+          className: dropdownClasses + ' ' + className }),
+        boundChildren
+      );
+    }
+  }]);
+
+  return Dropdown;
+}(_react.Component);
+
+Dropdown.propTypes = {
+  attachment: _propTypes2.default.oneOf(['attached', 'detached', 'inline']),
+  avoidEdges: _propTypes2.default.bool,
+  disabled: _propTypes2.default.bool,
+  active: _propTypes2.default.bool,
+  onHide: _propTypes2.default.func,
+  onShow: _propTypes2.default.func,
+  positionHorizontal: _propTypes2.default.oneOf(['left', 'center', 'right']),
+  positionVertical: _propTypes2.default.oneOf(['top', 'middle', 'bottom']),
+  contentHorizontalEdge: _propTypes2.default.oneOf(['left', 'right']),
+  contentVerticalEdge: _propTypes2.default.oneOf(['top', 'bottom']),
+  children: _propTypes2.default.node,
+  className: _propTypes2.default.string,
+  removeElement: _propTypes2.default.bool,
+  style: _propTypes2.default.object
+};
+
+Dropdown.defaultProps = {
+  attachment: 'attached',
+  avoidEdges: true,
+  contentHorizontalEdge: 'left',
+  contentVerticalEdge: 'top',
+  className: '',
+  positionHorizontal: 'left',
+  positionVertical: 'bottom'
+};
+
+exports.DropdownTrigger = _dropdownTrigger2.default;
+exports.DropdownContent = _dropdownContent2.default;
+exports.default = Dropdown;
+
+},{"../utils/dom":373,"./dropdown-content":370,"./dropdown-trigger":371,"classnames":8,"prop-types":213,"react":369,"react-dom":215,"react-minimalist-portal":343}],373:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.pixelStringToInteger = pixelStringToInteger;
+exports.getElementOuterHeight = getElementOuterHeight;
+exports.getElementOuterWidth = getElementOuterWidth;
+function pixelStringToInteger(marginString) {
+  return parseInt((marginString || '').replace('px', ''), 10) || 0;
+}
+
+function getElementOuterHeight(element) {
+  var height = element.offsetHeight || element.outerHeight;
+  var styles = window.getComputedStyle(element);
+  var verticalMargin = pixelStringToInteger(styles['margin-top']) + pixelStringToInteger(styles['margin-bottom']);
+
+  return height + verticalMargin;
+}
+
+function getElementOuterWidth(element) {
+  var width = element.offsetWidth || element.outerWidth;
+  var styles = window.getComputedStyle(element);
+  var horizontalMargin = pixelStringToInteger(styles['margin-left']) + pixelStringToInteger(styles['margin-right']);
+
+  return width + horizontalMargin;
+}
+
+},{}]},{},[3]);

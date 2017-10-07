@@ -17,5 +17,3 @@ export function getElementOuterWidth (element) {
 
   return width + horizontalMargin;
 }
-
-export default {};

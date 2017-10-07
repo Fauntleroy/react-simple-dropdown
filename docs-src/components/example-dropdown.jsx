@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/Dropdown.js';
+import Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/dropdown.js';
 
 export default function ExampleDropdown (props) {
   return (
