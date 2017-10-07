@@ -28,7 +28,9 @@ class App extends Component {
   constructor (props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      mountDropdown: true
+    };
 
     this.handleLinkClick = this.handleLinkClick.bind(this);
   }
@@ -54,12 +56,17 @@ class App extends Component {
   createStateUnsetter (key) {
     return () => {
       this.setState({
+        // eslint-disable-next-line no-undefined
         [key]: undefined
       });
     };
   }
 
   render () {
+    const {
+      mountDropdown,
+      ...dropdownState
+    } = this.state;
     const {
       active,
       attachment,
@@ -71,7 +78,7 @@ class App extends Component {
       positionVertical,
       className,
       removeElement
-    } = this.state;
+    } = dropdownState;
 
     return (
       <div className="app">
@@ -92,7 +99,7 @@ class App extends Component {
               <input
                 type="checkbox"
                 onChange={this.createStateHandler('avoidEdges', (event) => event.target.checked)}
-                value={avoidEdges} />
+                checked={avoidEdges} />
             </label>
             <button type="button" onClick={this.createStateUnsetter('avoidEdges')}>Unset avoidEdges</button>
           </li>
@@ -102,7 +109,7 @@ class App extends Component {
               <input
                 type="checkbox"
                 onChange={this.createStateHandler('disabled', (event) => event.target.checked)}
-                value={disabled} />
+                checked={disabled} />
             </label>
             <button type="button" onClick={this.createStateUnsetter('disabled')}>Unset disabled</button>
           </li>
@@ -112,7 +119,7 @@ class App extends Component {
               <input
                 type="checkbox"
                 onChange={this.createStateHandler('active', (event) => event.target.checked)}
-                value={active} />
+                checked={active} />
             </label>
             <button type="button" onClick={this.createStateUnsetter('active')}>Unset active</button>
           </li>
@@ -160,15 +167,23 @@ class App extends Component {
               <input
                 type="checkbox"
                 onChange={this.createStateHandler('removeElement', (event) => event.target.checked)}
-                value={removeElement} />
+                checked={removeElement} />
               <button type="button" onClick={this.createStateUnsetter('removeElement')}>Unset removeElement</button>
             </label>
           </li>
         </ul>
+        <br />
+        <label>
+          Mount dropdown
+          <input
+            type="checkbox"
+            onChange={this.createStateHandler('mountDropdown', (event) => event.target.checked)}
+            checked={mountDropdown} />
+        </label>
         <h3>Example</h3>
         <div className="overflow-scroller">
           <div className="overflow-scroller__top-spacer" />
-          <ExampleDropdown {...this.state} />
+          {mountDropdown && <ExampleDropdown {...dropdownState} />}
           <div className="overflow-scroller__bottom-spacer" />
         </div>
         <h3>Code</h3>

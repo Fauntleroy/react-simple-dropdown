@@ -83,6 +83,7 @@ a {
 }
 .overflow-scroller {
   position: relative;
+  width: 400px;
   height: 250px;
   padding: 25px;
   overflow: auto;

@@ -2,6 +2,7 @@ import React, { cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
+
 import Portal from 'react-minimalist-portal';
 
 import DropdownTrigger from './DropdownTrigger.js';
@@ -51,6 +52,7 @@ class Dropdown extends Component {
 
     this._onWindowClick = this._onWindowClick.bind(this);
     this._onToggleClick = this._onToggleClick.bind(this);
+    this._onAnimationFrame = this._onAnimationFrame.bind(this);
     this._setContentStyle = this._setContentStyle.bind(this);
   }
 
@@ -82,15 +84,27 @@ class Dropdown extends Component {
   }
 
   _startAutoUpdateContentStyle () {
-    if (!this._contentStyleUpdaterInterval) {
-      this._contentStyleUpdaterInterval = window.setInterval(this._setContentStyle, 1000 / 120);
+    if (!this._contentStyleUpdaterRafId) {
+      this._contentStyleUpdaterRafId = requestAnimationFrame(this._onAnimationFrame);
     }
   }
 
   _stopAutoUpdateContentStyle () {
-    if (this._contentStyleUpdaterInterval) {
-      clearInterval(this._contentStyleUpdaterInterval);
+    if (this._contentStyleUpdaterRafId) {
+      cancelAnimationFrame(this._contentStyleUpdaterRafId);
+      delete this._contentStyleUpdaterRafId;
     }
+  }
+
+  _onAnimationFrame () {
+    const { attachment } = this.props;
+
+    if (attachment !== 'attached') {
+      return;
+    }
+
+    this._setContentStyle();
+    this._contentStyleUpdaterRafId = requestAnimationFrame(this._onAnimationFrame);
   }
 
   _onWindowClick (event) {
@@ -222,7 +236,7 @@ class Dropdown extends Component {
             active,
             style: contentStyle
           });
-          child = (<Portal><div className={dropdownClasses}>{child}</div></Portal>);
+          child = (<Portal>{child}</Portal>);
         }
       }
       return child;
@@ -267,7 +281,7 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
-  attachment: 'inline',
+  attachment: 'attached',
   avoidEdges: true,
   contentHorizontalEdge: 'left',
   contentVerticalEdge: 'top',

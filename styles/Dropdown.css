@@ -1,5 +1,5 @@
 .dropdown {
-    display: inline-block;
+  display: inline-block;
 }
 
 .dropdown__content {
@@ -11,9 +11,9 @@
 }
 
 .dropdown .dropdown__content {
-    position: absolute;
+  position: absolute;
 }
 
 .dropdown--active .dropdown__content {
-    display: block;
+  display: block;
 }

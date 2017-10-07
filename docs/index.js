@@ -27,6 +27,8 @@ var _exampleDropdown2 = _interopRequireDefault(_exampleDropdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40,7 +42,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
 // eslint-disable-next-line no-sync
-var accountDropdownCode = "import React, { Component } from 'react';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/Dropdown.js';\n\nclass ExampleDropdown extends Component {\n  constructor (props) {\n    super(props);\n\n    this.handleLinkClick = this.handleLinkClick.bind(this);\n  }\n\n  handleLinkClick () {\n    this.refs.dropdown.hide();\n  }\n\n  render () {\n    return (\n      <Dropdown className=\"example-dropdown\" ref=\"dropdown\" {...this.props}>\n        <DropdownTrigger className=\"example-dropdown__trigger\">\n          Dropdown Trigger\n        </DropdownTrigger>\n        <DropdownContent className=\"example-dropdown__content\">\n          Dropdown Content\n        </DropdownContent>\n      </Dropdown>\n    );\n  }\n}\n\nexport default ExampleDropdown;\n";
+var accountDropdownCode = "import React from 'react';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/Dropdown.js';\n\nexport default function ExampleDropdown (props) {\n  return (\n    <Dropdown className=\"example-dropdown\" {...props}>\n      <DropdownTrigger className=\"example-dropdown__trigger\">\n        Dropdown Trigger\n      </DropdownTrigger>\n      <DropdownContent className=\"example-dropdown__content\">\n        Dropdown Content\n      </DropdownContent>\n    </Dropdown>\n  );\n}\n";
 
 var ATTACHMENTS = ['inline', 'attached', 'detached'];
 var POSITIONS_HORIZONTAL = ['left', 'center', 'right'];
@@ -66,7 +68,9 @@ var App = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
-    _this.state = {};
+    _this.state = {
+      mountDropdown: true
+    };
 
     _this.handleLinkClick = _this.handleLinkClick.bind(_this);
     return _this;
@@ -107,16 +111,20 @@ var App = function (_Component) {
     key: 'render',
     value: function render() {
       var _state = this.state;
-      var active = _state.active;
-      var attachment = _state.attachment;
-      var avoidEdges = _state.avoidEdges;
-      var contentHorizontalEdge = _state.contentHorizontalEdge;
-      var contentVerticalEdge = _state.contentVerticalEdge;
-      var disabled = _state.disabled;
-      var positionHorizontal = _state.positionHorizontal;
-      var positionVertical = _state.positionVertical;
-      var className = _state.className;
-      var removeElement = _state.removeElement;
+      var mountDropdown = _state.mountDropdown;
+
+      var dropdownState = _objectWithoutProperties(_state, ['mountDropdown']);
+
+      var active = dropdownState.active;
+      var attachment = dropdownState.attachment;
+      var avoidEdges = dropdownState.avoidEdges;
+      var contentHorizontalEdge = dropdownState.contentHorizontalEdge;
+      var contentVerticalEdge = dropdownState.contentVerticalEdge;
+      var disabled = dropdownState.disabled;
+      var positionHorizontal = dropdownState.positionHorizontal;
+      var positionVertical = dropdownState.positionVertical;
+      var className = dropdownState.className;
+      var removeElement = dropdownState.removeElement;
 
 
       return _react2.default.createElement(
@@ -167,7 +175,7 @@ var App = function (_Component) {
                 onChange: this.createStateHandler('avoidEdges', function (event) {
                   return event.target.checked;
                 }),
-                value: avoidEdges })
+                checked: avoidEdges })
             ),
             _react2.default.createElement(
               'button',
@@ -187,7 +195,7 @@ var App = function (_Component) {
                 onChange: this.createStateHandler('disabled', function (event) {
                   return event.target.checked;
                 }),
-                value: disabled })
+                checked: disabled })
             ),
             _react2.default.createElement(
               'button',
@@ -207,7 +215,7 @@ var App = function (_Component) {
                 onChange: this.createStateHandler('active', function (event) {
                   return event.target.checked;
                 }),
-                value: active })
+                checked: active })
             ),
             _react2.default.createElement(
               'button',
@@ -317,7 +325,7 @@ var App = function (_Component) {
                 onChange: this.createStateHandler('removeElement', function (event) {
                   return event.target.checked;
                 }),
-                value: removeElement }),
+                checked: removeElement }),
               _react2.default.createElement(
                 'button',
                 { type: 'button', onClick: this.createStateUnsetter('removeElement') },
@@ -325,6 +333,18 @@ var App = function (_Component) {
               )
             )
           )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'label',
+          null,
+          'Mount dropdown',
+          _react2.default.createElement('input', {
+            type: 'checkbox',
+            onChange: this.createStateHandler('mountDropdown', function (event) {
+              return event.target.checked;
+            }),
+            checked: mountDropdown })
         ),
         _react2.default.createElement(
           'h3',
@@ -335,7 +355,7 @@ var App = function (_Component) {
           'div',
           { className: 'overflow-scroller' },
           _react2.default.createElement('div', { className: 'overflow-scroller__top-spacer' }),
-          _react2.default.createElement(_exampleDropdown2.default, this.state),
+          mountDropdown && _react2.default.createElement(_exampleDropdown2.default, dropdownState),
           _react2.default.createElement('div', { className: 'overflow-scroller__bottom-spacer' })
         ),
         _react2.default.createElement(
@@ -372,7 +392,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = ExampleDropdown;
 
 var _react = require('react');
 
@@ -384,53 +404,22 @@ var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ExampleDropdown = function (_Component) {
-  _inherits(ExampleDropdown, _Component);
-
-  function ExampleDropdown(props) {
-    _classCallCheck(this, ExampleDropdown);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ExampleDropdown).call(this, props));
-
-    _this.handleLinkClick = _this.handleLinkClick.bind(_this);
-    return _this;
-  }
-
-  _createClass(ExampleDropdown, [{
-    key: 'handleLinkClick',
-    value: function handleLinkClick() {
-      this.refs.dropdown.hide();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        _Dropdown2.default,
-        _extends({ className: 'example-dropdown', ref: 'dropdown' }, this.props),
-        _react2.default.createElement(
-          _Dropdown.DropdownTrigger,
-          { className: 'example-dropdown__trigger' },
-          'Dropdown Trigger'
-        ),
-        _react2.default.createElement(
-          _Dropdown.DropdownContent,
-          { className: 'example-dropdown__content' },
-          'Dropdown Content'
-        )
-      );
-    }
-  }]);
-
-  return ExampleDropdown;
-}(_react.Component);
-
-exports.default = ExampleDropdown;
+function ExampleDropdown(props) {
+  return _react2.default.createElement(
+    _Dropdown2.default,
+    _extends({ className: 'example-dropdown' }, props),
+    _react2.default.createElement(
+      _Dropdown.DropdownTrigger,
+      { className: 'example-dropdown__trigger' },
+      'Dropdown Trigger'
+    ),
+    _react2.default.createElement(
+      _Dropdown.DropdownContent,
+      { className: 'example-dropdown__content' },
+      'Dropdown Content'
+    )
+  );
+}
 
 },{"../../lib/components/Dropdown.js":4,"react":369}],3:[function(require,module,exports){
 'use strict';
@@ -580,6 +569,7 @@ var Dropdown = function (_Component) {
 
     _this._onWindowClick = _this._onWindowClick.bind(_this);
     _this._onToggleClick = _this._onToggleClick.bind(_this);
+    _this._onAnimationFrame = _this._onAnimationFrame.bind(_this);
     _this._setContentStyle = _this._setContentStyle.bind(_this);
     return _this;
   }
@@ -619,16 +609,29 @@ var Dropdown = function (_Component) {
   }, {
     key: '_startAutoUpdateContentStyle',
     value: function _startAutoUpdateContentStyle() {
-      if (!this._contentStyleUpdaterInterval) {
-        this._contentStyleUpdaterInterval = window.setInterval(this._setContentStyle, 1000 / 120);
+      if (!this._contentStyleUpdaterRafId) {
+        this._contentStyleUpdaterRafId = requestAnimationFrame(this._onAnimationFrame);
       }
     }
   }, {
     key: '_stopAutoUpdateContentStyle',
     value: function _stopAutoUpdateContentStyle() {
-      if (this._contentStyleUpdaterInterval) {
-        clearInterval(this._contentStyleUpdaterInterval);
+      if (this._contentStyleUpdaterRafId) {
+        cancelAnimationFrame(this._contentStyleUpdaterRafId);
+        delete this._contentStyleUpdaterRafId;
       }
+    }
+  }, {
+    key: '_onAnimationFrame',
+    value: function _onAnimationFrame() {
+      var attachment = this.props.attachment;
+
+      if (attachment !== 'attached') {
+        return;
+      }
+
+      this._setContentStyle();
+      this._contentStyleUpdaterRafId = requestAnimationFrame(this._onAnimationFrame);
     }
   }, {
     key: '_onWindowClick',
@@ -775,7 +778,7 @@ var Dropdown = function (_Component) {
               active: active,
               style: contentStyle
             });
-            child = _react2.default.createElement(_reactMinimalistPortal2.default, null, _react2.default.createElement('div', { className: dropdownClasses }, child));
+            child = _react2.default.createElement(_reactMinimalistPortal2.default, null, child);
           }
         }
         return child;
@@ -818,7 +821,7 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
-  attachment: 'inline',
+  attachment: 'attached',
   avoidEdges: true,
   contentHorizontalEdge: 'left',
   contentVerticalEdge: 'top',
