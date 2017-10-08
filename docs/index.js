@@ -690,8 +690,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = require('react-dom');
-
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -738,32 +736,34 @@ var Dropdown = function (_Component) {
   _createClass(Dropdown, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      window.addEventListener('click', this._onWindowClick);
-      window.addEventListener('touchstart', this._onWindowClick);
+      this._watchClicks();
 
-      if (this.props.attachment === 'attached') {
+      if (this.props.attachment === 'attached' && this.isActive()) {
         this._startAutoUpdateContentStyle();
       }
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (this.props.attachment !== 'attached' && nextProps.attachment === 'attached') {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate(nextProps, nextState) {
+      var wasActive = this.props.active || this.state.active;
+      var willBeActive = nextProps.active || nextState.active;
+
+      if (!wasActive && willBeActive && nextProps.attachment === 'attached' || willBeActive && nextProps.attachment === 'attached' && this.props.attachment !== 'attached') {
         this._startAutoUpdateContentStyle();
-      } else if (this.props.attachment === 'attached' && nextProps.attachment !== 'attached') {
+      }
+
+      if (wasActive && !willBeActive || nextProps.attachment !== 'attached' && this.props.attachment === 'attached') {
         this._stopAutoUpdateContentStyle();
       }
 
-      if (!this.props.active && nextProps.active) {
+      if (!wasActive && willBeActive) {
         this._setContentStyle();
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      window.removeEventListener('click', this._onWindowClick);
-      window.removeEventListener('touchstart', this._onWindowClick);
-
+      this._unwatchClicks();
       this._stopAutoUpdateContentStyle();
     }
   }]);
@@ -774,9 +774,7 @@ var Dropdown = function (_Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dropdown).call(this, props));
 
     _this.state = {
-      active: false,
-      contentTop: 0,
-      contentLeft: 0
+      active: false
     };
 
     _this._onWindowClick = _this._onWindowClick.bind(_this);
@@ -819,6 +817,18 @@ var Dropdown = function (_Component) {
       });
     }
   }, {
+    key: '_watchClicks',
+    value: function _watchClicks() {
+      window.addEventListener('click', this._onWindowClick);
+      window.addEventListener('touchstart', this._onWindowClick);
+    }
+  }, {
+    key: '_unwatchClicks',
+    value: function _unwatchClicks() {
+      window.removeEventListener('click', this._onWindowClick);
+      window.removeEventListener('touchstart', this._onWindowClick);
+    }
+  }, {
     key: '_startAutoUpdateContentStyle',
     value: function _startAutoUpdateContentStyle() {
       if (!this._contentStyleUpdaterRafId) {
@@ -848,8 +858,12 @@ var Dropdown = function (_Component) {
   }, {
     key: '_onWindowClick',
     value: function _onWindowClick(event) {
-      var dropdownElement = (0, _reactDom.findDOMNode)(this);
-      if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive()) {
+      var dropdownContentElement = this.refs.content.getElement();
+      var dropdownTriggerElement = this.refs.trigger.getElement();
+      var isInContent = event.target === dropdownContentElement || dropdownContentElement.contains(event.target);
+      var isInTrigger = event.target === dropdownTriggerElement || dropdownTriggerElement.contains(event.target);
+
+      if (!isInContent && !isInTrigger && this.isActive()) {
         this.hide();
       }
     }
@@ -936,8 +950,8 @@ var Dropdown = function (_Component) {
       this.setState({
         contentStyle: {
           position: 'fixed',
-          top: verticalOffset,
-          left: horizontalOffset
+          top: verticalOffset + 'px',
+          left: horizontalOffset + 'px'
         }
       });
     }
@@ -990,7 +1004,13 @@ var Dropdown = function (_Component) {
               active: active,
               style: contentStyle
             });
+
             child = _react2.default.createElement(_reactMinimalistPortal2.default, null, child);
+          } else {
+            child = (0, _react.cloneElement)(child, {
+              ref: 'content',
+              active: active
+            });
           }
         }
         return child;
@@ -1046,7 +1066,7 @@ exports.DropdownTrigger = _dropdownTrigger2.default;
 exports.DropdownContent = _dropdownContent2.default;
 exports.default = Dropdown;
 
-},{"../utils/dom":7,"./dropdown-content":4,"./dropdown-trigger":5,"classnames":8,"prop-types":213,"react":369,"react-dom":215,"react-minimalist-portal":343}],7:[function(require,module,exports){
+},{"../utils/dom":7,"./dropdown-content":4,"./dropdown-trigger":5,"classnames":8,"prop-types":213,"react":369,"react-minimalist-portal":343}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -55352,8 +55372,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = require('react-dom');
-
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -55386,32 +55404,34 @@ var Dropdown = function (_Component) {
   _createClass(Dropdown, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      window.addEventListener('click', this._onWindowClick);
-      window.addEventListener('touchstart', this._onWindowClick);
+      this._watchClicks();
 
-      if (this.props.attachment === 'attached') {
+      if (this.props.attachment === 'attached' && this.isActive()) {
         this._startAutoUpdateContentStyle();
       }
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (this.props.attachment !== 'attached' && nextProps.attachment === 'attached') {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate(nextProps, nextState) {
+      var wasActive = this.props.active || this.state.active;
+      var willBeActive = nextProps.active || nextState.active;
+
+      if (!wasActive && willBeActive && nextProps.attachment === 'attached' || willBeActive && nextProps.attachment === 'attached' && this.props.attachment !== 'attached') {
         this._startAutoUpdateContentStyle();
-      } else if (this.props.attachment === 'attached' && nextProps.attachment !== 'attached') {
+      }
+
+      if (wasActive && !willBeActive || nextProps.attachment !== 'attached' && this.props.attachment === 'attached') {
         this._stopAutoUpdateContentStyle();
       }
 
-      if (!this.props.active && nextProps.active) {
+      if (!wasActive && willBeActive) {
         this._setContentStyle();
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      window.removeEventListener('click', this._onWindowClick);
-      window.removeEventListener('touchstart', this._onWindowClick);
-
+      this._unwatchClicks();
       this._stopAutoUpdateContentStyle();
     }
   }]);
@@ -55422,9 +55442,7 @@ var Dropdown = function (_Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dropdown).call(this, props));
 
     _this.state = {
-      active: false,
-      contentTop: 0,
-      contentLeft: 0
+      active: false
     };
 
     _this._onWindowClick = _this._onWindowClick.bind(_this);
@@ -55467,6 +55485,18 @@ var Dropdown = function (_Component) {
       });
     }
   }, {
+    key: '_watchClicks',
+    value: function _watchClicks() {
+      window.addEventListener('click', this._onWindowClick);
+      window.addEventListener('touchstart', this._onWindowClick);
+    }
+  }, {
+    key: '_unwatchClicks',
+    value: function _unwatchClicks() {
+      window.removeEventListener('click', this._onWindowClick);
+      window.removeEventListener('touchstart', this._onWindowClick);
+    }
+  }, {
     key: '_startAutoUpdateContentStyle',
     value: function _startAutoUpdateContentStyle() {
       if (!this._contentStyleUpdaterRafId) {
@@ -55497,8 +55527,12 @@ var Dropdown = function (_Component) {
   }, {
     key: '_onWindowClick',
     value: function _onWindowClick(event) {
-      var dropdownElement = (0, _reactDom.findDOMNode)(this);
-      if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive()) {
+      var dropdownContentElement = this.refs.content.getElement();
+      var dropdownTriggerElement = this.refs.trigger.getElement();
+      var isInContent = event.target === dropdownContentElement || dropdownContentElement.contains(event.target);
+      var isInTrigger = event.target === dropdownTriggerElement || dropdownTriggerElement.contains(event.target);
+
+      if (!isInContent && !isInTrigger && this.isActive()) {
         this.hide();
       }
     }
@@ -55585,8 +55619,8 @@ var Dropdown = function (_Component) {
       this.setState({
         contentStyle: {
           position: 'fixed',
-          top: verticalOffset,
-          left: horizontalOffset
+          top: verticalOffset + 'px',
+          left: horizontalOffset + 'px'
         }
       });
     }
@@ -55640,11 +55674,17 @@ var Dropdown = function (_Component) {
               active: active,
               style: contentStyle
             });
+
             child = _react2.default.createElement(
               _reactMinimalistPortal2.default,
               null,
               child
             );
+          } else {
+            child = (0, _react.cloneElement)(child, {
+              ref: 'content',
+              active: active
+            });
           }
         }
         return child;
@@ -55704,7 +55744,7 @@ exports.DropdownTrigger = _dropdownTrigger2.default;
 exports.DropdownContent = _dropdownContent2.default;
 exports.default = Dropdown;
 
-},{"../utils/dom":373,"./dropdown-content":370,"./dropdown-trigger":371,"classnames":8,"prop-types":213,"react":369,"react-dom":215,"react-minimalist-portal":343}],373:[function(require,module,exports){
+},{"../utils/dom":373,"./dropdown-content":370,"./dropdown-trigger":371,"classnames":8,"prop-types":213,"react":369,"react-minimalist-portal":343}],373:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

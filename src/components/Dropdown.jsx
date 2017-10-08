@@ -1,6 +1,5 @@
 import React, { cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 
 import Portal from 'react-minimalist-portal';
@@ -14,30 +13,38 @@ class Dropdown extends Component {
   displayName: 'Dropdown'
 
   componentDidMount () {
-    window.addEventListener('click', this._onWindowClick);
-    window.addEventListener('touchstart', this._onWindowClick);
+    this._watchClicks();
 
-    if (this.props.attachment === 'attached') {
+    if (this.props.attachment === 'attached' && this.isActive()) {
       this._startAutoUpdateContentStyle();
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.props.attachment !== 'attached' && nextProps.attachment === 'attached') {
+  componentWillUpdate (nextProps, nextState) {
+    const wasActive = (this.props.active || this.state.active);
+    const willBeActive = (nextProps.active || nextState.active);
+
+    if (
+      ((!wasActive && willBeActive) && nextProps.attachment === 'attached') ||
+      (willBeActive && (nextProps.attachment === 'attached' && this.props.attachment !== 'attached'))
+    ) {
       this._startAutoUpdateContentStyle();
-    } else if (this.props.attachment === 'attached' && nextProps.attachment !== 'attached') {
+    }
+
+    if (
+      (wasActive && !willBeActive) ||
+      (nextProps.attachment !== 'attached' && this.props.attachment === 'attached')
+    ) {
       this._stopAutoUpdateContentStyle();
     }
 
-    if (!this.props.active && nextProps.active) {
+    if (!wasActive && willBeActive) {
       this._setContentStyle();
     }
   }
 
   componentWillUnmount () {
-    window.removeEventListener('click', this._onWindowClick);
-    window.removeEventListener('touchstart', this._onWindowClick);
-
+    this._unwatchClicks();
     this._stopAutoUpdateContentStyle();
   }
 
@@ -45,9 +52,7 @@ class Dropdown extends Component {
     super(props);
 
     this.state = {
-      active: false,
-      contentTop: 0,
-      contentLeft: 0
+      active: false
     };
 
     this._onWindowClick = this._onWindowClick.bind(this);
@@ -83,6 +88,16 @@ class Dropdown extends Component {
     });
   }
 
+  _watchClicks () {
+    window.addEventListener('click', this._onWindowClick);
+    window.addEventListener('touchstart', this._onWindowClick);
+  }
+
+  _unwatchClicks () {
+    window.removeEventListener('click', this._onWindowClick);
+    window.removeEventListener('touchstart', this._onWindowClick);
+  }
+
   _startAutoUpdateContentStyle () {
     if (!this._contentStyleUpdaterRafId) {
       this._contentStyleUpdaterRafId = requestAnimationFrame(this._onAnimationFrame);
@@ -108,8 +123,12 @@ class Dropdown extends Component {
   }
 
   _onWindowClick (event) {
-    const dropdownElement = findDOMNode(this);
-    if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive()) {
+    const dropdownContentElement = this.refs.content.getElement();
+    const dropdownTriggerElement = this.refs.trigger.getElement();
+    const isInContent = (event.target === dropdownContentElement || dropdownContentElement.contains(event.target));
+    const isInTrigger = (event.target === dropdownTriggerElement || dropdownTriggerElement.contains(event.target));
+
+    if ((!isInContent && !isInTrigger) && this.isActive()) {
       this.hide();
     }
   }
@@ -188,8 +207,8 @@ class Dropdown extends Component {
     this.setState({
       contentStyle: {
         position: 'fixed',
-        top: verticalOffset,
-        left: horizontalOffset
+        top: `${verticalOffset}px`,
+        left: `${horizontalOffset}px`
       }
     });
   }
@@ -236,7 +255,13 @@ class Dropdown extends Component {
             active,
             style: contentStyle
           });
+
           child = (<Portal>{child}</Portal>);
+        } else {
+          child = cloneElement(child, {
+            ref: 'content',
+            active
+          });
         }
       }
       return child;

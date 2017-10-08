@@ -7,13 +7,9 @@
 }
 
 .dropdown__content--active {
-  display: block;
+  display: inline-block;
 }
 
 .dropdown .dropdown__content {
   position: absolute;
-}
-
-.dropdown--active .dropdown__content {
-  display: block;
 }
