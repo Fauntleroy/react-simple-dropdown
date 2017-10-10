@@ -156,24 +156,24 @@ class Dropdown extends Component {
     const contentElement = this.refs.content.getElement();
     const contentHeight = getElementOuterHeight(contentElement);
     const contentWidth = getElementOuterWidth(contentElement);
-    let horizontalOffset = 0;
-    let verticalOffset = 0;
+    let horizontalOffset = window.scrollX;
+    let verticalOffset = window.scrollY;
 
     if (triggerPosition) {
+      horizontalOffset += triggerPosition.left;
+      verticalOffset += triggerPosition.top;
+
       if (positionHorizontal === 'center') {
-        horizontalOffset = triggerPosition.width / 2;
+        horizontalOffset += triggerPosition.width / 2;
       } else if (positionHorizontal === 'right') {
-        horizontalOffset = triggerPosition.width;
+        horizontalOffset += triggerPosition.width;
       }
 
       if (positionVertical === 'bottom') {
-        verticalOffset = triggerPosition.height;
+        verticalOffset += triggerPosition.height;
       } else if (positionVertical === 'middle') {
-        verticalOffset = triggerPosition.height / 2;
+        verticalOffset += triggerPosition.height / 2;
       }
-
-      horizontalOffset += triggerPosition.left;
-      verticalOffset += triggerPosition.top;
     }
 
     if (contentVerticalEdge === 'bottom') {
@@ -214,7 +214,7 @@ class Dropdown extends Component {
 
     this.setState({
       contentStyle: {
-        position: 'fixed',
+        position: 'absolute',
         top: `${verticalOffset}px`,
         left: `${horizontalOffset}px`
       }
