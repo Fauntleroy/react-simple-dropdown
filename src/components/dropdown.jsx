@@ -194,29 +194,35 @@ class Dropdown extends Component {
       const contentBottomEdge = verticalOffset + contentHeight;
       const contentLeftEdge = horizontalOffset;
 
-      const beyondTopEdge = contentTopEdge < 0;
-      const beyondRightEdge = contentRightEdge > window.innerWidth;
-      const beyondBottomEdge = contentBottomEdge > window.innerHeight;
-      const beyondLeftEdge = contentLeftEdge < 0;
+      const windowTopEdge = window.scrollY;
+      const windowRightEdge = window.scrollX + window.innerWidth;
+      const windowBottomEdge = window.scrollY + window.innerHeight;
+      const windowLeftEdge = window.scrollX;
+
+      const beyondTopEdge = contentTopEdge < windowTopEdge;
+      const beyondRightEdge = contentRightEdge > windowRightEdge;
+      const beyondBottomEdge = contentBottomEdge > windowBottomEdge;
+      const beyondLeftEdge = contentLeftEdge < windowLeftEdge;
 
       if (beyondBottomEdge) {
-        verticalOffset = window.innerHeight - 5 - contentHeight;
+        verticalOffset = windowBottomEdge - 5 - contentHeight;
       } else if (beyondTopEdge) {
-        verticalOffset = 5;
+        verticalOffset = windowTopEdge + 5;
       }
 
       if (beyondLeftEdge) {
-        horizontalOffset = 5;
+        horizontalOffset = windowLeftEdge + 5;
       } else if (beyondRightEdge) {
-        horizontalOffset = window.innerWidth - 5 - contentWidth;
+        horizontalOffset = windowRightEdge - 5 - contentWidth;
       }
     }
 
     this.setState({
       contentStyle: {
         position: 'absolute',
-        top: `${verticalOffset}px`,
-        left: `${horizontalOffset}px`
+        top: 0,
+        left: 0,
+        transform: `translateX(${horizontalOffset}px) translateY(${verticalOffset}px)`
       }
     });
   }
