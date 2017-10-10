@@ -49,8 +49,8 @@ var accountDropdownCode = "import React from 'react';\nimport Dropdown, { Dropdo
 var ATTACHMENTS = ['inline', 'attached', 'detached'];
 var POSITIONS_HORIZONTAL = ['left', 'center', 'right'];
 var POSITIONS_VERTICAL = ['top', 'middle', 'bottom'];
-var CONTENT_EDGES_HORIZONTAL = ['left', 'right'];
-var CONTENT_EDGES_VERTICAL = ['top', 'bottom'];
+var CONTENT_EDGES_HORIZONTAL = ['left', 'center', 'right'];
+var CONTENT_EDGES_VERTICAL = ['top', 'middle', 'bottom'];
 
 function defaultDataGetter(event) {
   return event.target.value;
@@ -858,6 +858,10 @@ var Dropdown = function (_Component) {
   }, {
     key: '_onWindowClick',
     value: function _onWindowClick(event) {
+      if (!this.refs.content) {
+        return;
+      }
+
       var dropdownContentElement = this.refs.content.getElement();
       var dropdownTriggerElement = this.refs.trigger.getElement();
       var isInContent = event.target === dropdownContentElement || dropdownContentElement.contains(event.target);
@@ -917,10 +921,14 @@ var Dropdown = function (_Component) {
 
       if (contentVerticalEdge === 'bottom') {
         verticalOffset -= contentHeight;
+      } else if (contentVerticalEdge === 'middle') {
+        verticalOffset -= contentHeight / 2;
       }
 
       if (contentHorizontalEdge === 'right') {
         horizontalOffset -= contentWidth;
+      } else if (contentHorizontalEdge === 'center') {
+        horizontalOffset -= contentWidth / 2;
       }
 
       if (avoidEdges) {
@@ -997,7 +1005,10 @@ var Dropdown = function (_Component) {
           if (removeElement && !active) {
             child = null;
           } else if (renderInPortal) {
-            var contentStyle = _this4.state.contentStyle;
+            var _state$contentStyle = _this4.state.contentStyle;
+            var contentStyle = _state$contentStyle === undefined ? {
+              visibility: 'hidden'
+            } : _state$contentStyle;
 
             child = (0, _react.cloneElement)(child, {
               ref: 'content',
@@ -1044,8 +1055,8 @@ Dropdown.propTypes = {
   onShow: _propTypes2.default.func,
   positionHorizontal: _propTypes2.default.oneOf(['left', 'center', 'right']),
   positionVertical: _propTypes2.default.oneOf(['top', 'middle', 'bottom']),
-  contentHorizontalEdge: _propTypes2.default.oneOf(['left', 'right']),
-  contentVerticalEdge: _propTypes2.default.oneOf(['top', 'bottom']),
+  contentHorizontalEdge: _propTypes2.default.oneOf(['left', 'center', 'right']),
+  contentVerticalEdge: _propTypes2.default.oneOf(['top', 'middle', 'bottom']),
   children: _propTypes2.default.node,
   className: _propTypes2.default.string,
   removeElement: _propTypes2.default.bool,
@@ -55527,6 +55538,10 @@ var Dropdown = function (_Component) {
   }, {
     key: '_onWindowClick',
     value: function _onWindowClick(event) {
+      if (!this.refs.content) {
+        return;
+      }
+
       var dropdownContentElement = this.refs.content.getElement();
       var dropdownTriggerElement = this.refs.trigger.getElement();
       var isInContent = event.target === dropdownContentElement || dropdownContentElement.contains(event.target);
@@ -55586,10 +55601,14 @@ var Dropdown = function (_Component) {
 
       if (contentVerticalEdge === 'bottom') {
         verticalOffset -= contentHeight;
+      } else if (contentVerticalEdge === 'middle') {
+        verticalOffset -= contentHeight / 2;
       }
 
       if (contentHorizontalEdge === 'right') {
         horizontalOffset -= contentWidth;
+      } else if (contentHorizontalEdge === 'center') {
+        horizontalOffset -= contentWidth / 2;
       }
 
       if (avoidEdges) {
@@ -55666,7 +55685,10 @@ var Dropdown = function (_Component) {
           if (removeElement && !active) {
             child = null;
           } else if (renderInPortal) {
-            var contentStyle = _this4.state.contentStyle;
+            var _state$contentStyle = _this4.state.contentStyle;
+            var contentStyle = _state$contentStyle === undefined ? {
+              visibility: 'hidden'
+            } : _state$contentStyle;
 
 
             child = (0, _react.cloneElement)(child, {
@@ -55722,8 +55744,8 @@ Dropdown.propTypes = {
   onShow: _propTypes2.default.func,
   positionHorizontal: _propTypes2.default.oneOf(['left', 'center', 'right']),
   positionVertical: _propTypes2.default.oneOf(['top', 'middle', 'bottom']),
-  contentHorizontalEdge: _propTypes2.default.oneOf(['left', 'right']),
-  contentVerticalEdge: _propTypes2.default.oneOf(['top', 'bottom']),
+  contentHorizontalEdge: _propTypes2.default.oneOf(['left', 'center', 'right']),
+  contentVerticalEdge: _propTypes2.default.oneOf(['top', 'middle', 'bottom']),
   children: _propTypes2.default.node,
   className: _propTypes2.default.string,
   removeElement: _propTypes2.default.bool,

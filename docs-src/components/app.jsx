@@ -14,8 +14,8 @@ const accountDropdownCode = fs.readFileSync(`${__dirname}/example-dropdown.jsx`,
 const ATTACHMENTS = ['inline', 'attached', 'detached'];
 const POSITIONS_HORIZONTAL = ['left', 'center', 'right'];
 const POSITIONS_VERTICAL = ['top', 'middle', 'bottom'];
-const CONTENT_EDGES_HORIZONTAL = ['left', 'right'];
-const CONTENT_EDGES_VERTICAL = ['top', 'bottom'];
+const CONTENT_EDGES_HORIZONTAL = ['left', 'center', 'right'];
+const CONTENT_EDGES_VERTICAL = ['top', 'middle', 'bottom'];
 
 function defaultDataGetter (event) {
   return event.target.value;

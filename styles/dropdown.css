@@ -4,12 +4,9 @@
 
 .dropdown__content {
   display: none;
+  position: absolute;
 }
 
 .dropdown__content--active {
-  display: inline-block;
-}
-
-.dropdown .dropdown__content {
-  position: absolute;
+  display: block;
 }

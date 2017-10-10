@@ -123,6 +123,10 @@ class Dropdown extends Component {
   }
 
   _onWindowClick (event) {
+    if (!this.refs.content) {
+      return;
+    }
+
     const dropdownContentElement = this.refs.content.getElement();
     const dropdownTriggerElement = this.refs.trigger.getElement();
     const isInContent = (event.target === dropdownContentElement || dropdownContentElement.contains(event.target));
@@ -174,10 +178,14 @@ class Dropdown extends Component {
 
     if (contentVerticalEdge === 'bottom') {
       verticalOffset -= contentHeight;
+    } else if (contentVerticalEdge === 'middle') {
+      verticalOffset -= contentHeight / 2;
     }
 
     if (contentHorizontalEdge === 'right') {
       horizontalOffset -= contentWidth;
+    } else if (contentHorizontalEdge === 'center') {
+      horizontalOffset -= contentWidth / 2;
     }
 
     if (avoidEdges) {
@@ -248,7 +256,13 @@ class Dropdown extends Component {
         if ((removeElement) && !active) {
           child = null;
         } else if (renderInPortal) {
-          const { contentStyle } = this.state;
+          const {
+            // for short periods the style may not be ready
+            // at that time just hide the dropdown content for a bit
+            contentStyle = {
+              visibility: 'hidden'
+            }
+          } = this.state;
 
           child = cloneElement(child, {
             ref: 'content',
@@ -297,8 +311,8 @@ Dropdown.propTypes = {
   onShow: PropTypes.func,
   positionHorizontal: PropTypes.oneOf(['left', 'center', 'right']),
   positionVertical: PropTypes.oneOf(['top', 'middle', 'bottom']),
-  contentHorizontalEdge: PropTypes.oneOf(['left', 'right']),
-  contentVerticalEdge: PropTypes.oneOf(['top', 'bottom']),
+  contentHorizontalEdge: PropTypes.oneOf(['left', 'center', 'right']),
+  contentVerticalEdge: PropTypes.oneOf(['top', 'middle', 'bottom']),
   children: PropTypes.node,
   className: PropTypes.string,
   removeElement: PropTypes.bool,
