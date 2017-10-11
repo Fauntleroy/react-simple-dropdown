@@ -1,8 +1,8 @@
 {
   "name": "react-simple-dropdown",
-  "version": "4.0.0-alpha.3",
+  "version": "4.0.0-alpha.7",
   "description": "Non-prescriptive React.js dropdown toolkit",
-  "main": "lib/components/Dropdown.js",
+  "main": "lib/components/dropdown.js",
   "scripts": {
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
