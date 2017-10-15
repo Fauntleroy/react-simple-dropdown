@@ -5,7 +5,7 @@ import { findRenderedComponentWithType, renderIntoDocument, Simulate } from 'rea
 import smock from 'simple-mock';
 import domClasses, { has as hasClass } from 'dom-classes';
 
-import DropdownContent from '../../lib/components/DropdownContent.js';
+import DropdownContent from '../../lib/components/dropdown-content.js';
 
 class TestApp extends Component {
   constructor () {

@@ -5,7 +5,7 @@ import { findRenderedComponentWithType, findRenderedDOMComponentWithClass, rende
 import smock from 'simple-mock';
 import domClasses, { has as hasClass } from 'dom-classes';
 
-import Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/Dropdown.js';
+import Dropdown, { DropdownTrigger, DropdownContent } from '../../lib/components/dropdown.js';
 
 const DEFAULT_TEST_APP_STATE = {};
 
