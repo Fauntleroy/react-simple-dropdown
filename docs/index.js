@@ -899,24 +899,24 @@ var Dropdown = function (_Component) {
       var contentElement = this.refs.content.getElement();
       var contentHeight = (0, _dom.getElementOuterHeight)(contentElement);
       var contentWidth = (0, _dom.getElementOuterWidth)(contentElement);
-      var horizontalOffset = 0;
-      var verticalOffset = 0;
+      var horizontalOffset = window.scrollX;
+      var verticalOffset = window.scrollY;
 
       if (triggerPosition) {
+        horizontalOffset += triggerPosition.left;
+        verticalOffset += triggerPosition.top;
+
         if (positionHorizontal === 'center') {
-          horizontalOffset = triggerPosition.width / 2;
+          horizontalOffset += triggerPosition.width / 2;
         } else if (positionHorizontal === 'right') {
-          horizontalOffset = triggerPosition.width;
+          horizontalOffset += triggerPosition.width;
         }
 
         if (positionVertical === 'bottom') {
-          verticalOffset = triggerPosition.height;
+          verticalOffset += triggerPosition.height;
         } else if (positionVertical === 'middle') {
-          verticalOffset = triggerPosition.height / 2;
+          verticalOffset += triggerPosition.height / 2;
         }
-
-        horizontalOffset += triggerPosition.left;
-        verticalOffset += triggerPosition.top;
       }
 
       if (contentVerticalEdge === 'bottom') {
@@ -937,29 +937,35 @@ var Dropdown = function (_Component) {
         var contentBottomEdge = verticalOffset + contentHeight;
         var contentLeftEdge = horizontalOffset;
 
-        var beyondTopEdge = contentTopEdge < 0;
-        var beyondRightEdge = contentRightEdge > window.innerWidth;
-        var beyondBottomEdge = contentBottomEdge > window.innerHeight;
-        var beyondLeftEdge = contentLeftEdge < 0;
+        var windowTopEdge = window.scrollY;
+        var windowRightEdge = window.scrollX + window.innerWidth;
+        var windowBottomEdge = window.scrollY + window.innerHeight;
+        var windowLeftEdge = window.scrollX;
+
+        var beyondTopEdge = contentTopEdge < windowTopEdge;
+        var beyondRightEdge = contentRightEdge > windowRightEdge;
+        var beyondBottomEdge = contentBottomEdge > windowBottomEdge;
+        var beyondLeftEdge = contentLeftEdge < windowLeftEdge;
 
         if (beyondBottomEdge) {
-          verticalOffset = window.innerHeight - 5 - contentHeight;
+          verticalOffset = windowBottomEdge - 5 - contentHeight;
         } else if (beyondTopEdge) {
-          verticalOffset = 5;
+          verticalOffset = windowTopEdge + 5;
         }
 
         if (beyondLeftEdge) {
-          horizontalOffset = 5;
+          horizontalOffset = windowLeftEdge + 5;
         } else if (beyondRightEdge) {
-          horizontalOffset = window.innerWidth - 5 - contentWidth;
+          horizontalOffset = windowRightEdge - 5 - contentWidth;
         }
       }
 
       this.setState({
         contentStyle: {
-          position: 'fixed',
-          top: verticalOffset + 'px',
-          left: horizontalOffset + 'px'
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          transform: 'translateX(' + horizontalOffset + 'px) translateY(' + verticalOffset + 'px)'
         }
       });
     }
@@ -55579,24 +55585,24 @@ var Dropdown = function (_Component) {
       var contentElement = this.refs.content.getElement();
       var contentHeight = (0, _dom.getElementOuterHeight)(contentElement);
       var contentWidth = (0, _dom.getElementOuterWidth)(contentElement);
-      var horizontalOffset = 0;
-      var verticalOffset = 0;
+      var horizontalOffset = window.scrollX;
+      var verticalOffset = window.scrollY;
 
       if (triggerPosition) {
+        horizontalOffset += triggerPosition.left;
+        verticalOffset += triggerPosition.top;
+
         if (positionHorizontal === 'center') {
-          horizontalOffset = triggerPosition.width / 2;
+          horizontalOffset += triggerPosition.width / 2;
         } else if (positionHorizontal === 'right') {
-          horizontalOffset = triggerPosition.width;
+          horizontalOffset += triggerPosition.width;
         }
 
         if (positionVertical === 'bottom') {
-          verticalOffset = triggerPosition.height;
+          verticalOffset += triggerPosition.height;
         } else if (positionVertical === 'middle') {
-          verticalOffset = triggerPosition.height / 2;
+          verticalOffset += triggerPosition.height / 2;
         }
-
-        horizontalOffset += triggerPosition.left;
-        verticalOffset += triggerPosition.top;
       }
 
       if (contentVerticalEdge === 'bottom') {
@@ -55617,29 +55623,35 @@ var Dropdown = function (_Component) {
         var contentBottomEdge = verticalOffset + contentHeight;
         var contentLeftEdge = horizontalOffset;
 
-        var beyondTopEdge = contentTopEdge < 0;
-        var beyondRightEdge = contentRightEdge > window.innerWidth;
-        var beyondBottomEdge = contentBottomEdge > window.innerHeight;
-        var beyondLeftEdge = contentLeftEdge < 0;
+        var windowTopEdge = window.scrollY;
+        var windowRightEdge = window.scrollX + window.innerWidth;
+        var windowBottomEdge = window.scrollY + window.innerHeight;
+        var windowLeftEdge = window.scrollX;
+
+        var beyondTopEdge = contentTopEdge < windowTopEdge;
+        var beyondRightEdge = contentRightEdge > windowRightEdge;
+        var beyondBottomEdge = contentBottomEdge > windowBottomEdge;
+        var beyondLeftEdge = contentLeftEdge < windowLeftEdge;
 
         if (beyondBottomEdge) {
-          verticalOffset = window.innerHeight - 5 - contentHeight;
+          verticalOffset = windowBottomEdge - 5 - contentHeight;
         } else if (beyondTopEdge) {
-          verticalOffset = 5;
+          verticalOffset = windowTopEdge + 5;
         }
 
         if (beyondLeftEdge) {
-          horizontalOffset = 5;
+          horizontalOffset = windowLeftEdge + 5;
         } else if (beyondRightEdge) {
-          horizontalOffset = window.innerWidth - 5 - contentWidth;
+          horizontalOffset = windowRightEdge - 5 - contentWidth;
         }
       }
 
       this.setState({
         contentStyle: {
-          position: 'fixed',
-          top: verticalOffset + 'px',
-          left: horizontalOffset + 'px'
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          transform: 'translateX(' + horizontalOffset + 'px) translateY(' + verticalOffset + 'px)'
         }
       });
     }
