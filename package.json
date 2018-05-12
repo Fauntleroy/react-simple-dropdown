@@ -1,6 +1,6 @@
 {
   "name": "react-simple-dropdown",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "lib/components/Dropdown.js",
   "scripts": {
@@ -78,7 +78,7 @@
     "zuul": "^3.11.1"
   },
   "peerDependencies": {
-    "react": "0.14.x || 15.x",
-    "react-dom": "0.14.x || 15.x"
+    "react": "0.14.x || 15.x || 16.x",
+    "react-dom": "0.14.x || 15.x || 16.x"
   }
 }
