@@ -22,8 +22,8 @@ class TestApp extends Component {
     return (
       <Dropdown
         {...dropdownState}>
-        <DropdownTrigger onClick={onTriggerClick} />
-        <DropdownContent />
+        <DropdownTrigger onClick={onTriggerClick}>test</DropdownTrigger>
+        <DropdownContent>test</DropdownContent>
       </Dropdown>
     );
   }
