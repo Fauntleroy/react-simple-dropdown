@@ -20,25 +20,28 @@ class Dropdown extends Component {
     }
   }
 
-  componentWillUpdate (nextProps, nextState) {
-    const wasActive = (this.props.active || this.state.active);
-    const willBeActive = (nextProps.active || nextState.active);
+  componentDidUpdate (prevProps, prevState) {
+    const wasActive = (prevProps.active || prevState.active);
+    const willBeActive = (this.props.active || this.state.active);
 
     if (
       (!wasActive && willBeActive) ||
-      (willBeActive && (this.props.attachment === 'detached' && nextProps.attachment !== 'detached'))
+      (willBeActive && (prevProps.attachment === 'detached' && this.props.attachment !== 'detached'))
     ) {
       this._startAutoUpdateContentStyle();
     }
 
     if (
       (wasActive && !willBeActive) ||
-      (this.props.attachment !== 'detached' && nextProps.attachment === 'detached')
+      (prevProps.attachment !== 'detached' && this.props.attachment === 'detached')
     ) {
       this._stopAutoUpdateContentStyle();
     }
 
-    if (!wasActive && willBeActive) {
+    if (
+      (!wasActive && willBeActive) ||
+      (prevProps.attachment !== this.props.attachment)
+    ) {
       this._setContentStyle();
     }
   }

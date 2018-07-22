@@ -743,20 +743,20 @@ var Dropdown = function (_Component) {
       }
     }
   }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate(nextProps, nextState) {
-      var wasActive = this.props.active || this.state.active;
-      var willBeActive = nextProps.active || nextState.active;
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      var wasActive = prevProps.active || prevState.active;
+      var willBeActive = this.props.active || this.state.active;
 
-      if (!wasActive && willBeActive || willBeActive && this.props.attachment === 'detached' && nextProps.attachment !== 'detached') {
+      if (!wasActive && willBeActive || willBeActive && prevProps.attachment === 'detached' && this.props.attachment !== 'detached') {
         this._startAutoUpdateContentStyle();
       }
 
-      if (wasActive && !willBeActive || this.props.attachment !== 'detached' && nextProps.attachment === 'detached') {
+      if (wasActive && !willBeActive || prevProps.attachment !== 'detached' && this.props.attachment === 'detached') {
         this._stopAutoUpdateContentStyle();
       }
 
-      if (!wasActive && willBeActive) {
+      if (!wasActive && willBeActive || prevProps.attachment !== this.props.attachment) {
         this._setContentStyle();
       }
     }
@@ -55458,20 +55458,20 @@ var Dropdown = function (_Component) {
       }
     }
   }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate(nextProps, nextState) {
-      var wasActive = this.props.active || this.state.active;
-      var willBeActive = nextProps.active || nextState.active;
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      var wasActive = prevProps.active || prevState.active;
+      var willBeActive = this.props.active || this.state.active;
 
-      if (!wasActive && willBeActive || willBeActive && this.props.attachment === 'detached' && nextProps.attachment !== 'detached') {
+      if (!wasActive && willBeActive || willBeActive && prevProps.attachment === 'detached' && this.props.attachment !== 'detached') {
         this._startAutoUpdateContentStyle();
       }
 
-      if (wasActive && !willBeActive || this.props.attachment !== 'detached' && nextProps.attachment === 'detached') {
+      if (wasActive && !willBeActive || prevProps.attachment !== 'detached' && this.props.attachment === 'detached') {
         this._stopAutoUpdateContentStyle();
       }
 
-      if (!wasActive && willBeActive) {
+      if (!wasActive && willBeActive || prevProps.attachment !== this.props.attachment) {
         this._setContentStyle();
       }
     }
