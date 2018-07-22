@@ -25,15 +25,15 @@ class Dropdown extends Component {
     const willBeActive = (nextProps.active || nextState.active);
 
     if (
-      ((!wasActive && willBeActive) && nextProps.attachment === 'attached') ||
-      (willBeActive && (nextProps.attachment === 'attached' && this.props.attachment !== 'attached'))
+      (!wasActive && willBeActive) ||
+      (willBeActive && (this.props.attachment === 'detached' && nextProps.attachment !== 'detached'))
     ) {
       this._startAutoUpdateContentStyle();
     }
 
     if (
       (wasActive && !willBeActive) ||
-      (nextProps.attachment !== 'attached' && this.props.attachment === 'attached')
+      (this.props.attachment !== 'detached' && nextProps.attachment === 'detached')
     ) {
       this._stopAutoUpdateContentStyle();
     }
@@ -114,7 +114,7 @@ class Dropdown extends Component {
   _onAnimationFrame () {
     const { attachment } = this.props;
 
-    if (attachment !== 'attached') {
+    if (attachment === 'detached') {
       return;
     }
 
@@ -151,17 +151,24 @@ class Dropdown extends Component {
       return;
     }
 
-    const { avoidEdges, contentHorizontalEdge, contentVerticalEdge, positionHorizontal, positionVertical } = this.props;
+    const { attachment, avoidEdges, contentHorizontalEdge, contentVerticalEdge, positionHorizontal, positionVertical } = this.props;
     const triggerPosition = this.refs.trigger.getElement().getBoundingClientRect();
     const contentElement = this.refs.content.getElement();
     const contentHeight = getElementOuterHeight(contentElement);
     const contentWidth = getElementOuterWidth(contentElement);
-    let horizontalOffset = window.scrollX;
-    let verticalOffset = window.scrollY;
+    let horizontalOffset = 0;
+    let verticalOffset = 0;
+
+    if (attachment !== 'inline') {
+      horizontalOffset += window.scrollX;
+      verticalOffset += window.scrollY;
+    }
 
     if (triggerPosition) {
-      horizontalOffset += triggerPosition.left;
-      verticalOffset += triggerPosition.top;
+      if (attachment !== 'inline') {
+        horizontalOffset += triggerPosition.left;
+        verticalOffset += triggerPosition.top;
+      }
 
       if (positionHorizontal === 'center') {
         horizontalOffset += triggerPosition.width / 2;
@@ -189,31 +196,53 @@ class Dropdown extends Component {
     }
 
     if (avoidEdges) {
-      const contentTopEdge = verticalOffset;
-      const contentRightEdge = horizontalOffset + contentWidth;
-      const contentBottomEdge = verticalOffset + contentHeight;
-      const contentLeftEdge = horizontalOffset;
-
       const windowTopEdge = window.scrollY;
       const windowRightEdge = window.scrollX + window.innerWidth;
       const windowBottomEdge = window.scrollY + window.innerHeight;
       const windowLeftEdge = window.scrollX;
+
+      const contentTopEdge = attachment === 'inline'
+        ? verticalOffset + (windowTopEdge + triggerPosition.top)
+        : verticalOffset;
+      const contentRightEdge = attachment === 'inline'
+        ? horizontalOffset + contentWidth + (windowLeftEdge + triggerPosition.left)
+        : horizontalOffset + contentWidth;
+      const contentBottomEdge = attachment === 'inline'
+        ? verticalOffset + contentHeight + (windowTopEdge + triggerPosition.top)
+        : verticalOffset + contentHeight;
+      const contentLeftEdge = attachment === 'inline'
+        ? horizontalOffset + (windowLeftEdge + triggerPosition.left)
+        : horizontalOffset;
 
       const beyondTopEdge = contentTopEdge < windowTopEdge;
       const beyondRightEdge = contentRightEdge > windowRightEdge;
       const beyondBottomEdge = contentBottomEdge > windowBottomEdge;
       const beyondLeftEdge = contentLeftEdge < windowLeftEdge;
 
-      if (beyondBottomEdge) {
-        verticalOffset = windowBottomEdge - 5 - contentHeight;
-      } else if (beyondTopEdge) {
-        verticalOffset = windowTopEdge + 5;
-      }
+      if (attachment === 'inline') {
+        if (beyondBottomEdge) {
+          verticalOffset = verticalOffset - 5 - (contentBottomEdge - windowBottomEdge);
+        } else if (beyondTopEdge) {
+          verticalOffset = verticalOffset + 5 + (windowTopEdge - contentTopEdge);
+        }
 
-      if (beyondLeftEdge) {
-        horizontalOffset = windowLeftEdge + 5;
-      } else if (beyondRightEdge) {
-        horizontalOffset = windowRightEdge - 5 - contentWidth;
+        if (beyondLeftEdge) {
+          horizontalOffset = horizontalOffset + 5 + (windowLeftEdge - contentLeftEdge);
+        } else if (beyondRightEdge) {
+          horizontalOffset = horizontalOffset - 5 - (contentRightEdge - windowRightEdge);
+        }
+      } else {
+        if (beyondBottomEdge) {
+          verticalOffset = windowBottomEdge - 5 - contentHeight;
+        } else if (beyondTopEdge) {
+          verticalOffset = windowTopEdge + 5;
+        }
+
+        if (beyondLeftEdge) {
+          horizontalOffset = windowLeftEdge + 5;
+        } else if (beyondRightEdge) {
+          horizontalOffset = windowRightEdge - 5 - contentWidth;
+        }
       }
     }
 
@@ -243,6 +272,10 @@ class Dropdown extends Component {
       'dropdown--active': active,
       'dropdown--disabled': disabled
     });
+    const dropdownStyle = {
+      position: renderInPortal ? null : 'relative'
+    };
+
     // stick callback on trigger element
     const boundChildren = React.Children.map(children, child => {
       if (child.type === DropdownTrigger) {
@@ -278,9 +311,14 @@ class Dropdown extends Component {
 
           child = (<Portal>{child}</Portal>);
         } else {
+          const {
+            contentStyle
+          } = this.state;
+
           child = cloneElement(child, {
             ref: 'content',
-            active
+            active,
+            style: contentStyle
           });
         }
       }
@@ -301,7 +339,8 @@ class Dropdown extends Component {
     return (
       <div
         {...cleanProps}
-        className={`${dropdownClasses} ${className}`}>
+        className={`${dropdownClasses} ${className}`}
+        style={dropdownStyle}>
         {boundChildren}
       </div>
     );

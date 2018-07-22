@@ -748,11 +748,11 @@ var Dropdown = function (_Component) {
       var wasActive = this.props.active || this.state.active;
       var willBeActive = nextProps.active || nextState.active;
 
-      if (!wasActive && willBeActive && nextProps.attachment === 'attached' || willBeActive && nextProps.attachment === 'attached' && this.props.attachment !== 'attached') {
+      if (!wasActive && willBeActive || willBeActive && this.props.attachment === 'detached' && nextProps.attachment !== 'detached') {
         this._startAutoUpdateContentStyle();
       }
 
-      if (wasActive && !willBeActive || nextProps.attachment !== 'attached' && this.props.attachment === 'attached') {
+      if (wasActive && !willBeActive || this.props.attachment !== 'detached' && nextProps.attachment === 'detached') {
         this._stopAutoUpdateContentStyle();
       }
 
@@ -848,7 +848,7 @@ var Dropdown = function (_Component) {
     value: function _onAnimationFrame() {
       var attachment = this.props.attachment;
 
-      if (attachment !== 'attached') {
+      if (attachment === 'detached') {
         return;
       }
 
@@ -889,6 +889,7 @@ var Dropdown = function (_Component) {
       }
 
       var _props = this.props;
+      var attachment = _props.attachment;
       var avoidEdges = _props.avoidEdges;
       var contentHorizontalEdge = _props.contentHorizontalEdge;
       var contentVerticalEdge = _props.contentVerticalEdge;
@@ -899,12 +900,19 @@ var Dropdown = function (_Component) {
       var contentElement = this.refs.content.getElement();
       var contentHeight = (0, _dom.getElementOuterHeight)(contentElement);
       var contentWidth = (0, _dom.getElementOuterWidth)(contentElement);
-      var horizontalOffset = window.scrollX;
-      var verticalOffset = window.scrollY;
+      var horizontalOffset = 0;
+      var verticalOffset = 0;
+
+      if (attachment !== 'inline') {
+        horizontalOffset += window.scrollX;
+        verticalOffset += window.scrollY;
+      }
 
       if (triggerPosition) {
-        horizontalOffset += triggerPosition.left;
-        verticalOffset += triggerPosition.top;
+        if (attachment !== 'inline') {
+          horizontalOffset += triggerPosition.left;
+          verticalOffset += triggerPosition.top;
+        }
 
         if (positionHorizontal === 'center') {
           horizontalOffset += triggerPosition.width / 2;
@@ -932,31 +940,45 @@ var Dropdown = function (_Component) {
       }
 
       if (avoidEdges) {
-        var contentTopEdge = verticalOffset;
-        var contentRightEdge = horizontalOffset + contentWidth;
-        var contentBottomEdge = verticalOffset + contentHeight;
-        var contentLeftEdge = horizontalOffset;
-
         var windowTopEdge = window.scrollY;
         var windowRightEdge = window.scrollX + window.innerWidth;
         var windowBottomEdge = window.scrollY + window.innerHeight;
         var windowLeftEdge = window.scrollX;
+
+        var contentTopEdge = attachment === 'inline' ? verticalOffset + (windowTopEdge + triggerPosition.top) : verticalOffset;
+        var contentRightEdge = attachment === 'inline' ? horizontalOffset + contentWidth + (windowLeftEdge + triggerPosition.left) : horizontalOffset + contentWidth;
+        var contentBottomEdge = attachment === 'inline' ? verticalOffset + contentHeight + (windowTopEdge + triggerPosition.top) : verticalOffset + contentHeight;
+        var contentLeftEdge = attachment === 'inline' ? horizontalOffset + (windowLeftEdge + triggerPosition.left) : horizontalOffset;
 
         var beyondTopEdge = contentTopEdge < windowTopEdge;
         var beyondRightEdge = contentRightEdge > windowRightEdge;
         var beyondBottomEdge = contentBottomEdge > windowBottomEdge;
         var beyondLeftEdge = contentLeftEdge < windowLeftEdge;
 
-        if (beyondBottomEdge) {
-          verticalOffset = windowBottomEdge - 5 - contentHeight;
-        } else if (beyondTopEdge) {
-          verticalOffset = windowTopEdge + 5;
-        }
+        if (attachment === 'inline') {
+          if (beyondBottomEdge) {
+            verticalOffset = verticalOffset - 5 - (contentBottomEdge - windowBottomEdge);
+          } else if (beyondTopEdge) {
+            verticalOffset = verticalOffset + 5 + (windowTopEdge - contentTopEdge);
+          }
 
-        if (beyondLeftEdge) {
-          horizontalOffset = windowLeftEdge + 5;
-        } else if (beyondRightEdge) {
-          horizontalOffset = windowRightEdge - 5 - contentWidth;
+          if (beyondLeftEdge) {
+            horizontalOffset = horizontalOffset + 5 + (windowLeftEdge - contentLeftEdge);
+          } else if (beyondRightEdge) {
+            horizontalOffset = horizontalOffset - 5 - (contentRightEdge - windowRightEdge);
+          }
+        } else {
+          if (beyondBottomEdge) {
+            verticalOffset = windowBottomEdge - 5 - contentHeight;
+          } else if (beyondTopEdge) {
+            verticalOffset = windowTopEdge + 5;
+          }
+
+          if (beyondLeftEdge) {
+            horizontalOffset = windowLeftEdge + 5;
+          } else if (beyondRightEdge) {
+            horizontalOffset = windowRightEdge - 5 - contentWidth;
+          }
         }
       }
 
@@ -990,6 +1012,10 @@ var Dropdown = function (_Component) {
         'dropdown--active': active,
         'dropdown--disabled': disabled
       });
+      var dropdownStyle = {
+        position: renderInPortal ? null : 'relative'
+      };
+
       // stick callback on trigger element
       var boundChildren = _react2.default.Children.map(children, function (child) {
         if (child.type === _dropdownTrigger2.default) {
@@ -1024,9 +1050,12 @@ var Dropdown = function (_Component) {
 
             child = _react2.default.createElement(_reactMinimalistPortal2.default, null, child);
           } else {
+            var _contentStyle = _this4.state.contentStyle;
+
             child = (0, _react.cloneElement)(child, {
               ref: 'content',
-              active: active
+              active: active,
+              style: _contentStyle
             });
           }
         }
@@ -1045,7 +1074,8 @@ var Dropdown = function (_Component) {
       delete cleanProps.removeElement;
 
       return _react2.default.createElement('div', _extends({}, cleanProps, {
-        className: dropdownClasses + ' ' + className }), boundChildren);
+        className: dropdownClasses + ' ' + className,
+        style: dropdownStyle }), boundChildren);
     }
   }]);
 
@@ -55433,11 +55463,11 @@ var Dropdown = function (_Component) {
       var wasActive = this.props.active || this.state.active;
       var willBeActive = nextProps.active || nextState.active;
 
-      if (!wasActive && willBeActive && nextProps.attachment === 'attached' || willBeActive && nextProps.attachment === 'attached' && this.props.attachment !== 'attached') {
+      if (!wasActive && willBeActive || willBeActive && this.props.attachment === 'detached' && nextProps.attachment !== 'detached') {
         this._startAutoUpdateContentStyle();
       }
 
-      if (wasActive && !willBeActive || nextProps.attachment !== 'attached' && this.props.attachment === 'attached') {
+      if (wasActive && !willBeActive || this.props.attachment !== 'detached' && nextProps.attachment === 'detached') {
         this._stopAutoUpdateContentStyle();
       }
 
@@ -55534,7 +55564,7 @@ var Dropdown = function (_Component) {
       var attachment = this.props.attachment;
 
 
-      if (attachment !== 'attached') {
+      if (attachment === 'detached') {
         return;
       }
 
@@ -55575,6 +55605,7 @@ var Dropdown = function (_Component) {
       }
 
       var _props = this.props;
+      var attachment = _props.attachment;
       var avoidEdges = _props.avoidEdges;
       var contentHorizontalEdge = _props.contentHorizontalEdge;
       var contentVerticalEdge = _props.contentVerticalEdge;
@@ -55585,12 +55616,19 @@ var Dropdown = function (_Component) {
       var contentElement = this.refs.content.getElement();
       var contentHeight = (0, _dom.getElementOuterHeight)(contentElement);
       var contentWidth = (0, _dom.getElementOuterWidth)(contentElement);
-      var horizontalOffset = window.scrollX;
-      var verticalOffset = window.scrollY;
+      var horizontalOffset = 0;
+      var verticalOffset = 0;
+
+      if (attachment !== 'inline') {
+        horizontalOffset += window.scrollX;
+        verticalOffset += window.scrollY;
+      }
 
       if (triggerPosition) {
-        horizontalOffset += triggerPosition.left;
-        verticalOffset += triggerPosition.top;
+        if (attachment !== 'inline') {
+          horizontalOffset += triggerPosition.left;
+          verticalOffset += triggerPosition.top;
+        }
 
         if (positionHorizontal === 'center') {
           horizontalOffset += triggerPosition.width / 2;
@@ -55618,31 +55656,45 @@ var Dropdown = function (_Component) {
       }
 
       if (avoidEdges) {
-        var contentTopEdge = verticalOffset;
-        var contentRightEdge = horizontalOffset + contentWidth;
-        var contentBottomEdge = verticalOffset + contentHeight;
-        var contentLeftEdge = horizontalOffset;
-
         var windowTopEdge = window.scrollY;
         var windowRightEdge = window.scrollX + window.innerWidth;
         var windowBottomEdge = window.scrollY + window.innerHeight;
         var windowLeftEdge = window.scrollX;
+
+        var contentTopEdge = attachment === 'inline' ? verticalOffset + (windowTopEdge + triggerPosition.top) : verticalOffset;
+        var contentRightEdge = attachment === 'inline' ? horizontalOffset + contentWidth + (windowLeftEdge + triggerPosition.left) : horizontalOffset + contentWidth;
+        var contentBottomEdge = attachment === 'inline' ? verticalOffset + contentHeight + (windowTopEdge + triggerPosition.top) : verticalOffset + contentHeight;
+        var contentLeftEdge = attachment === 'inline' ? horizontalOffset + (windowLeftEdge + triggerPosition.left) : horizontalOffset;
 
         var beyondTopEdge = contentTopEdge < windowTopEdge;
         var beyondRightEdge = contentRightEdge > windowRightEdge;
         var beyondBottomEdge = contentBottomEdge > windowBottomEdge;
         var beyondLeftEdge = contentLeftEdge < windowLeftEdge;
 
-        if (beyondBottomEdge) {
-          verticalOffset = windowBottomEdge - 5 - contentHeight;
-        } else if (beyondTopEdge) {
-          verticalOffset = windowTopEdge + 5;
-        }
+        if (attachment === 'inline') {
+          if (beyondBottomEdge) {
+            verticalOffset = verticalOffset - 5 - (contentBottomEdge - windowBottomEdge);
+          } else if (beyondTopEdge) {
+            verticalOffset = verticalOffset + 5 + (windowTopEdge - contentTopEdge);
+          }
 
-        if (beyondLeftEdge) {
-          horizontalOffset = windowLeftEdge + 5;
-        } else if (beyondRightEdge) {
-          horizontalOffset = windowRightEdge - 5 - contentWidth;
+          if (beyondLeftEdge) {
+            horizontalOffset = horizontalOffset + 5 + (windowLeftEdge - contentLeftEdge);
+          } else if (beyondRightEdge) {
+            horizontalOffset = horizontalOffset - 5 - (contentRightEdge - windowRightEdge);
+          }
+        } else {
+          if (beyondBottomEdge) {
+            verticalOffset = windowBottomEdge - 5 - contentHeight;
+          } else if (beyondTopEdge) {
+            verticalOffset = windowTopEdge + 5;
+          }
+
+          if (beyondLeftEdge) {
+            horizontalOffset = windowLeftEdge + 5;
+          } else if (beyondRightEdge) {
+            horizontalOffset = windowRightEdge - 5 - contentWidth;
+          }
         }
       }
 
@@ -55676,6 +55728,10 @@ var Dropdown = function (_Component) {
         'dropdown--active': active,
         'dropdown--disabled': disabled
       });
+      var dropdownStyle = {
+        position: renderInPortal ? null : 'relative'
+      };
+
       // stick callback on trigger element
       var boundChildren = _react2.default.Children.map(children, function (child) {
         if (child.type === _dropdownTrigger2.default) {
@@ -55715,9 +55771,13 @@ var Dropdown = function (_Component) {
               child
             );
           } else {
+            var _contentStyle = _this4.state.contentStyle;
+
+
             child = (0, _react.cloneElement)(child, {
               ref: 'content',
-              active: active
+              active: active,
+              style: _contentStyle
             });
           }
         }
@@ -55738,7 +55798,8 @@ var Dropdown = function (_Component) {
       return _react2.default.createElement(
         'div',
         _extends({}, cleanProps, {
-          className: dropdownClasses + ' ' + className }),
+          className: dropdownClasses + ' ' + className,
+          style: dropdownStyle }),
         boundChildren
       );
     }
