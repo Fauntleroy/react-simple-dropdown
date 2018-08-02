@@ -1,6 +1,6 @@
 {
   "name": "react-simple-dropdown",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Non-prescriptive React.js dropdown toolkit",
   "main": "lib/components/Dropdown.js",
   "scripts": {
