@@ -9,7 +9,7 @@
     "test": "npm run build && zuul -- test/**/*.{js,jsx}",
     "test:browser": "zuul --local 55555 -- test/**/*.{js,jsx}",
     "test:electron": "zuul --electron -- test/**/*.{js,jsx}",
-    "build": "babel src/components --out-dir lib/components",
+    "build": "trash lib && babel src/components --out-dir lib/components",
     "watch": "npm run build -- -w",
     "dev": "npm-run-all --parallel watch test:browser",
     "lint": "eslint src --ext .js --ext .jsx",
