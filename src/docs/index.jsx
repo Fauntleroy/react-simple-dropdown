@@ -1,7 +1,7 @@
 const fs = require('fs'); // brfs doesn't play nice with babelify
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AccountDropdown from './components/AccountDropdown.jsx';
+import AccountDropdown from './components/account-dropdown.jsx';
 import Highlight from 'react-highlight';
 
 const user = {
@@ -10,7 +10,7 @@ const user = {
 };
 
 // eslint-disable-next-line no-sync
-const accountDropdownCode = fs.readFileSync(`${__dirname}/components/AccountDropdown.jsx`, 'utf8');
+const accountDropdownCode = fs.readFileSync(`${__dirname}/components/account-dropdown.jsx`, 'utf8');
 
 ReactDOM.render(<AccountDropdown user={user} />, document.getElementById('account-dropdown'));
 ReactDOM.render((<Highlight className="code jsx">{accountDropdownCode}</Highlight>), document.getElementById('account-dropdown-code'));

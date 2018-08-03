@@ -6,6 +6,196 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var DropdownContent = function (_Component) {
+  _inherits(DropdownContent, _Component);
+
+  function DropdownContent() {
+    _classCallCheck(this, DropdownContent);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownContent).apply(this, arguments));
+  }
+
+  _createClass(DropdownContent, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownContentProps = _objectWithoutProperties(_props, ['children', 'className']);
+
+      dropdownContentProps.className = 'dropdown__content ' + className;
+
+      return _react2.default.createElement('div', dropdownContentProps, children);
+    }
+  }]);
+
+  return DropdownContent;
+}(_react.Component);
+
+DropdownContent.displayName = 'DropdownContent';
+
+DropdownContent.propTypes = {
+  children: _propTypes2.default.node,
+  className: _propTypes2.default.string
+};
+
+DropdownContent.defaultProps = {
+  className: ''
+};
+
+exports.default = DropdownContent;
+
+},{"prop-types":208,"react":390}],2:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var DropdownTrigger = function (_Component) {
+  _inherits(DropdownTrigger, _Component);
+
+  function DropdownTrigger() {
+    _classCallCheck(this, DropdownTrigger);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownTrigger).apply(this, arguments));
+  }
+
+  _createClass(DropdownTrigger, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+
+      var dropdownTriggerProps = _objectWithoutProperties(_props, ['children', 'className']);
+
+      dropdownTriggerProps.className = 'dropdown__trigger ' + className;
+
+      return _react2.default.createElement('a', dropdownTriggerProps, children);
+    }
+  }]);
+
+  return DropdownTrigger;
+}(_react.Component);
+
+DropdownTrigger.displayName = 'DropdownTrigger';
+
+DropdownTrigger.propTypes = {
+  children: _propTypes2.default.node,
+  className: _propTypes2.default.string
+};
+
+DropdownTrigger.defaultProps = {
+  className: ''
+};
+
+exports.default = DropdownTrigger;
+
+},{"prop-types":208,"react":390}],3:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.DropdownContent = exports.DropdownTrigger = undefined;
 
 var _extends = Object.assign || function (target) {
@@ -42,13 +232,13 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _DropdownTrigger = require('./DropdownTrigger.js');
+var _dropdownTrigger = require('./dropdown-trigger.js');
 
-var _DropdownTrigger2 = _interopRequireDefault(_DropdownTrigger);
+var _dropdownTrigger2 = _interopRequireDefault(_dropdownTrigger);
 
-var _DropdownContent = require('./DropdownContent.js');
+var _dropdownContent = require('./dropdown-content.js');
 
-var _DropdownContent2 = _interopRequireDefault(_DropdownContent);
+var _dropdownContent2 = _interopRequireDefault(_dropdownContent);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -173,7 +363,7 @@ var Dropdown = function (_Component) {
       });
       // stick callback on trigger element
       var boundChildren = _react2.default.Children.map(children, function (child) {
-        if (child.type === _DropdownTrigger2.default) {
+        if (child.type === _dropdownTrigger2.default) {
           (function () {
             var originalOnClick = child.props.onClick;
             child = (0, _react.cloneElement)(child, {
@@ -188,7 +378,7 @@ var Dropdown = function (_Component) {
               }
             });
           })();
-        } else if (child.type === _DropdownContent2.default && removeElement && !active) {
+        } else if (child.type === _dropdownContent2.default && removeElement && !active) {
           child = null;
         }
         return child;
@@ -222,201 +412,11 @@ Dropdown.defaultProps = {
   className: ''
 };
 
-exports.DropdownTrigger = _DropdownTrigger2.default;
-exports.DropdownContent = _DropdownContent2.default;
+exports.DropdownTrigger = _dropdownTrigger2.default;
+exports.DropdownContent = _dropdownContent2.default;
 exports.default = Dropdown;
 
-},{"./DropdownContent.js":2,"./DropdownTrigger.js":3,"classnames":4,"prop-types":208,"react":390,"react-dom":212}],2:[function(require,module,exports){
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _objectWithoutProperties(obj, keys) {
-  var target = {};for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-  }return target;
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var DropdownContent = function (_Component) {
-  _inherits(DropdownContent, _Component);
-
-  function DropdownContent() {
-    _classCallCheck(this, DropdownContent);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownContent).apply(this, arguments));
-  }
-
-  _createClass(DropdownContent, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-
-      var dropdownContentProps = _objectWithoutProperties(_props, ['children', 'className']);
-
-      dropdownContentProps.className = 'dropdown__content ' + className;
-
-      return _react2.default.createElement('div', dropdownContentProps, children);
-    }
-  }]);
-
-  return DropdownContent;
-}(_react.Component);
-
-DropdownContent.displayName = 'DropdownContent';
-
-DropdownContent.propTypes = {
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string
-};
-
-DropdownContent.defaultProps = {
-  className: ''
-};
-
-exports.default = DropdownContent;
-
-},{"prop-types":208,"react":390}],3:[function(require,module,exports){
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _objectWithoutProperties(obj, keys) {
-  var target = {};for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-  }return target;
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var DropdownTrigger = function (_Component) {
-  _inherits(DropdownTrigger, _Component);
-
-  function DropdownTrigger() {
-    _classCallCheck(this, DropdownTrigger);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(DropdownTrigger).apply(this, arguments));
-  }
-
-  _createClass(DropdownTrigger, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-
-      var dropdownTriggerProps = _objectWithoutProperties(_props, ['children', 'className']);
-
-      dropdownTriggerProps.className = 'dropdown__trigger ' + className;
-
-      return _react2.default.createElement('a', dropdownTriggerProps, children);
-    }
-  }]);
-
-  return DropdownTrigger;
-}(_react.Component);
-
-DropdownTrigger.displayName = 'DropdownTrigger';
-
-DropdownTrigger.propTypes = {
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string
-};
-
-DropdownTrigger.defaultProps = {
-  className: ''
-};
-
-exports.default = DropdownTrigger;
-
-},{"prop-types":208,"react":390}],4:[function(require,module,exports){
+},{"./dropdown-content.js":1,"./dropdown-trigger.js":2,"classnames":4,"prop-types":208,"react":390,"react-dom":212}],4:[function(require,module,exports){
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -57937,9 +57937,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Dropdown = require('../../../lib/components/Dropdown.js');
+var _dropdown = require('../../../lib/components/dropdown.js');
 
-var _Dropdown2 = _interopRequireDefault(_Dropdown);
+var _dropdown2 = _interopRequireDefault(_dropdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57973,10 +57973,10 @@ var AccountDropdown = function (_Component) {
 
 
       return _react2.default.createElement(
-        _Dropdown2.default,
+        _dropdown2.default,
         { className: 'account-dropdown', ref: 'dropdown' },
         _react2.default.createElement(
-          _Dropdown.DropdownTrigger,
+          _dropdown.DropdownTrigger,
           null,
           _react2.default.createElement('img', { className: 'account-dropdown__avatar', src: user.avatar_url }),
           _react2.default.createElement(
@@ -57986,7 +57986,7 @@ var AccountDropdown = function (_Component) {
           )
         ),
         _react2.default.createElement(
-          _Dropdown.DropdownContent,
+          _dropdown.DropdownContent,
           null,
           _react2.default.createElement(
             'div',
@@ -58074,7 +58074,7 @@ AccountDropdown.propTypes = {
 
 exports.default = AccountDropdown;
 
-},{"../../../lib/components/Dropdown.js":1,"prop-types":208,"react":390}],398:[function(require,module,exports){
+},{"../../../lib/components/dropdown.js":3,"prop-types":208,"react":390}],398:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -58085,9 +58085,9 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AccountDropdown = require('./components/AccountDropdown.jsx');
+var _accountDropdown = require('./components/account-dropdown.jsx');
 
-var _AccountDropdown2 = _interopRequireDefault(_AccountDropdown);
+var _accountDropdown2 = _interopRequireDefault(_accountDropdown);
 
 var _reactHighlight = require('react-highlight');
 
@@ -58104,13 +58104,13 @@ var user = {
 };
 
 // eslint-disable-next-line no-sync
-var accountDropdownCode = "import React, { Component } from 'react';\nimport PropTypes from 'prop-types';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/Dropdown.js';\n\nclass AccountDropdown extends Component {\n  constructor (props) {\n    super(props);\n\n    this.handleLinkClick = this.handleLinkClick.bind(this);\n  }\n\n  handleLinkClick () {\n    this.refs.dropdown.hide();\n  }\n\n  render () {\n    const { user } = this.props;\n\n    return (\n      <Dropdown className=\"account-dropdown\" ref=\"dropdown\">\n        <DropdownTrigger>\n          <img className=\"account-dropdown__avatar\" src={user.avatar_url} /><span className=\"account-dropdown__name\">My Account</span>\n        </DropdownTrigger>\n        <DropdownContent>\n          <div className=\"account-dropdown__identity account-dropdown__segment\">\n            Signed in as <strong>{user.name}</strong>\n          </div>\n          <ul className=\"account-dropdown__quick-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your profile\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your stars\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Explore\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Help\n              </a>\n            </li>\n          </ul>\n          <ul className=\"account-dropdown__management-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Settings\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Sign out\n              </a>\n            </li>\n          </ul>\n        </DropdownContent>\n      </Dropdown>\n    );\n  }\n}\n\nAccountDropdown.propTypes = {\n  user: PropTypes.object.isRequired\n};\n\nexport default AccountDropdown;\n";
+var accountDropdownCode = "import React, { Component } from 'react';\nimport PropTypes from 'prop-types';\nimport Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/dropdown.js';\n\nclass AccountDropdown extends Component {\n  constructor (props) {\n    super(props);\n\n    this.handleLinkClick = this.handleLinkClick.bind(this);\n  }\n\n  handleLinkClick () {\n    this.refs.dropdown.hide();\n  }\n\n  render () {\n    const { user } = this.props;\n\n    return (\n      <Dropdown className=\"account-dropdown\" ref=\"dropdown\">\n        <DropdownTrigger>\n          <img className=\"account-dropdown__avatar\" src={user.avatar_url} /><span className=\"account-dropdown__name\">My Account</span>\n        </DropdownTrigger>\n        <DropdownContent>\n          <div className=\"account-dropdown__identity account-dropdown__segment\">\n            Signed in as <strong>{user.name}</strong>\n          </div>\n          <ul className=\"account-dropdown__quick-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your profile\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Your stars\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Explore\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Help\n              </a>\n            </li>\n          </ul>\n          <ul className=\"account-dropdown__management-links account-dropdown__segment\">\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Settings\n              </a>\n            </li>\n            <li className=\"account-dropdown__link\">\n              <a className=\"account-dropdown__link__anchor\" href=\"#\" onClick={this.handleLinkClick}>\n                Sign out\n              </a>\n            </li>\n          </ul>\n        </DropdownContent>\n      </Dropdown>\n    );\n  }\n}\n\nAccountDropdown.propTypes = {\n  user: PropTypes.object.isRequired\n};\n\nexport default AccountDropdown;\n";
 
-_reactDom2.default.render(_react2.default.createElement(_AccountDropdown2.default, { user: user }), document.getElementById('account-dropdown'));
+_reactDom2.default.render(_react2.default.createElement(_accountDropdown2.default, { user: user }), document.getElementById('account-dropdown'));
 _reactDom2.default.render(_react2.default.createElement(
   _reactHighlight2.default,
   { className: 'code jsx' },
   accountDropdownCode
 ), document.getElementById('account-dropdown-code'));
 
-},{"./components/AccountDropdown.jsx":397,"react":390,"react-dom":212,"react-highlight":229}]},{},[398]);
+},{"./components/account-dropdown.jsx":397,"react":390,"react-dom":212,"react-highlight":229}]},{},[398]);

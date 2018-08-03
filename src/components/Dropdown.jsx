@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 
-import DropdownTrigger from './DropdownTrigger.js';
-import DropdownContent from './DropdownContent.js';
+import DropdownTrigger from './dropdown-trigger.js';
+import DropdownContent from './dropdown-content.js';
 
 class Dropdown extends Component {
   displayName: 'Dropdown'

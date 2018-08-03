@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/Dropdown.js';
+import Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/dropdown.js';
 
 class AccountDropdown extends Component {
   constructor (props) {
