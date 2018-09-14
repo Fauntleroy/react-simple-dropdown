@@ -10,12 +10,12 @@ class Dropdown extends Component {
   displayName: 'Dropdown'
 
   componentDidMount () {
-    window.addEventListener('click', this._onWindowClick);
+    window.addEventListener(this.props.hideOnMouseDown ? 'mousedown' : 'click', this._onWindowClick);
     window.addEventListener('touchstart', this._onWindowClick);
   }
 
   componentWillUnmount () {
-    window.removeEventListener('click', this._onWindowClick);
+    window.removeEventListener(this.props.hideOnMouseDown ? 'mousedown' : 'click', this._onWindowClick);
     window.removeEventListener('touchstart', this._onWindowClick);
   }
 
@@ -106,6 +106,7 @@ class Dropdown extends Component {
     delete cleanProps.onShow;
     delete cleanProps.onHide;
     delete cleanProps.removeElement;
+    delete cleanProps.hideOnMouseDown;
 
     return (
       <div
@@ -125,11 +126,13 @@ Dropdown.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   removeElement: PropTypes.bool,
+  hideOnMouseDown: PropTypes.bool,
   style: PropTypes.object
 };
 
 Dropdown.defaultProps = {
-  className: ''
+  className: '',
+  hideOnMouseDown: false
 };
 
 export { DropdownTrigger, DropdownContent };
