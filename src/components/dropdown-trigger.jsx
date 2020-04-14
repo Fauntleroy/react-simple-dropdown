@@ -7,9 +7,9 @@ class DropdownTrigger extends Component {
     dropdownTriggerProps.className = `dropdown__trigger ${className}`;
 
     return (
-      <a {...dropdownTriggerProps}>
+      <button {...dropdownTriggerProps}>
         {children}
-      </a>
+      </button>
     );
   }
 }
