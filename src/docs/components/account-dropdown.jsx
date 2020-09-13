@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import Dropdown, { DropdownTrigger, DropdownContent } from '../../../lib/components/dropdown.js';
 
 class AccountDropdown extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.handleLinkClick = this.handleLinkClick.bind(this);
   }
 
-  handleLinkClick () {
-    this.refs.dropdown.hide();
+  handleLinkClick() {
+    this.dropdownRef.hide();
   }
 
-  render () {
+  render() {
     const { user } = this.props;
 
     return (
-      <Dropdown className="account-dropdown" ref="dropdown">
+      <Dropdown className="account-dropdown" ref={ref => (this.dropdownRef = ref)}>
         <DropdownTrigger>
           <img className="account-dropdown__avatar" src={user.avatar_url} /><span className="account-dropdown__name">My Account</span>
         </DropdownTrigger>
