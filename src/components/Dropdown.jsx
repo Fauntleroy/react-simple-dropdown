@@ -9,17 +9,17 @@ import DropdownContent from './dropdown-content.js';
 class Dropdown extends Component {
   displayName: 'Dropdown'
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('click', this._onWindowClick);
     window.addEventListener('touchstart', this._onWindowClick);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('click', this._onWindowClick);
     window.removeEventListener('touchstart', this._onWindowClick);
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -30,13 +30,13 @@ class Dropdown extends Component {
     this._onToggleClick = this._onToggleClick.bind(this);
   }
 
-  isActive () {
+  isActive() {
     return (typeof this.props.active === 'boolean') ?
       this.props.active :
       this.state.active;
   }
 
-  hide () {
+  hide() {
     this.setState({
       active: false
     }, () => {
@@ -46,7 +46,7 @@ class Dropdown extends Component {
     });
   }
 
-  show () {
+  show() {
     this.setState({
       active: true
     }, () => {
@@ -56,14 +56,14 @@ class Dropdown extends Component {
     });
   }
 
-  _onWindowClick (event) {
+  _onWindowClick(event) {
     const dropdownElement = findDOMNode(this);
     if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive()) {
       this.hide();
     }
   }
 
-  _onToggleClick (event) {
+  _onToggleClick(event) {
     event.preventDefault();
     if (this.isActive()) {
       this.hide();
@@ -72,7 +72,7 @@ class Dropdown extends Component {
     }
   }
 
-  render () {
+  render() {
     const { children, className, disabled, removeElement } = this.props;
     // create component classes
     const active = this.isActive();
@@ -86,7 +86,6 @@ class Dropdown extends Component {
       if (child.type === DropdownTrigger) {
         const originalOnClick = child.props.onClick;
         child = cloneElement(child, {
-          ref: 'trigger',
           onClick: (event) => {
             if (!disabled) {
               this._onToggleClick(event);
